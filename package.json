@@ -14,15 +14,20 @@
     "@tonejs/midi": "^2.0.25",
     "next": "10.0.2",
     "react": "17.0.1",
-    "react-dom": "17.0.1"
+    "react-dom": "17.0.1",
+    "styled-components": "^5.2.1",
+    "styled-reset": "^4.3.1"
   },
   "devDependencies": {
     "@types/node": "^14.14.8",
     "@types/react": "^16.9.56",
+    "@types/styled-components": "^5.1.4",
     "@typescript-eslint/eslint-plugin": "^4.8.1",
     "@typescript-eslint/parser": "^4.8.1",
+    "babel-plugin-styled-components": "^1.11.1",
     "eslint": "^7.13.0",
     "eslint-config-prettier": "^6.15.0",
+    "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-react": "^7.21.5",

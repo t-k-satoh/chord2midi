@@ -26,6 +26,7 @@ module.exports = {
         'plugin:jsx-a11y/recommended', // Accessibility rules
         'prettier/@typescript-eslint', // Prettier plugin
         'plugin:prettier/recommended', // Prettier recommended rules 
+        'plugin:import/errors',
       ],
       rules: {
         'react/prop-types': 'off', // We will use TypeScript's types for component props instead
@@ -40,6 +41,7 @@ module.exports = {
           },
         ],
         'prettier/prettier': ['error', {}, { usePrettierrc: true }], // Includes .prettierrc.js rules
+        'import/order': [2, { alphabetize: { order: 'asc' } }],
       },
     },
   ],

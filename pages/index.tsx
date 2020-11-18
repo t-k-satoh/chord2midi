@@ -1,5 +1,8 @@
 import { Chord } from '@tonaljs/tonal'
 import { Midi } from '@tonejs/midi'
+import Head from 'next/head'
+import styled, { createGlobalStyle } from 'styled-components'
+
 // import fs from 'fs'
 
 export async function getStaticProps() {
@@ -23,6 +26,25 @@ export async function getStaticProps() {
   }
 }
 
+const GlobalStyle = createGlobalStyle`
+ h1 {
+   font-size: 4rem;
+ }
+`
+const Container = styled.div`
+  text-align: center;
+`
+
 export default function Home() {
-  return <div>テストだよーん</div>
+  return (
+    <>
+      <Head>
+        <title>Hello, world!</title>
+      </Head>
+      <Container>
+        <GlobalStyle />
+        <h1>Hello, world!</h1>
+      </Container>
+    </>
+  )
 }
