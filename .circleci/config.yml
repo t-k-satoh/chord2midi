@@ -1,0 +1,68 @@
+version: 2.1
+executors:
+  default:
+    working_directory: ~/workspace
+    docker:
+      - image: node:12
+
+commands:
+  restore_yarn:
+    steps:
+      - restore_cache:
+          name: Restore Yarn dependencies
+          key: yarn-packages-{{ checksum "yarn.lock" }}
+
+  save_yarn:
+    steps:
+      - save_cache:
+          name: Cache Yarn dependencies
+          key: yarn-packages-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/workspace/node_modules
+
+jobs:
+  setup:
+    executor:
+      name: default
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: yarn install --frozen-lockfile
+      - save_yarn
+
+  lint:
+    executor:
+      name: default
+    steps:
+      - checkout
+      - restore_yarn
+      - run: yarn install --frozen-lockfile
+      - run: 
+          name: Lint
+          command: yarn lint
+      - save_yarn
+
+  build:
+    executor:
+      name: default
+    steps:
+      - checkout
+      - restore_yarn
+      - run: yarn install --frozen-lockfile
+      - run: 
+          name: Build
+          command: yarn build
+      - save_yarn
+
+
+workflows:
+  pull-request:
+    jobs:
+      - setup
+      - lint:
+          requires:
+            - setup
+      - build:
+          requires:
+            - lint
