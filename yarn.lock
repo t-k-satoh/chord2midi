@@ -4581,9 +4581,10 @@ graceful-fs@^4.1.11, graceful-fs@^4.1.15, graceful-fs@^4.1.2, graceful-fs@^4.2.4
   version "4.2.4"
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.2.4.tgz#2256bde14d3632958c465ebc96dc467ca07a29fb"
 
-gradient-color@^2.0.1:
+gradient-color@2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/gradient-color/-/gradient-color-2.0.1.tgz#125c0435e220bc2a0ecc2118c1a38843ad805cfb"
+  integrity sha512-WgSeTMJ++n6qCWa8XLfCkYsV1TTt/OjRr3lKvlF5s1DaJTpgWjDQJCU/3to3SIqq5I2YjkVVk9LuWzIRJpl5Rw==
   dependencies:
     color "^2.0.1"
 
@@ -6911,9 +6912,10 @@ rc@^1.2.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
-react-device-detect@^1.14.0:
+react-device-detect@1.14.0:
   version "1.14.0"
   resolved "https://registry.yarnpkg.com/react-device-detect/-/react-device-detect-1.14.0.tgz#ae8bf8cff85055c030f97aa491a0c2b06c472644"
+  integrity sha512-fXFsZoTeLVrONrUr2sqCAXvnbouwyuqlBWoa3K92goCiPM1lUBvZqekv5TY3C02U/IrdoKLOBPFITYluwxKFyw==
   dependencies:
     ua-parser-js "^0.7.22"
 
