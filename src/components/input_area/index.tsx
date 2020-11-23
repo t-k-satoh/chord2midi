@@ -7,9 +7,10 @@ import * as Styles from './styles'
 type Props = {
   onChangeData: (data: Data[]) => void
   onChangeChords: (allNote: Chord[]) => void
+  onError: (error: { isError: boolean; details: string }) => void
 }
 
-export const InputArea: React.FC<Props> = ({ onChangeData, onChangeChords }) => {
+export const InputArea: React.FC<Props> = ({ onChangeData, onChangeChords, onError }) => {
   const [currentText, setCurrentText] = React.useState<string>('')
 
   const [data, isError, errorDetails, allChords] = useChordParser(currentText)
@@ -29,6 +30,10 @@ export const InputArea: React.FC<Props> = ({ onChangeData, onChangeChords }) => 
     onChangeChords(allChords)
   }, [allChords, onChangeChords])
 
+  React.useEffect(() => {
+    onError({ isError, details: errorDetails })
+  }, [onError, errorDetails, isError])
+
   return (
     <Styles.Main>
       <Styles.TextArea>
@@ -40,9 +45,6 @@ export const InputArea: React.FC<Props> = ({ onChangeData, onChangeChords }) => 
           placeholder={'ex. C#/D6 | C C/F A | E/F A B | A B C/D | A B | A B C | A | A B C D'}
         />
       </Styles.TextArea>
-      <Styles.ErrorArea>
-        <Styles.ErrorText>{errorDetails}</Styles.ErrorText>
-      </Styles.ErrorArea>
     </Styles.Main>
   )
 }

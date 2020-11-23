@@ -9,6 +9,10 @@ import * as Styles from './styles'
 export const Home: NextPage = () => {
   const [data, setData] = React.useState<Data[]>([])
   const [chords, setChords] = React.useState<Chord[]>([])
+  const [error, setError] = React.useState<{ isError: boolean; details: string }>({
+    isError: false,
+    details: '',
+  })
 
   const onChangeData = React.useCallback((_data: Data[]) => {
     setData(_data)
@@ -18,15 +22,19 @@ export const Home: NextPage = () => {
     setChords(_chords)
   }, [])
 
+  const onError = React.useCallback((_error: typeof error) => {
+    setError(_error)
+  }, [])
+
   return (
     <Styles.Main>
       <MainHeader />
-      <Styles.Area>
-        <InputArea onChangeData={onChangeData} onChangeChords={onChangeChords} />
-      </Styles.Area>
-      <Styles.Area>
+      <Styles.InputArea>
+        <InputArea onChangeData={onChangeData} onChangeChords={onChangeChords} onError={onError} />
+      </Styles.InputArea>
+      <Styles.ViewArea>
         <ViewArea data={data} chords={chords} />
-      </Styles.Area>
+      </Styles.ViewArea>
     </Styles.Main>
   )
 }

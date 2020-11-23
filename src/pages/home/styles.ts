@@ -6,7 +6,11 @@ export const Main = styled.main`
   height: 100vh;
 `
 
-export const Area = styled.div`
+export const InputArea = styled.div`
   width: 100%;
-  height: calc((100% - ${HeaderHight}px) / 2);
+  height: calc(30% - ${HeaderHight}px / 2);
+`
+export const ViewArea = styled.div`
+  width: 100%;
+  height: calc(70% - ${HeaderHight}px / 2);
 `

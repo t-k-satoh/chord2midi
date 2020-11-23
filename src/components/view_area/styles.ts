@@ -3,7 +3,7 @@ import styled from 'styled-components'
 export const Main = styled.div`
   width: 100%;
   height: 100%;
-  padding: 20px;
+  padding: 8px;
   box-sizing: border-box;
   overflow: scroll;
 `
@@ -14,11 +14,44 @@ export const Bars = styled.div`
 `
 
 export const Bar = styled.div`
-  display: flex;
   height: 96px;
   width: calc(100% / 4);
   position: relative;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
+  box-sizing: border-box;
+  &::before {
+    content: '';
+    display: block;
+    height: 100%;
+    width: 2px;
+    background: rgba(0, 0, 0, 0.7);
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 4;
+  }
+  &:nth-child(4n),
+  &:last-child {
+    &::after {
+      content: '';
+      display: block;
+      height: 100%;
+      width: 2px;
+      background: rgba(0, 0, 0, 0.7);
+      position: absolute;
+      top: 0;
+      right: 0;
+      z-index: 4;
+    }
+  }
+`
+
+export const Layer = styled.div<{ zIndex: number }>`
+  display: flex;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: ${(props) => props.zIndex};
 `
 
 export const Chord = styled.div<{ duration: number }>`
@@ -40,3 +73,20 @@ export const Note = styled.div<{ position: number; duration: number; left: numbe
   left: ${(props) => props.left}%;
   z-index: 2;
 `
+export const NoteButton = styled.button<{ duration: number }>`
+  height: 100%;
+  width: ${(props) => `calc(100% / ${props.duration})`};
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  padding: 0;
+  appearance: none;
+  box-sizing: border-box;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+`
+
+export const NoteText = styled.p``
