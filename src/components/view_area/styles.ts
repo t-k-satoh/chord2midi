@@ -1,4 +1,7 @@
+import gradient from 'gradient-color'
 import styled from 'styled-components'
+
+const colors: string[] = gradient(['#ff0000', '#ff8000', '#00ff80'], 48)
 
 export const Main = styled.div`
   width: 100%;
@@ -14,7 +17,7 @@ export const Bars = styled.div`
 `
 
 export const Bar = styled.div`
-  height: 96px;
+  height: 144px;
   width: calc(100% / 4);
   position: relative;
   margin-bottom: 16px;
@@ -66,12 +69,13 @@ export const Chord = styled.div<{ duration: number }>`
 
 export const Note = styled.div<{ position: number; duration: number; left: number }>`
   position: absolute;
-  background-color: rgba(255, 255, 25, 0.3);
+  background-color: ${(props) => `${colors[props.position / 4]}`};
   bottom: ${(props) => props.position}px;
   width: ${(props) => `calc(100% / ${props.duration})`};
   height: 4px;
   left: ${(props) => props.left}%;
   z-index: 2;
+  opacity: 0.5;
 `
 export const NoteButton = styled.button<{ duration: number }>`
   height: 100%;
