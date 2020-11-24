@@ -17,36 +17,11 @@ export const Bars = styled.div`
 `
 
 export const Bar = styled.div`
-  height: 144px;
+  height: 72px;
   width: calc(100% / 4);
   position: relative;
   margin-bottom: 16px;
   box-sizing: border-box;
-  &::before {
-    content: '';
-    display: block;
-    height: 100%;
-    width: 2px;
-    background: rgba(0, 0, 0, 0.7);
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 4;
-  }
-  &:nth-child(4n),
-  &:last-child {
-    &::after {
-      content: '';
-      display: block;
-      height: 100%;
-      width: 2px;
-      background: rgba(0, 0, 0, 0.7);
-      position: absolute;
-      top: 0;
-      right: 0;
-      z-index: 4;
-    }
-  }
 `
 
 export const Layer = styled.div<{ zIndex: number }>`
@@ -69,10 +44,10 @@ export const Chord = styled.div<{ duration: number }>`
 
 export const Note = styled.div<{ position: number; duration: number; left: number }>`
   position: absolute;
-  background-color: ${(props) => `${colors[props.position / 4]}`};
-  bottom: ${(props) => props.position}px;
+  background-color: ${(props) => `${colors[props.position]}`};
+  bottom: ${(props) => props.position * 2}px;
   width: ${(props) => `calc(100% / ${props.duration})`};
-  height: 4px;
+  height: 2px;
   left: ${(props) => props.left}%;
   z-index: 2;
   opacity: 0.5;

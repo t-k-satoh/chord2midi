@@ -115,7 +115,7 @@ export const ViewArea: React.FC<Props> = ({ data, chords }) => {
                     <Styles.Note
                       key={_index}
                       duration={2 / duration}
-                      position={(Note.midi(note) - baseNote) * 4}
+                      position={Note.midi(note) - baseNote}
                       left={((time - index * 2) / 2) * 100}
                     ></Styles.Note>
                   )

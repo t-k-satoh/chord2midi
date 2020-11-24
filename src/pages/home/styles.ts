@@ -8,9 +8,16 @@ export const Main = styled.main`
 
 export const InputArea = styled.div`
   width: 100%;
-  height: calc(30% - ${HeaderHight}px / 2);
+  height: calc(20% - ${HeaderHight}px / 3);
 `
 export const ViewArea = styled.div`
   width: 100%;
-  height: calc(70% - ${HeaderHight}px / 2);
+  height: calc(60% - ${HeaderHight}px / 3);
+`
+
+export const ButtonArea = styled.div`
+  width: 100%;
+  height: calc(20% - ${HeaderHight}px / 3);
+  display: flex;
+  justify-content: center;
 `
