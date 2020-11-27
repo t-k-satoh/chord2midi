@@ -1,4 +1,5 @@
-import { Button } from '@adobe/react-spectrum'
+import { Button, Text } from '@adobe/react-spectrum'
+import Alert from '@spectrum-icons/workflow/Alert'
 import { Midi } from '@tonejs/midi'
 import { saveAs } from 'file-saver'
 import { NextPage } from 'next'
@@ -17,6 +18,7 @@ export const Home: NextPage = () => {
     isError: false,
     details: '',
   })
+  const [baseNoteNumber, setBaseNoteNumber] = React.useState<number>(4)
 
   const onChangeData = React.useCallback((_data: Data[]) => {
     setData(_data)
@@ -28,6 +30,10 @@ export const Home: NextPage = () => {
 
   const onError = React.useCallback((_error: typeof error) => {
     setError(_error)
+  }, [])
+
+  const onChangeBaseNoteNumber = React.useCallback((_baseNoteNumber: number) => {
+    setBaseNoteNumber(_baseNoteNumber)
   }, [])
 
   const onPress = React.useCallback(() => {
@@ -45,12 +51,23 @@ export const Home: NextPage = () => {
 
   return (
     <Styles.Main>
-      <MainHeader />
+      <Styles.Error isShow={error.isError}>
+        <Alert color="negative" size="S" />
+        <Styles.ErrorText>
+          <Text>{error.details}</Text>
+        </Styles.ErrorText>
+      </Styles.Error>
+      <MainHeader baseNoteNumber={baseNoteNumber} onChangeBaseNoteNumber={onChangeBaseNoteNumber} />
       <Styles.InputArea>
-        <InputArea onChangeData={onChangeData} onChangeChords={onChangeChords} onError={onError} />
+        <InputArea
+          baseNoteNumber={baseNoteNumber}
+          onChangeData={onChangeData}
+          onChangeChords={onChangeChords}
+          onError={onError}
+        />
       </Styles.InputArea>
       <Styles.ViewArea>
-        <ViewArea data={data} chords={chords} />
+        <ViewArea data={data} chords={chords} baseNoteNumber={baseNoteNumber} />
       </Styles.ViewArea>
       <Styles.ButtonArea>
         <Button

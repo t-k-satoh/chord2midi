@@ -22,7 +22,8 @@ const makeTime = (splitSpace: string[], chordIndex: number, noteIndex: number): 
     : noteIndex * 2 + makeDuration(splitSpace, chordIndex) * chordIndex
 
 export const useChordParser = (
-  chordText: string
+  chordText: string,
+  baseNoteNumber: number
 ): [data: Data[], isError: boolean, errorDetails: string, allChords: Chord[]] => {
   const [isError, setIsError] = React.useState<boolean>(false)
   const [errorDetails, setErrorDetails] = React.useState<string>('')
@@ -38,6 +39,8 @@ export const useChordParser = (
         .filter((note) => note !== '' && note !== ' '),
     [chordText]
   )
+
+  const newBaseNoteNumber = React.useMemo(() => baseNoteNumber + 1, [baseNoteNumber])
 
   React.useEffect(() => {
     const tempData: Data[] = []
@@ -56,8 +59,7 @@ export const useChordParser = (
 
       if (splitSpace.some((chord) => chord === '')) {
         // コード表記が不正
-        console.log('コード表記が不正')
-        setErrorDetails(`コード表記が不正です (${JSON.stringify(splitSpace)})`)
+        setErrorDetails(`The code notation is incorrect`)
         setIsError(true)
         return
       }
@@ -73,11 +75,10 @@ export const useChordParser = (
           const splitSlash = chords.split('/')
           const isInvalidOnChord = splitSlash.some((chord) => chord === '')
 
-          if (isInvalidOnChord) {
+          if (isInvalidOnChord && splitSlash[1] !== '') {
             // 不正なオンコードがある
-            console.log('不正なオンコードがある')
             setIsError(true)
-            setErrorDetails(`不正なオンコードがあります (${JSON.stringify(splitSlash)})`)
+            setErrorDetails(`There is an incorrect on-code`)
             return
           }
 
@@ -86,23 +87,21 @@ export const useChordParser = (
 
           if (!chordValidate(configurationChord)) {
             // オンコードの構成音が不正
-            console.log('オンコードの構成音が不正')
             setIsError(true)
-            setErrorDetails(`オンコードの構成音が不正です (${JSON.stringify(chords)})`)
+            setErrorDetails(`The configuration note on the chord is incorrect`)
             return
           }
 
-          if (!chordValidate(baseChord)) {
+          if (!chordValidate(baseChord) && splitSlash[1] !== '') {
             // オンコードのベース音が不正
-            console.log('オンコードのベース音が不正')
-            setErrorDetails(`オンコードのベース音が不正です (${JSON.stringify(chords)})`)
+            setErrorDetails(`The bass note on the chord is incorrect`)
             setIsError(true)
             return
           }
 
           // Base 音
           tempData.push({
-            note: `${baseChord.tonic}3`,
+            note: `${baseChord.tonic}${newBaseNoteNumber}`,
             time,
             duration,
             noteIndex,
@@ -119,7 +118,7 @@ export const useChordParser = (
           for (const [newNoteIndex] of removeBaseNotes.entries()) {
             tempData.push({
               note: Note.transpose(
-                `${configurationChord.tonic}3`,
+                `${configurationChord.tonic}${newBaseNoteNumber}`,
                 configurationChord.intervals[newNoteIndex + 1]
               ),
               time,
@@ -135,12 +134,11 @@ export const useChordParser = (
           setErrorDetails('')
         } else {
           const newChord = tonalChord.get(chords)
-          const root = `${newChord.tonic}3`
+          const root = `${newChord.tonic}${newBaseNoteNumber}`
 
           if (!chordValidate(newChord)) {
             // コード表記が不正
-            console.log('コード表記が不正')
-            setErrorDetails(`コード表記が不正です (${JSON.stringify(chords)})`)
+            setErrorDetails(`The code notation is incorrect`)
             setIsError(true)
             return
           }
@@ -183,7 +181,7 @@ export const useChordParser = (
         })
       )
     )
-  }, [notes])
+  }, [notes, newBaseNoteNumber])
 
   return [data, isError, errorDetails, allChords]
 }

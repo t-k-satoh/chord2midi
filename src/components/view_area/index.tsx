@@ -18,13 +18,14 @@ import * as Styles from './styles'
 type Props = {
   data: Data[]
   chords: Chord[]
+  baseNoteNumber: number
 }
 
-export const ViewArea: React.FC<Props> = ({ data, chords }) => {
+export const ViewArea: React.FC<Props> = ({ data, chords, baseNoteNumber }) => {
   const [isOpen, setIsOpen] = React.useState<boolean>(false)
   const [currentSymbol, setCurrentSymbol] = React.useState<string>('')
 
-  const baseNote = Note.midi('C3')
+  const baseNote = Note.midi(`C${baseNoteNumber}`)
 
   const allChord: {
     chord: string[]
@@ -69,6 +70,35 @@ export const ViewArea: React.FC<Props> = ({ data, chords }) => {
     setCurrentSymbol('')
   }, [])
 
+  const dialogContents: { interval: string; note: string }[] = React.useMemo(() => {
+    const hasOnChord = currentSymbol.indexOf('/') !== -1
+
+    if (hasOnChord) {
+      const splitSlash = currentSymbol.split('/')
+      const configurationChord = tonalChord.get(splitSlash[0])
+      const baseChord = tonalChord.get(splitSlash[1])
+
+      return [
+        { interval: '1P', note: baseChord.notes[0] },
+        ...configurationChord.notes
+          .filter((_note, index) => index !== 0)
+          .map((note, index) => {
+            return {
+              interval: configurationChord.intervals[index + 1],
+              note,
+            }
+          }),
+      ]
+    }
+
+    return tonalChord.get(currentSymbol).notes.map((note, index) => {
+      return {
+        interval: tonalChord.get(currentSymbol).intervals[index],
+        note,
+      }
+    })
+  }, [currentSymbol])
+
   return (
     <Styles.Main>
       <DialogContainer onDismiss={onDismiss}>
@@ -77,10 +107,10 @@ export const ViewArea: React.FC<Props> = ({ data, chords }) => {
             <Heading>{currentSymbol}</Heading>
             <Divider />
             <Content>
-              {tonalChord.get(currentSymbol).notes.map((note, index) => {
+              {dialogContents.map(({ note, interval }) => {
                 return (
                   <Styles.NoteText key={note}>
-                    <Text>{`${tonalChord.get(currentSymbol).intervals[index]}: ${note}`}</Text>
+                    <Text>{`${interval}: ${note}`}</Text>
                   </Styles.NoteText>
                 )
               })}

@@ -8,12 +8,18 @@ type Props = {
   onChangeData: (data: Data[]) => void
   onChangeChords: (allNote: Chord[]) => void
   onError: (error: { isError: boolean; details: string }) => void
+  baseNoteNumber: number
 }
 
-export const InputArea: React.FC<Props> = ({ onChangeData, onChangeChords, onError }) => {
+export const InputArea: React.FC<Props> = ({
+  onChangeData,
+  onChangeChords,
+  onError,
+  baseNoteNumber,
+}) => {
   const [currentText, setCurrentText] = React.useState<string>('')
 
-  const [data, isError, errorDetails, allChords] = useChordParser(currentText)
+  const [data, isError, errorDetails, allChords] = useChordParser(currentText, baseNoteNumber)
 
   const onChange = React.useCallback(
     (value: string) => {

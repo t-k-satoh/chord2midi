@@ -7,5 +7,8 @@ const withTM = require('next-transpile-modules')([
 ]);
 
 module.exports = withPlugins([withCSS, withTM], {
-  // Your Next.js configuration
+  i18n: {
+    locales: ['en', 'ja'],
+    defaultLocale: 'en'
+  }
 });
