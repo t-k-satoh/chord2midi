@@ -25,7 +25,7 @@ export const ViewArea: React.FC<Props> = ({ data, chords, baseNoteNumber }) => {
   const [isOpen, setIsOpen] = React.useState<boolean>(false)
   const [currentSymbol, setCurrentSymbol] = React.useState<string>('')
 
-  const baseNote = Note.midi(`C${baseNoteNumber}`)
+  const baseNote = Note.midi(`C${baseNoteNumber + 1}`)
 
   const allChord: {
     chord: string[]

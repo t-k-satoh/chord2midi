@@ -9,18 +9,22 @@ export const Main = styled.main`
 
 export const InputArea = styled.div`
   width: 100%;
-  height: calc(20% - ${HeaderHight}px / 3);
+  height: calc(30% - ${HeaderHight}px / 2);
 `
 export const ViewArea = styled.div`
   width: 100%;
-  height: calc(60% - ${HeaderHight}px / 3);
+  height: calc(70% - ${HeaderHight}px / 2);
 `
 
 export const ButtonArea = styled.div`
   width: 100%;
-  height: calc(20% - ${HeaderHight}px / 3);
+  height: 60px;
   display: flex;
   justify-content: center;
+  align-items: center;
+  position: fixed;
+  bottom: 0;
+  left: 0;
 `
 
 export const Error = styled.div<{ isShow: boolean }>`
