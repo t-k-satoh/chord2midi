@@ -1,6 +1,7 @@
 import Document from 'next/document'
 import NextDocument, { Html, Head, Main, NextScript, DocumentContext } from 'next/document'
 import { ServerStyleSheet } from 'styled-components'
+import { version } from '../package.json'
 
 export default class MyDocument extends NextDocument {
   static async getInitialProps(ctx: DocumentContext) {
@@ -32,10 +33,8 @@ export default class MyDocument extends NextDocument {
     return (
       <Html>
         <Head>
-          <link
-            href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap"
-            rel="stylesheet"
-          />
+          <title>Chord to MIDI v.{version}</title>
+          <meta name="viewport" content="initial-scale=1.0, width=device-width" />
         </Head>
         <body>
           <Main />

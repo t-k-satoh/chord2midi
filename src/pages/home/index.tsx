@@ -3,8 +3,11 @@ import Alert from '@spectrum-icons/workflow/Alert'
 import { Midi } from '@tonejs/midi'
 import { saveAs } from 'file-saver'
 import { NextPage } from 'next'
+import Router from 'next/router'
+import { useRouter } from 'next/router'
 import React from 'react'
 import { v4 as uuidv4 } from 'uuid'
+import { Beats } from '../../components/constants'
 import { MainHeader } from '../../components/header'
 import { InputArea } from '../../components/input_area'
 import { Data, Chord } from '../../components/types'
@@ -12,6 +15,19 @@ import { ViewArea } from '../../components/view_area'
 import * as Styles from './styles'
 
 export const Home: NextPage = () => {
+  const router = useRouter()
+
+  const newBaseNoteNumber: number = React.useMemo(() => {
+    return router.query.base_note_number ? Number(router.query.base_note_number) : 4
+  }, [router.query.base_note_number])
+  const newBeat: typeof Beats[number] = React.useMemo(
+    () =>
+      Array.isArray(router.query.beat) || !router.query.beat
+        ? '4/4'
+        : (router.query.beat as typeof Beats[number]),
+    [router.query.beat]
+  )
+
   const [data, setData] = React.useState<Data[]>([])
   const [chords, setChords] = React.useState<Chord[]>([])
   const [error, setError] = React.useState<{ isError: boolean; details: string }>({
@@ -19,6 +35,15 @@ export const Home: NextPage = () => {
     details: '',
   })
   const [baseNoteNumber, setBaseNoteNumber] = React.useState<number>(4)
+  const [beat, setBeat] = React.useState<typeof Beats[number]>('4/4')
+
+  React.useEffect(() => {
+    setBaseNoteNumber(newBaseNoteNumber)
+  }, [newBaseNoteNumber])
+
+  React.useEffect(() => {
+    setBeat(newBeat)
+  }, [newBeat])
 
   const onChangeData = React.useCallback((_data: Data[]) => {
     setData(_data)
@@ -32,9 +57,29 @@ export const Home: NextPage = () => {
     setError(_error)
   }, [])
 
-  const onChangeBaseNoteNumber = React.useCallback((_baseNoteNumber: number) => {
-    setBaseNoteNumber(_baseNoteNumber)
-  }, [])
+  const onChangeBaseNoteNumber = React.useCallback(
+    (_baseNoteNumber: number) => {
+      Router.push({
+        pathname: '/',
+        query: { base_note_number: _baseNoteNumber, beat },
+      })
+
+      setBaseNoteNumber(_baseNoteNumber)
+    },
+    [beat]
+  )
+
+  const onChangeBeat = React.useCallback(
+    (_beat: typeof beat) => {
+      Router.push({
+        pathname: '/',
+        query: { base_note_number: baseNoteNumber, beat: _beat },
+      })
+
+      setBeat(_beat)
+    },
+    [baseNoteNumber]
+  )
 
   const onPress = React.useCallback(() => {
     const midi = new Midi()
@@ -57,17 +102,23 @@ export const Home: NextPage = () => {
           <Text>{error.details}</Text>
         </Styles.ErrorText>
       </Styles.Error>
-      <MainHeader baseNoteNumber={baseNoteNumber} onChangeBaseNoteNumber={onChangeBaseNoteNumber} />
+      <MainHeader
+        baseNoteNumber={baseNoteNumber}
+        onChangeBaseNoteNumber={onChangeBaseNoteNumber}
+        onChangeBeat={onChangeBeat}
+        beat={beat}
+      />
       <Styles.InputArea>
         <InputArea
           baseNoteNumber={baseNoteNumber}
           onChangeData={onChangeData}
           onChangeChords={onChangeChords}
           onError={onError}
+          beat={beat}
         />
       </Styles.InputArea>
       <Styles.ViewArea>
-        <ViewArea data={data} chords={chords} baseNoteNumber={baseNoteNumber} />
+        <ViewArea data={data} chords={chords} baseNoteNumber={baseNoteNumber} beat={beat} />
       </Styles.ViewArea>
       <Styles.ButtonArea>
         <Button

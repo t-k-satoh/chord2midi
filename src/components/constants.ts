@@ -1,26 +1,3 @@
 export const HeaderHight = 60
 
-export const Colors = [
-  'FFFF00',
-  'DFDF1F',
-  'BFBF3F',
-  '9F9F5F',
-  '7F7F7F',
-  '5F5F9F',
-  '3F3FBF',
-  '1F1FDF',
-  '0000FF',
-  '1F00DF',
-  '3F00BF',
-  '5F009F',
-  '7F007F',
-  '9F005F',
-  'BF003F',
-  'DF001F',
-  'FF0000',
-  'DF1F00',
-  'BF3F00',
-  '9F5F00',
-  '7F7F00',
-  '5F9F00',
-]
+export const Beats = ['3/4', '4/4'] as const

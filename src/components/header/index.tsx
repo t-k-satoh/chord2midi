@@ -20,35 +20,64 @@ import Settings from '@spectrum-icons/workflow/Settings'
 import React from 'react'
 import { version } from '../../../package.json'
 import { HeaderHight } from '../../components/constants'
+import { Beats } from '../constants'
 import * as Styles from './styles'
 
 type Props = {
+  onChangeBeat: (beat: typeof Beats[number]) => void
   onChangeBaseNoteNumber: (baseNoteNumber: number) => void
   baseNoteNumber: number
+  beat: typeof Beats[number]
 }
 
-export const MainHeader: React.FC<Props> = ({ baseNoteNumber, onChangeBaseNoteNumber }) => {
+export const MainHeader: React.FC<Props> = ({
+  baseNoteNumber,
+  onChangeBaseNoteNumber,
+  beat,
+  onChangeBeat,
+}) => {
   const [currentBaseNoteNumber, setCurrentBaseNoteNumber] = React.useState<string>(
     String(baseNoteNumber)
   )
+  const [currentBeat, setCurrentBeat] = React.useState<typeof beat>(beat)
 
   const isValidBaseNoteNumber = React.useMemo(() => /\d/.test(currentBaseNoteNumber), [
     currentBaseNoteNumber,
   ])
 
+  React.useEffect(() => {
+    setCurrentBaseNoteNumber(String(baseNoteNumber))
+  }, [baseNoteNumber])
+
+  React.useEffect(() => {
+    setCurrentBeat(beat)
+  }, [beat])
+
   const onSubmitSettings = React.useCallback(
     (close: () => void) => () => {
-      if (isValidBaseNoteNumber) {
-        onChangeBaseNoteNumber(Number(currentBaseNoteNumber))
+      onChangeBaseNoteNumber(Number(currentBaseNoteNumber))
+      onChangeBeat(currentBeat)
 
-        close()
-      }
+      close()
     },
-    [currentBaseNoteNumber, onChangeBaseNoteNumber, isValidBaseNoteNumber]
+    [currentBaseNoteNumber, onChangeBaseNoteNumber, currentBeat, onChangeBeat]
+  )
+
+  const onClose = React.useCallback(
+    (close: () => void) => () => {
+      setCurrentBaseNoteNumber(String(baseNoteNumber))
+      setCurrentBeat(beat)
+      close()
+    },
+    [baseNoteNumber, beat]
   )
 
   const onChangeCurrentBaseNoteNumber = React.useCallback((value: string) => {
     setCurrentBaseNoteNumber(value)
+  }, [])
+
+  const onChangeCurrentBeat = React.useCallback((value: typeof Beats[number]) => {
+    setCurrentBeat(value)
   }, [])
 
   return (
@@ -80,15 +109,25 @@ export const MainHeader: React.FC<Props> = ({ baseNoteNumber, onChangeBaseNoteNu
                       inputMode={'tel'}
                       validationState={isValidBaseNoteNumber ? 'valid' : 'invalid'}
                     />
-                    <RadioGroup label="Beat">
-                      <Radio value="3/4">3/4</Radio>
-                      <Radio value="4/4">4/4</Radio>
+                    <RadioGroup label="Beat" value={currentBeat} onChange={onChangeCurrentBeat}>
+                      {Beats.map((_beat) => (
+                        <Radio key={_beat} value={_beat}>
+                          {_beat}
+                        </Radio>
+                      ))}
                     </RadioGroup>
                     <Switch>Strings mode</Switch>
                   </Form>
                 </Content>
                 <ButtonGroup>
-                  <Button variant="cta" onPress={onSubmitSettings(close)}>
+                  <Button variant="secondary" onPress={onClose(close)}>
+                    Cancel
+                  </Button>
+                  <Button
+                    variant="cta"
+                    onPress={onSubmitSettings(close)}
+                    isDisabled={!isValidBaseNoteNumber}
+                  >
                     Submit
                   </Button>
                 </ButtonGroup>

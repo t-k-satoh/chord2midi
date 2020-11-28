@@ -1,31 +1,15 @@
 import { Chord as tonalChord, Note } from '@tonaljs/tonal'
 import React from 'react'
 import { v4 as uuidv4 } from 'uuid'
+import { Beats } from '../constants'
 import { Data, Chord } from '../types'
-
-const chordValidate = (chord: ReturnType<typeof tonalChord.get>): boolean =>
-  !chord.empty && chord.name !== '' && chord.notes.length !== 0
-
-const makeDuration = (splitSpace: string[], chordIndex: number): 0.5 | 1 | 2 => {
-  if (splitSpace.length === 3 && chordIndex !== 2) {
-    return 0.5
-  } else if (splitSpace.length === 3 && chordIndex === 2) {
-    return 1
-  }
-
-  return (2 / splitSpace.length) as 0.5 | 1 | 2
-}
-
-const makeTime = (splitSpace: string[], chordIndex: number, noteIndex: number): number =>
-  splitSpace.length === 3 && chordIndex === 2
-    ? noteIndex * 2 + makeDuration(splitSpace, chordIndex) * 1
-    : noteIndex * 2 + makeDuration(splitSpace, chordIndex) * chordIndex
+import { chordValidate, makeDuration, makeTime } from './utils'
 
 export const useChordParser = (
   chordText: string,
-  baseNoteNumber: number
-): [data: Data[], isError: boolean, errorDetails: string, allChords: Chord[]] => {
-  const [isError, setIsError] = React.useState<boolean>(false)
+  baseNoteNumber: number,
+  beat: typeof Beats[number]
+): [data: Data[], errorDetails: string, allChords: Chord[]] => {
   const [errorDetails, setErrorDetails] = React.useState<string>('')
   const [data, setData] = React.useState<Data[]>([])
   const [allChords, setAllChords] = React.useState<Chord[]>([])
@@ -42,14 +26,26 @@ export const useChordParser = (
 
   const newBaseNoteNumber = React.useMemo(() => baseNoteNumber + 1, [baseNoteNumber])
 
+  const newBest: {
+    denominator: number
+    numerator: number
+  } = React.useMemo(() => {
+    const split = beat.split('/')
+
+    return {
+      denominator: Number(split[1]),
+      numerator: Number(split[0]),
+    }
+  }, [beat])
+
   React.useEffect(() => {
     const tempData: Data[] = []
-    const tempAllChords: Chord[] = []
+    const tempAllChords: Omit<Chord, 'isError'>[] = []
 
     if (notes.length === 0) {
-      setIsError(false)
       setErrorDetails('')
       setData([])
+      setAllChords([])
       return
     }
 
@@ -57,14 +53,13 @@ export const useChordParser = (
       const splitSpace = note.split(' ')
       const uuid = uuidv4()
 
-      if (splitSpace.some((chord) => chord === '')) {
+      tempAllChords.push({ chord: splitSpace, index: noteIndex, uuid })
+
+      if (splitSpace.length > newBest.numerator) {
         // コード表記が不正
         setErrorDetails(`The code notation is incorrect`)
-        setIsError(true)
         return
       }
-
-      tempAllChords.push({ chord: splitSpace, index: noteIndex, uuid })
 
       splitSpace.forEach((chords, chordIndex) => {
         const hasOnChord = chords.indexOf('/') !== -1
@@ -77,7 +72,6 @@ export const useChordParser = (
 
           if (isInvalidOnChord && splitSlash[1] !== '') {
             // 不正なオンコードがある
-            setIsError(true)
             setErrorDetails(`There is an incorrect on-code`)
             return
           }
@@ -87,7 +81,6 @@ export const useChordParser = (
 
           if (!chordValidate(configurationChord)) {
             // オンコードの構成音が不正
-            setIsError(true)
             setErrorDetails(`The configuration note on the chord is incorrect`)
             return
           }
@@ -95,7 +88,6 @@ export const useChordParser = (
           if (!chordValidate(baseChord) && splitSlash[1] !== '') {
             // オンコードのベース音が不正
             setErrorDetails(`The bass note on the chord is incorrect`)
-            setIsError(true)
             return
           }
 
@@ -130,7 +122,6 @@ export const useChordParser = (
             })
           }
 
-          setIsError(false)
           setErrorDetails('')
         } else {
           const newChord = tonalChord.get(chords)
@@ -139,7 +130,6 @@ export const useChordParser = (
           if (!chordValidate(newChord)) {
             // コード表記が不正
             setErrorDetails(`The code notation is incorrect`)
-            setIsError(true)
             return
           }
 
@@ -156,32 +146,36 @@ export const useChordParser = (
               chordIndex,
             })
           }
-
-          setIsError(false)
-          setErrorDetails('')
         }
       })
     })
 
     setData(tempData)
     setAllChords(
-      tempAllChords.filter(({ chord }) =>
-        chord.every((_chord) => {
-          const hasOnChord = _chord.indexOf('/') !== -1
+      tempAllChords.map((tempAllChord) => {
+        const isError =
+          tempAllChord.chord.length > newBest.numerator ||
+          tempAllChord.chord.every((_chord) => {
+            const hasOnChord = _chord.indexOf('/') !== -1
 
-          if (hasOnChord) {
-            const splitSlash = _chord.split('/')
-            const configurationChord = tonalChord.get(splitSlash[0])
-            const baseChord = tonalChord.get(splitSlash[1])
+            if (hasOnChord) {
+              const splitSlash = _chord.split('/')
+              const configurationChord = tonalChord.get(splitSlash[0])
+              const baseChord = tonalChord.get(splitSlash[1])
 
-            return chordValidate(configurationChord) && chordValidate(baseChord)
-          }
+              return !chordValidate(configurationChord) && !chordValidate(baseChord)
+            }
 
-          return chordValidate(tonalChord.get(_chord))
-        })
-      )
+            return !chordValidate(tonalChord.get(_chord))
+          })
+
+        return {
+          ...tempAllChord,
+          isError,
+        }
+      })
     )
-  }, [notes, newBaseNoteNumber])
+  }, [notes, newBaseNoteNumber, newBest])
 
-  return [data, isError, errorDetails, allChords]
+  return [data, errorDetails, allChords]
 }

@@ -1,7 +1,7 @@
 import gradient from 'gradient-color'
 import styled from 'styled-components'
 
-const colors: string[] = gradient(['#ff0000', '#ff8000', '#00ff80'], 48)
+const colors: string[] = gradient(['#00FF00', '#6495ED', '#ADD8E6'], 48)
 
 export const Main = styled.div`
   width: 100%;
@@ -16,9 +16,9 @@ export const Bars = styled.div`
   flex-wrap: wrap;
 `
 
-export const Bar = styled.div`
+export const Bar = styled.div<{ beat: number }>`
   height: 72px;
-  width: calc(100% / 4);
+  width: calc(100% / ${(props) => props.beat});
   position: relative;
   margin-bottom: 16px;
   box-sizing: border-box;
@@ -68,4 +68,20 @@ export const NoteButton = styled.button<{ duration: number }>`
   }
 `
 
-export const NoteText = styled.p``
+export const Error = styled.div`
+  width: calc(100% - 20px);
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(220, 20, 60, 0.5);
+  margin: 0 10px;
+  overflow: hidden;
+  padding: 10px;
+`
+
+export const NoteText = styled.p`
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+`

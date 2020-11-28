@@ -6,9 +6,10 @@ const withTM = require('next-transpile-modules')([
   '@react-spectrum/.*'
 ]);
 
+
 module.exports = withPlugins([withCSS, withTM], {
   i18n: {
     locales: ['en', 'ja'],
     defaultLocale: 'en'
-  }
+  },
 });

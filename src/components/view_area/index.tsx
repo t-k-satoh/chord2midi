@@ -11,7 +11,8 @@ import {
 import { Note, Chord as tonalChord } from '@tonaljs/tonal'
 import _ from 'lodash'
 import React from 'react'
-import { isMobile, isBrowser } from 'react-device-detect'
+import { isBrowser } from 'react-device-detect'
+import { Beats } from '../constants'
 import { Data, Chord } from '../types'
 import * as Styles from './styles'
 
@@ -19,43 +20,17 @@ type Props = {
   data: Data[]
   chords: Chord[]
   baseNoteNumber: number
+  beat: typeof Beats[number]
 }
 
-export const ViewArea: React.FC<Props> = ({ data, chords, baseNoteNumber }) => {
+export const ViewArea: React.FC<Props> = ({ data, chords, baseNoteNumber, beat }) => {
   const [isOpen, setIsOpen] = React.useState<boolean>(false)
   const [currentSymbol, setCurrentSymbol] = React.useState<string>('')
+  const [hover, setHover] = React.useState<string>('')
 
-  const baseNote = Note.midi(`C${baseNoteNumber + 1}`)
-
-  const allChord: {
-    chord: string[]
-    notes: Data[]
-  }[] = React.useMemo(() => {
-    return chords.map(({ chord, index }) => {
-      return {
-        chord,
-        notes: data.filter(({ noteIndex }) => noteIndex === index),
-      }
-    })
-  }, [data, chords])
-
-  const symbolsList: {
-    duration: number
-    symbol: string
-  }[][] = React.useMemo(() => {
-    return chords.map(({ uuid }) => {
-      const targetData = data
-        .filter(({ uuid: _uuid }) => uuid === _uuid)
-        .map(({ chordIndex, duration, symbol }) => {
-          return { chordIndex, duration: 2 / duration, symbol }
-        })
-
-      return _.uniqBy(targetData, 'chordIndex').map(({ duration, symbol }) => ({
-        duration,
-        symbol,
-      }))
-    })
-  }, [data, chords])
+  const baseNote: number = React.useMemo(() => Note.midi(`C${baseNoteNumber + 1}`), [
+    baseNoteNumber,
+  ])
 
   const onClickNoteButton = React.useCallback(
     (symbol: string) => () => {
@@ -69,6 +44,53 @@ export const ViewArea: React.FC<Props> = ({ data, chords, baseNoteNumber }) => {
     setIsOpen(false)
     setCurrentSymbol('')
   }, [])
+
+  const onMouseEnter = React.useCallback(
+    (uuid: string) => () => {
+      setHover(uuid)
+    },
+    []
+  )
+
+  const onMouseLeave = React.useCallback(() => {
+    setHover('')
+  }, [])
+
+  const allChord: {
+    chord: string[]
+    notes: Data[]
+    isError: boolean
+    uuid: string
+  }[] = React.useMemo(() => {
+    return chords.map(({ chord, index, isError, uuid }) => {
+      return {
+        chord,
+        notes: data.filter(({ noteIndex }) => noteIndex === index),
+        isError,
+        uuid,
+      }
+    })
+  }, [data, chords])
+
+  const symbolsList: {
+    duration: number
+    symbol: string
+    uuid: string
+  }[][] = React.useMemo(() => {
+    return chords.map(({ uuid }) => {
+      const targetData = data
+        .filter(({ uuid: _uuid }) => uuid === _uuid)
+        .map(({ chordIndex, duration, symbol }) => {
+          return { chordIndex, duration: 2 / duration, symbol }
+        })
+
+      return _.uniqBy(targetData, 'chordIndex').map(({ duration, symbol }) => ({
+        duration,
+        symbol,
+        uuid,
+      }))
+    })
+  }, [data, chords])
 
   const dialogContents: { interval: string; note: string }[] = React.useMemo(() => {
     const hasOnChord = currentSymbol.indexOf('/') !== -1
@@ -99,8 +121,20 @@ export const ViewArea: React.FC<Props> = ({ data, chords, baseNoteNumber }) => {
     })
   }, [currentSymbol])
 
+  const newBeat: {
+    denominator: number
+    numerator: number
+  } = React.useMemo(() => {
+    const split = beat.split('/')
+
+    return {
+      denominator: Number(split[1]),
+      numerator: Number(split[0]),
+    }
+  }, [beat])
+
   return (
-    <Styles.Main>
+    <Styles.Main id={hover}>
       <DialogContainer onDismiss={onDismiss}>
         {isOpen && (
           <Dialog>
@@ -124,14 +158,22 @@ export const ViewArea: React.FC<Props> = ({ data, chords, baseNoteNumber }) => {
         )}
       </DialogContainer>
       <Styles.Bars>
-        {allChord.map(({ chord, notes }, index) => {
+        {allChord.map(({ chord, notes, isError }, index) => {
           return (
-            <Styles.Bar key={`${chord}_${index}`}>
-              {isBrowser && (
+            <Styles.Bar key={`${chord}_${index}`} beat={newBeat.numerator}>
+              {isError && (
                 <Styles.Layer zIndex={0}>
-                  {symbolsList[index].map(({ symbol, duration }, index) => {
+                  <Styles.Error>
+                    <Styles.NoteText>Error: {chord}</Styles.NoteText>
+                  </Styles.Error>
+                </Styles.Layer>
+              )}
+
+              {isBrowser && !isError && (
+                <Styles.Layer zIndex={0}>
+                  {symbolsList[index].map(({ symbol, duration }, _index) => {
                     return (
-                      <Styles.Chord duration={duration} key={index}>
+                      <Styles.Chord duration={duration} key={`${index}_${_index}`}>
                         {symbol}
                       </Styles.Chord>
                     )
@@ -139,27 +181,31 @@ export const ViewArea: React.FC<Props> = ({ data, chords, baseNoteNumber }) => {
                 </Styles.Layer>
               )}
 
-              <Styles.Layer zIndex={1}>
-                {notes.map(({ note, duration, time }, _index) => {
-                  return (
-                    <Styles.Note
-                      key={_index}
-                      duration={2 / duration}
-                      position={Note.midi(note) - baseNote}
-                      left={((time - index * 2) / 2) * 100}
-                    ></Styles.Note>
-                  )
-                })}
-              </Styles.Layer>
+              {!isError && (
+                <Styles.Layer zIndex={1}>
+                  {notes.map(({ note, duration, time }, _index) => {
+                    return (
+                      <Styles.Note
+                        key={_index}
+                        duration={2 / duration}
+                        position={Note.midi(note) - baseNote}
+                        left={((time - index * 2) / 2) * 100}
+                      ></Styles.Note>
+                    )
+                  })}
+                </Styles.Layer>
+              )}
 
-              {isMobile && (
+              {!isError && (
                 <Styles.Layer zIndex={2}>
-                  {symbolsList[index].map(({ duration, symbol }, index) => {
+                  {symbolsList[index].map(({ duration, symbol, uuid }, _index) => {
                     return (
                       <Styles.NoteButton
-                        key={index}
+                        key={`${index}_${_index}`}
                         duration={duration}
                         onClick={onClickNoteButton(symbol)}
+                        onMouseEnter={onMouseEnter(uuid)}
+                        onMouseLeave={onMouseLeave}
                       />
                     )
                   })}

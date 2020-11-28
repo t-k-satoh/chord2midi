@@ -1,5 +1,6 @@
 import { TextArea } from '@adobe/react-spectrum'
 import React from 'react'
+import { Beats } from '../constants'
 import { Data, Chord } from '../types'
 import { useChordParser } from './hooks'
 import * as Styles from './styles'
@@ -9,6 +10,7 @@ type Props = {
   onChangeChords: (allNote: Chord[]) => void
   onError: (error: { isError: boolean; details: string }) => void
   baseNoteNumber: number
+  beat: typeof Beats[number]
 }
 
 export const InputArea: React.FC<Props> = ({
@@ -16,10 +18,13 @@ export const InputArea: React.FC<Props> = ({
   onChangeChords,
   onError,
   baseNoteNumber,
+  beat,
 }) => {
   const [currentText, setCurrentText] = React.useState<string>('')
 
-  const [data, isError, errorDetails, allChords] = useChordParser(currentText, baseNoteNumber)
+  const [data, errorDetails, allChords] = useChordParser(currentText, baseNoteNumber, beat)
+
+  const isError = React.useMemo(() => allChords.some((allChord) => allChord.isError), [allChords])
 
   const onChange = React.useCallback(
     (value: string) => {
