@@ -1,8 +1,8 @@
 import { Chord as tonalChord, Note } from '@tonaljs/tonal'
 import React from 'react'
 import { v4 as uuidv4 } from 'uuid'
-import { Beats } from '../constants'
-import { Data, Chord } from '../types'
+import { Beats } from '../../constants'
+import { Data, Chord } from '../../types'
 import { chordValidate, makeDuration, makeTime } from './utils'
 
 export const useChordParser = (

@@ -1,11 +1,11 @@
 import { TextArea } from '@adobe/react-spectrum'
 import React from 'react'
-import { Beats } from '../constants'
-import { Data, Chord } from '../types'
+import { Beats } from '../../constants'
+import { Data, Chord } from '../../types'
 import { useChordParser } from './hooks'
 import * as Styles from './styles'
 
-type Props = {
+export type Props = {
   onChangeData: (data: Data[]) => void
   onChangeChords: (allNote: Chord[]) => void
   onError: (error: { isError: boolean; details: string }) => void

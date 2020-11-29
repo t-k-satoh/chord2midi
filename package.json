@@ -4,10 +4,12 @@
   "private": true,
   "scripts": {
     "build": "next build",
+    "build-storybook": "build-storybook",
     "dev": "next dev -H 0.0.0.0",
     "lint": "eslint --ext ts --ext tsx --fix",
     "sort": "sort-package-json",
     "start": "next start",
+    "storybook": "start-storybook -p 6006",
     "test": "jest",
     "type-check": "tsc --project tsconfig.json --pretty --noEmit"
   },
@@ -30,6 +32,11 @@
     "styled-reset": "4.3.1"
   },
   "devDependencies": {
+    "@babel/core": "^7.12.9",
+    "@storybook/addon-actions": "^6.1.8",
+    "@storybook/addon-essentials": "^6.1.8",
+    "@storybook/addon-links": "^6.1.8",
+    "@storybook/react": "^6.1.8",
     "@types/file-saver": "2.0.1",
     "@types/jest": "26.0.15",
     "@types/lodash": "4.14.165",
@@ -39,6 +46,7 @@
     "@typescript-eslint/eslint-plugin": "4.8.2",
     "@typescript-eslint/parser": "4.8.2",
     "@zeit/next-css": "1.0.1",
+    "babel-loader": "^8.2.2",
     "babel-plugin-styled-components": "1.12.0",
     "eslint": "7.14.0",
     "eslint-config-prettier": "6.15.0",
