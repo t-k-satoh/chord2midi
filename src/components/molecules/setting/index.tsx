@@ -9,16 +9,18 @@ import {
   Radio,
   Form,
   Switch,
+  Picker,
+  Item,
 } from '@adobe/react-spectrum'
 import React, { ComponentProps } from 'react'
 import { Beats } from '../../constants'
 
 export type Props = {
   beat: typeof Beats[number]
-  baseNote: number
+  baseNote: { symbol: string; number: number }
   isStringsMode: boolean
   onClose: () => void
-  onChangeBaseNote: (baseNote: number) => void
+  onChangeBaseNote: (baseNote: { symbol: string; number: number }) => void
   onChangeBeat: (beat: typeof Beats[number]) => void
   onChangeStringsMode: (stringsMode: boolean) => void
 }
@@ -32,33 +34,39 @@ export const Setting: React.FC<Props> = ({
   onChangeBeat,
   onChangeStringsMode,
 }) => {
+  const baseNoteSymbols = [{ symbol: 'C' }]
+
   const [tempBeat, setTempBeat] = React.useState<typeof beat>(beat)
-  const [tempBaseNote, setTempBaseNote] = React.useState<string>(String(baseNote))
+  const [tempBaseNoteNumber, setTempBaseNoteNumber] = React.useState<string>(
+    String(baseNote.number)
+  )
+  const [tempBaseNoteSymbol, setTempBaseNoteSymbol] = React.useState<string>(baseNote.symbol)
   const [tempIsStringsMode, setTempIsStringsMode] = React.useState<typeof isStringsMode>(
     isStringsMode
   )
 
   const isValidBaseNoteNumber = React.useMemo(
-    () => /\d/.test(tempBaseNote) && tempBaseNote !== '',
-    [tempBaseNote]
+    () => /\d/.test(tempBaseNoteNumber) && tempBaseNoteNumber !== '',
+    [tempBaseNoteNumber]
   )
 
   const onChancel = React.useCallback(() => {
-    setTempBeat(beat)
-    setTempBaseNote(String(baseNote))
-    setTempIsStringsMode(isStringsMode)
     onClose()
+    setTempBeat(beat)
+    setTempBaseNoteNumber(String(baseNote))
+    setTempIsStringsMode(isStringsMode)
   }, [beat, baseNote, isStringsMode, onClose])
 
   const onSubmit = React.useCallback(() => {
     onChangeBeat(tempBeat)
-    onChangeBaseNote(Number(tempBaseNote))
+    onChangeBaseNote({ number: Number(tempBaseNoteNumber), symbol: tempBaseNoteSymbol })
     onChangeStringsMode(tempIsStringsMode)
     onClose()
   }, [
     tempBeat,
-    tempBaseNote,
+    tempBaseNoteNumber,
     tempIsStringsMode,
+    tempBaseNoteSymbol,
     onClose,
     onChangeBaseNote,
     onChangeBeat,
@@ -69,9 +77,16 @@ export const Setting: React.FC<Props> = ({
     setTempBeat(_beat)
   }, [])
 
-  const onChangeTempBaseNote = React.useCallback(
+  const onChangeTempBaseNoteNumber = React.useCallback(
     (_baseNote: Parameters<ComponentProps<typeof TextField>['onChange']>[0]) => {
-      setTempBaseNote(_baseNote)
+      setTempBaseNoteNumber(_baseNote)
+    },
+    []
+  )
+
+  const onChangeTempBaseNoteSymbol = React.useCallback(
+    (_baseNoteSymbol: Parameters<ComponentProps<typeof TextField>['onChange']>[0]) => {
+      setTempBaseNoteSymbol(_baseNoteSymbol)
     },
     []
   )
@@ -86,10 +101,18 @@ export const Setting: React.FC<Props> = ({
       <Divider />
       <Content>
         <Form>
+          <Picker
+            label="Base Note Symbol"
+            items={baseNoteSymbols}
+            selectedKey={tempBaseNoteSymbol}
+            onSelectionChange={onChangeTempBaseNoteSymbol}
+          >
+            {(item) => <Item key={item.symbol}>{item.symbol}</Item>}
+          </Picker>
           <TextField
             label="Base Note Number"
-            defaultValue={String(tempBaseNote)}
-            onChange={onChangeTempBaseNote}
+            defaultValue={String(tempBaseNoteNumber)}
+            onChange={onChangeTempBaseNoteNumber}
             inputMode={'tel'}
             validationState={isValidBaseNoteNumber ? 'valid' : 'invalid'}
           />

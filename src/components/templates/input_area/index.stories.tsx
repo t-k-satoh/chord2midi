@@ -13,11 +13,12 @@ export default {
 const Template: Story<Props> = (args) => <InputArea {...args} />
 
 const props: Props = {
-  baseNoteNumber: 4,
+  baseNote: {
+    symbol: 'C',
+    number: 3,
+  },
   beat: '4/4',
-  onChangeChords: (arg) => console.log(arg),
-  onChangeData: (arg) => console.log(arg),
-  onError: (arg) => console.log(arg),
+  onChangeSomeData: (arg) => console.log(arg),
 }
 
 export const Component = Template.bind({})

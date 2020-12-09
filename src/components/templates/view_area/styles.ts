@@ -17,6 +17,7 @@ export const Bars = styled.div`
 `
 
 export const Bar = styled.div<{ beat: number }>`
+  display: flex;
   height: 72px;
   width: calc(100% / ${(props) => props.beat});
   position: relative;
@@ -25,36 +26,17 @@ export const Bar = styled.div<{ beat: number }>`
 `
 
 export const Layer = styled.div<{ zIndex: number }>`
-  display: flex;
   width: 100%;
   height: 100%;
-  position: absolute;
   z-index: ${(props) => props.zIndex};
 `
 
-export const Chord = styled.div<{ duration: number }>`
+export const Chord = styled.button<{ duration: number }>`
   display: flex;
-  align-items: center;
-  justify-content: center;
   height: 100%;
-  width: ${(props) => `calc(100% / ${props.duration})`};
-  font-size: 30px;
-  color: rgba(255, 255, 255, 0.4);
-`
-
-export const Note = styled.div<{ position: number; duration: number; left: number }>`
-  position: absolute;
-  background-color: ${(props) => `${colors[props.position]}`};
-  bottom: ${(props) => props.position * 2}px;
-  width: ${(props) => `calc(100% / ${props.duration})`};
-  height: 2px;
-  left: ${(props) => props.left}%;
-  z-index: 2;
-  opacity: 0.5;
-`
-export const NoteButton = styled.button<{ duration: number }>`
-  height: 100%;
-  width: ${(props) => `calc(100% / ${props.duration})`};
+  width: ${(props) => `${props.duration}%`};
+  box-sizing: border-box;
+  position: relative;
   background-color: transparent;
   border: none;
   cursor: pointer;
@@ -62,10 +44,35 @@ export const NoteButton = styled.button<{ duration: number }>`
   padding: 0;
   appearance: none;
   box-sizing: border-box;
-
+  font-weight: normal;
   &:hover {
     background: rgba(255, 255, 255, 0.1);
   }
+`
+
+export const Symbol = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: 30px;
+  z-index: 0;
+  color: rgba(255, 255, 255, 0.4);
+`
+
+export const Note = styled.div<{ position: number }>`
+  position: absolute;
+  background-color: ${(props) => `${colors[props.position]}`};
+  bottom: ${(props) => props.position * 2}px;
+  width: 100%;
+  height: 2px;
+  left: 0;
+  z-index: 2;
+  opacity: 0.5;
 `
 
 export const Error = styled.div`

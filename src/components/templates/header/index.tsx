@@ -11,17 +11,15 @@ import * as Styles from './styles'
 
 type Props = {
   onChangeBeat: (beat: typeof Beats[number]) => void
-  onChangeBaseNoteNumber: (baseNoteNumber: number) => void
-  baseNoteNumber: number
+  onChangeBaseNote: (baseNote: { symbol: string; number: number }) => void
+  baseNote: {
+    symbol: string
+    number: number
+  }
   beat: typeof Beats[number]
 }
 
-export const MainHeader: React.FC<Props> = ({
-  baseNoteNumber,
-  onChangeBaseNoteNumber,
-  beat,
-  onChangeBeat,
-}) => {
+export const MainHeader: React.FC<Props> = ({ baseNote, onChangeBaseNote, beat, onChangeBeat }) => {
   return (
     <Header width={'100%'} height={`${HeaderHight}px`}>
       <Styles.Main>
@@ -42,9 +40,9 @@ export const MainHeader: React.FC<Props> = ({
               <Dialog>
                 <Setting
                   beat={beat}
-                  baseNote={baseNoteNumber}
+                  baseNote={baseNote}
                   isStringsMode={true}
-                  onChangeBaseNote={onChangeBaseNoteNumber}
+                  onChangeBaseNote={onChangeBaseNote}
                   onChangeBeat={onChangeBeat}
                   onChangeStringsMode={() => ({})}
                   onClose={close}
