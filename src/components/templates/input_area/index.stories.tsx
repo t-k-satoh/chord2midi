@@ -19,6 +19,7 @@ const props: Props = {
   },
   beat: '4/4',
   onChangeSomeData: (arg) => console.log(arg),
+  onChangeValue: (arg) => console.log(arg),
 }
 
 export const Component = Template.bind({})

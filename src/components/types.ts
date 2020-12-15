@@ -36,6 +36,7 @@ export type Note = {
   distance: string
   barUuid: string
   chordUuid: string
+  isError: boolean
 }
 
 export type Error = {

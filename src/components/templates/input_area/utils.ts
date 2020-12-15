@@ -53,7 +53,10 @@ export const makeNotes = (chords: Chord[]): Note[] => {
   chords.forEach((chord) => {
     if ('symbol' in chord) {
       const { symbol, barUuid, uuid } = chord
-      const { notes, intervals } = tonalChord.get(symbol)
+      const isError = symbol === ''
+
+      // エラーでもそれっぽいコード入れておく
+      const { notes, intervals } = tonalChord.get(isError ? 'C' : symbol)
 
       notes.forEach((note, index) => {
         tempNote.push({
@@ -63,15 +66,19 @@ export const makeNotes = (chords: Chord[]): Note[] => {
           barUuid,
           chordUuid: uuid,
           distance: intervals[index],
+          isError,
         })
       })
     } else {
       const { configurationSymbol, baseSymbol, barUuid, uuid } = chord
+      const isError = configurationSymbol === '' || baseSymbol === ''
 
       const { notes: configurationNotes, intervals: configurationIntervals } = tonalChord.get(
-        configurationSymbol
+        isError ? 'C' : configurationSymbol
       )
-      const { notes: baseNotes, intervals: baseIntervals } = tonalChord.get(baseSymbol)
+      const { notes: baseNotes, intervals: baseIntervals } = tonalChord.get(
+        isError ? 'C' : baseSymbol
+      )
 
       const temp: { note: string; distance: string }[] = [
         { note: baseNotes[0], distance: baseIntervals[0] },
@@ -88,6 +95,7 @@ export const makeNotes = (chords: Chord[]): Note[] => {
           barUuid,
           chordUuid: uuid,
           distance,
+          isError,
         })
       })
     }

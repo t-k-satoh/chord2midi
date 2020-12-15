@@ -31,7 +31,7 @@ export default class MyDocument extends NextDocument {
 
   render() {
     return (
-      <Html>
+      <Html className={'spectrum'}>
         <Head>
           <title>Chord to MIDI v.{version}</title>
           <meta name="viewport" content="initial-scale=1.0, width=device-width" />

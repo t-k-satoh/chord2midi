@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { HeaderHight } from '../../constants'
+import { HeaderHight } from '../../../constants'
 
 export const Main = styled.main`
   width: 100vw;

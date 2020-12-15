@@ -76,15 +76,13 @@ export const Note = styled.div<{ position: number }>`
 `
 
 export const Error = styled.div`
-  width: calc(100% - 20px);
+  width: 100%;
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   background: rgba(220, 20, 60, 0.5);
-  margin: 0 10px;
   overflow: hidden;
-  padding: 10px;
 `
 
 export const NoteText = styled.p`

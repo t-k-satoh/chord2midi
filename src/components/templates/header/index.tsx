@@ -1,12 +1,13 @@
-import { Header, ActionButton, Dialog, DialogTrigger, Text } from '@adobe/react-spectrum'
+import { Header, ActionButton } from '@adobe/react-spectrum'
 import Help from '@spectrum-icons/workflow/Help'
+import Rail from '@spectrum-icons/workflow/Rail'
 import Settings from '@spectrum-icons/workflow/Settings'
+import Image from 'next/image'
 import React from 'react'
+import { isMobile } from 'react-device-detect'
 import { version } from '../../../../package.json'
 import { HeaderHight } from '../../constants'
 import { Beats } from '../../constants'
-import { HowToUse } from '../../molecules/how_to_use'
-import { Setting } from '../../molecules/setting'
 import * as Styles from './styles'
 
 type Props = {
@@ -19,49 +20,41 @@ type Props = {
   beat: typeof Beats[number]
 }
 
-export const MainHeader: React.FC<Props> = ({ baseNote, onChangeBaseNote, beat, onChangeBeat }) => {
+export const MainHeader: React.FC<Props> = () => {
+  const iconSize = React.useMemo(() => (isMobile ? 40 : 32), [])
+
+  const logoImage = React.useMemo(
+    () => (
+      <Image
+        src="/icon_wh.png"
+        alt={`Chord to MIDI v.${version}`}
+        width={iconSize}
+        height={iconSize}
+      />
+    ),
+    [iconSize]
+  )
+
   return (
     <Header width={'100%'} height={`${HeaderHight}px`}>
-      <Styles.Main>
-        <Styles.Right>
-          <Styles.Title>
-            <Text>Chord to MIDI</Text>
-          </Styles.Title>
-          <Styles.Version>
-            <Text>{`v.${version}`}</Text>
-          </Styles.Version>
-        </Styles.Right>
-        <Styles.Left>
-          <DialogTrigger>
-            <ActionButton isQuiet>
-              <Settings />
+      {isMobile ? (
+        <Styles.MobileMain>
+          <Styles.MobileLogo>{logoImage}</Styles.MobileLogo>
+          <Styles.MobileNav>
+            <ActionButton isQuiet width={32} height={32}>
+              <Rail />
             </ActionButton>
-            {(close) => (
-              <Dialog>
-                <Setting
-                  beat={beat}
-                  baseNote={baseNote}
-                  isStringsMode={true}
-                  onChangeBaseNote={onChangeBaseNote}
-                  onChangeBeat={onChangeBeat}
-                  onChangeStringsMode={() => ({})}
-                  onClose={close}
-                />
-              </Dialog>
-            )}
-          </DialogTrigger>
-          <DialogTrigger>
-            <ActionButton isQuiet>
-              <Help />
-            </ActionButton>
-            {(close) => (
-              <Dialog>
-                <HowToUse onClose={close} />
-              </Dialog>
-            )}
-          </DialogTrigger>
-        </Styles.Left>
-      </Styles.Main>
+          </Styles.MobileNav>
+        </Styles.MobileMain>
+      ) : (
+        <Styles.Main S_isMobile={isMobile}>
+          <Styles.Right>{logoImage}</Styles.Right>
+          <Styles.Left>
+            <Settings />
+            <Help />
+          </Styles.Left>
+        </Styles.Main>
+      )}
     </Header>
   )
 }
