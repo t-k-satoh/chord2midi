@@ -20,6 +20,7 @@ export type Chord =
       barUuid: string
       index: number
       symbol: string
+      isError: boolean
     }
   | {
       uuid: string
@@ -27,6 +28,7 @@ export type Chord =
       index: number
       configurationSymbol: string
       baseSymbol: string
+      isError: boolean
     }
 
 export type Note = {

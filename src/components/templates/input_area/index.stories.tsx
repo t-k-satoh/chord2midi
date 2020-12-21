@@ -1,26 +1,28 @@
-import { Story, Meta } from '@storybook/react/types-6-0'
-import React from 'react'
-// also exported from '@storybook/react' if you can deal with breaking changes in 6.1
+export const Storybook = ''
 
-import { InputArea, Props } from '.'
+// import { Story, Meta } from '@storybook/react/types-6-0'
+// import React from 'react'
+// // also exported from '@storybook/react' if you can deal with breaking changes in 6.1
 
-export default {
-  title: InputArea.name,
-  component: InputArea,
-  argTypes: { onChangeChords: { action: 'clicked' } },
-} as Meta
+// import { InputArea, Props } from '.'
 
-const Template: Story<Props> = (args) => <InputArea {...args} />
+// export default {
+//   title: InputArea.name,
+//   component: InputArea,
+//   argTypes: { onChangeChords: { action: 'clicked' } },
+// } as Meta
 
-const props: Props = {
-  baseNote: {
-    symbol: 'C',
-    number: 3,
-  },
-  beat: '4/4',
-  onChangeSomeData: (arg) => console.log(arg),
-  onChangeValue: (arg) => console.log(arg),
-}
+// const Template: Story<Props> = (args) => <InputArea {...args} />
 
-export const Component = Template.bind({})
-Component.args = props
+// const props: Props = {
+//   baseNote: {
+//     symbol: 'C',
+//     number: 3,
+//   },
+//   beat: '4/4',
+//   onChangeSomeData: (arg) => console.log(arg),
+//   onChangeValue: (arg) => console.log(arg),
+// }
+
+// export const Component = Template.bind({})
+// Component.args = props

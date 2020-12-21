@@ -1,17 +1,18 @@
 import { SSRProvider, Provider, defaultTheme } from '@adobe/react-spectrum'
+import { AppProps } from 'next/app'
+import React, { FC } from 'react'
 import { Reset } from 'styled-reset'
+import { wrapper } from '../src/store/store'
 
-function MyApp({ Component, pageProps }): JSX.Element {
-  return (
-    <>
-      <Reset />
-      <SSRProvider>
-        <Provider theme={defaultTheme}>
-          <Component {...pageProps} />
-        </Provider>
-      </SSRProvider>
-    </>
-  )
-}
+const WrappedApp: FC<AppProps> = ({ Component, pageProps }) => (
+  <>
+    <Reset />
+    <SSRProvider>
+      <Provider theme={defaultTheme}>
+        <Component {...pageProps} />
+      </Provider>
+    </SSRProvider>
+  </>
+)
 
-export default MyApp
+export default wrapper.withRedux(WrappedApp)

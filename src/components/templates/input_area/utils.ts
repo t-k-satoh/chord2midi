@@ -15,10 +15,16 @@ export const makeBars = (chordText: string): Bar[] =>
       chords: note.split(' '),
     }))
 
-export const makeChords = (bars: Bar[]): Chord[] => {
+export const makeChords = (bars: Bar[], beat: typeof Beats[number]): Chord[] => {
+  const newBeat = {
+    molecular: Number(beat.split('/')[0]),
+    denominator: Number(beat.split('/')[1]),
+  }
   const tempChords: Chord[] = []
 
   bars.forEach(({ uuid, chords }) => {
+    const isError = newBeat.molecular - chords.length < 0
+
     chords.forEach((chord, index) => {
       const base = {
         uuid: uuidv4(),
@@ -34,11 +40,13 @@ export const makeChords = (bars: Bar[]): Chord[] => {
           ...base,
           configurationSymbol: tonalChord.get(split[0]).symbol,
           baseSymbol: tonalChord.get(split[1]).symbol,
+          isError,
         })
       } else {
         tempChords.push({
           ...base,
           symbol: tonalChord.get(chord).symbol,
+          isError,
         })
       }
     })
@@ -49,7 +57,6 @@ export const makeChords = (bars: Bar[]): Chord[] => {
 
 export const makeNotes = (chords: Chord[]): Note[] => {
   const tempNote: Note[] = []
-
   chords.forEach((chord) => {
     if ('symbol' in chord) {
       const { symbol, barUuid, uuid } = chord
@@ -108,7 +115,10 @@ export const makeData = (
   bars: Bar[],
   chords: Chord[],
   notes: Note[],
-  baseNoteNumber: number,
+  baseNote: {
+    symbol: string
+    number: number
+  },
   beat: typeof Beats[number]
 ): Data[] => {
   const newBeat = {
@@ -116,6 +126,7 @@ export const makeData = (
     denominator: Number(beat.split('/')[1]),
   }
   const barLimit = newBeat.molecular / 2
+  const baseMidiNote = tonalNote.midi(`${baseNote.symbol}${baseNote.number}`)
 
   return notes.map(({ barUuid, chordUuid, uuid, distance }) => {
     const parentBar = bars.find((bar) => bar.uuid === barUuid)
@@ -129,16 +140,22 @@ export const makeData = (
 
     const isLastInscrutableChord = isInscrutable && chordsLength === parentChord.index + 1
 
-    const baseNote = notes.find((_note) => _note.chordUuid === chordUuid && _note.index === 0)
+    const _baseNote = notes.find((_note) => _note.chordUuid === chordUuid && _note.index === 0)
 
-    const newNote = tonalNote.transpose(`${baseNote.note}${baseNoteNumber}`, distance)
+    const newNote = tonalNote.transpose(`${_baseNote.note}${baseNote.number}`, distance)
+
+    const newMidiNote = tonalNote.midi(newNote)
+
+    const isLowNote = newMidiNote - baseMidiNote < 0
+
+    const newBaseNote = isLowNote ? baseNote.number + 1 : baseNote.number
 
     return {
       uuid: uuidv4(),
       barUuid,
       chordUuid,
       noteUuid: uuid,
-      note: newNote,
+      note: tonalNote.transpose(`${_baseNote.note}${newBaseNote}`, distance),
       time: barStartTime + baseDuration * parentChord.index,
       duration: isLastInscrutableChord ? baseDuration * 2 : baseDuration,
     }
@@ -147,13 +164,16 @@ export const makeData = (
 
 export const makeAllData = (
   chordText: string,
-  baseNoteNumber: number,
+  baseNote: {
+    symbol: string
+    number: number
+  },
   beat: typeof Beats[number]
 ): { bars: Bar[]; chords: Chord[]; notes: Note[]; data: Data[] } => {
   const bars = makeBars(chordText)
-  const chords = makeChords(bars)
+  const chords = makeChords(bars, beat)
   const notes = makeNotes(chords)
-  const data = makeData(bars, chords, notes, baseNoteNumber, beat)
+  const data = makeData(bars, chords, notes, baseNote, beat)
 
   return {
     bars,

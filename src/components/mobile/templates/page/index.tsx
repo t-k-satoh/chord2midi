@@ -7,15 +7,19 @@ import * as Styles from './styles'
 
 type Props = {
   locale: string
-  onClickDownLoad: () => void
-  isDisabledDownLoad: boolean
+  isDisabledDownLoad?: boolean
+  isDisabledShare?: boolean
+  onClickDownLoad?: () => void
+  onClickShare?: () => void
 }
 
 export const Page: React.FC<Props> = ({
   locale,
   children,
   isDisabledDownLoad,
+  isDisabledShare,
   onClickDownLoad,
+  onClickShare,
 }) => {
   const [isShowSettings, setIsShowSettings] = React.useState<boolean>(false)
 
@@ -38,8 +42,10 @@ export const Page: React.FC<Props> = ({
           <MainHeader
             version={version}
             isDisabledDownLoad={isDisabledDownLoad}
+            isDisabledShare={isDisabledShare}
             onClickSettings={showSettings}
             onClickDownLoad={onClickDownLoad}
+            onClickShare={onClickShare}
           />
         </Styles.Header>
         {children}

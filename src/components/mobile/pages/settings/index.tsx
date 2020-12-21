@@ -9,7 +9,7 @@ type Props = {
 
 export const MobileSetting: React.FC<Props> = ({ locale }) => {
   return (
-    <Page locale={locale} onClickDownLoad={() => ({})} isDisabledDownLoad={true}>
+    <Page locale={locale}>
       <Frame>
         <Setting locale={locale} />
       </Frame>

@@ -25,6 +25,23 @@ export const Bar = styled.div<{ beat: number }>`
   box-sizing: border-box;
 `
 
+export const ErrorBar = styled.button`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(220, 20, 60, 0.5);
+  overflow: hidden;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  padding: 0;
+  appearance: none;
+  box-sizing: border-box;
+  font-weight: normal;
+`
+
 export const Layer = styled.div<{ zIndex: number }>`
   width: 100%;
   height: 100%;

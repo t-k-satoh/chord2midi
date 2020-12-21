@@ -38,13 +38,20 @@ export const ViewArea: React.FC<Props> = ({ bars, chords, notes, data, beat, bas
     []
   )
 
-  console.log(chords)
-
   return (
     <Styles.Main>
       <Styles.Bars>
         {bars.map((bar) => {
           const targetChords = chords.filter((chord) => chord.barUuid === bar.uuid)
+          const isBarError = targetChords.some((chord) => chord.isError)
+
+          if (isBarError) {
+            return (
+              <Styles.Bar key={bar.uuid} beat={beatParser.denominator}>
+                <Styles.ErrorBar />
+              </Styles.Bar>
+            )
+          }
 
           return (
             <Styles.Bar key={bar.uuid} beat={beatParser.denominator}>
@@ -59,20 +66,28 @@ export const ViewArea: React.FC<Props> = ({ bars, chords, notes, data, beat, bas
                     ? targetChord.symbol
                     : `${targetChord.configurationSymbol}/${targetChord.baseSymbol}`
                 const targetNotes = notes.filter(({ chordUuid }) => chordUuid === targetChord.uuid)
-                const isError = targetNotes.some((note) => note.isError)
+                const isNoteError = targetNotes.some((note) => note.isError)
 
                 return (
                   <Styles.Chord
                     key={targetChord.uuid}
                     duration={(chordDuration[0] / 2) * 100}
-                    onClick={onClickChord(targetChord.uuid, isError)}
+                    onClick={onClickChord(targetChord.uuid, isNoteError)}
                   >
-                    {isError ? (
-                      <Styles.Error></Styles.Error>
+                    {isNoteError ? (
+                      <Styles.Error />
                     ) : (
                       <>
                         {isBrowser ?? <Styles.Symbol>{symbol}</Styles.Symbol>}
                         {targetNotes.map((targetNote) => {
+                          const targetData = data.find(
+                            ({ noteUuid }) => noteUuid === targetNote.uuid
+                          )
+
+                          if (!targetData) {
+                            return
+                          }
+
                           const interval =
                             tonalNote.midi(
                               data.find(({ noteUuid }) => noteUuid === targetNote.uuid).note
