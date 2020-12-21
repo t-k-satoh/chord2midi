@@ -5,9 +5,9 @@ import Settings from '@spectrum-icons/workflow/Settings'
 import Image from 'next/image'
 import React from 'react'
 import { isMobile } from 'react-device-detect'
-import { version } from '../../../../package.json'
-import { HeaderHight } from '../../constants'
-import { Beats } from '../../constants'
+import { version } from '../../../../../package.json'
+import { HeaderHight } from '../../../../constants'
+import { Beats } from '../../../../constants'
 import * as Styles from './styles'
 
 type Props = {

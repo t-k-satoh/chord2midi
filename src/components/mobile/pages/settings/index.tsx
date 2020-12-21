@@ -1,5 +1,5 @@
 import React from 'react'
-import { Setting } from '../../../templates/settings'
+import { Setting } from '../../../common/templates/settings'
 import { Frame } from '../../templates/frame'
 import { Page } from '../../templates/page'
 

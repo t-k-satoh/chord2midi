@@ -1,7 +1,7 @@
 import { Chord as tonalChord, Note as tonalNote } from '@tonaljs/tonal'
 import { v4 as uuidv4 } from 'uuid'
-import { Beats } from '../../constants'
-import { Bar, Chord, Note, Data } from '../../types'
+import { Beats } from '../../../../constants'
+import { Bar, Chord, Note, Data } from '../../../../types'
 
 export const makeBars = (chordText: string): Bar[] =>
   chordText

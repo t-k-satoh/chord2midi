@@ -2,8 +2,8 @@ import { Note as tonalNote } from '@tonaljs/tonal'
 import _ from 'lodash'
 import React from 'react'
 import { isBrowser } from 'react-device-detect'
-import { Beats } from '../../constants'
-import { Data, Chord, Bar, Note } from '../../types'
+import { Beats } from '../../../../constants'
+import { Data, Chord, Bar, Note } from '../../../../types'
 import * as Styles from './styles'
 
 export type Props = {

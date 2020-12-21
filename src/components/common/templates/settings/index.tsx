@@ -1,7 +1,7 @@
 import { TextField, RadioGroup, Radio, Form, Picker, Item } from '@adobe/react-spectrum'
 import Cookies from 'js-cookie'
 import React from 'react'
-import { Beats } from '../../constants'
+import { Beats } from '../../../../constants'
 import { Title } from '../../molecules/title'
 import { dictionary as _dictionary, options } from './constants'
 import * as Styles from './styles'
