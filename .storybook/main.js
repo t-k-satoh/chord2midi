@@ -1,4 +1,5 @@
 const path = require('path');
+const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin')
 
 module.exports = {
   "stories": [
@@ -7,7 +8,8 @@ module.exports = {
   ],
   "addons": [
     "@storybook/addon-links",
-    "@storybook/addon-essentials"
+    "@storybook/addon-essentials",
+    "@next/plugin-storybook"
   ],
   typescript: {
     check: false,
@@ -19,11 +21,19 @@ module.exports = {
     },
   },
   webpackFinal: async (config, { configType }) => {
-    config.resolve.modules = [
-      path.resolve(__dirname, ".."),
-      "node_modules",
+    const nextConfig = require('../next.config.js');
+    // `configType` has a value of 'DEVELOPMENT' or 'PRODUCTION'
+    // You can change the configuration based on that.
+    // 'PRODUCTION' is used when building the static version of storybook.
+
+    // Ensure the `paths`-defined in tsconfig.json are correctly resolved by webpack
+    config.resolve.plugins = [
+      new TsconfigPathsPlugin({
+        configFile: path.resolve(__dirname, '../tsconfig.json'),
+      }),
     ]
 
-    return config;
-  }
+    // Return the altered config
+    return config
+  },
 }

@@ -25,7 +25,7 @@ module.exports = {
         'plugin:react-hooks/recommended', // React hooks rules
         'plugin:jsx-a11y/recommended', // Accessibility rules
         'prettier/@typescript-eslint', // Prettier plugin
-        'plugin:prettier/recommended', // Prettier recommended rules 
+        'plugin:prettier/recommended', // Prettier recommended rules
         'plugin:import/errors',
       ],
       rules: {
@@ -33,7 +33,8 @@ module.exports = {
         'react/react-in-jsx-scope': 'off', // No need to import React when using Next.js
         'jsx-a11y/anchor-is-valid': 'off', // This rule is not compatible with Next.js's <Link /> components
         '@typescript-eslint/no-unused-vars': ['error'], // Why would you want unused vars?
-        '@typescript-eslint/explicit-function-return-type': [ // I suggest this setting for requiring return types on functions only where usefull
+        '@typescript-eslint/explicit-function-return-type': [
+          // I suggest this setting for requiring return types on functions only where usefull
           'warn',
           {
             allowExpressions: true,
@@ -46,8 +47,8 @@ module.exports = {
     },
   ],
   settings: {
-    "import/resolver": {
-      typescript: {} // this loads <rootdir>/tsconfig.json to eslint
+    'import/resolver': {
+      typescript: {}, // this loads <rootdir>/tsconfig.json to eslint
     },
   },
 }

@@ -9,7 +9,7 @@ import Link from 'next/link'
 import React from 'react'
 import * as Styles from './styles'
 
-type Props = {
+export type Props = {
   locale: string
   version: string
 }

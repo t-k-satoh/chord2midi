@@ -1,64 +1,64 @@
 // import { DialogContainer, AlertDialog } from '@adobe/react-spectrum'
-import { Midi } from '@tonejs/midi'
-import { saveAs } from 'file-saver'
-import Cookies from 'js-cookie'
-import _ from 'lodash'
-import Router, { useRouter } from 'next/router'
 import React from 'react'
-import { v4 as uuidv4 } from 'uuid'
-import { Data, Chord, Note, Bar } from '../../../../types'
+import { ChordSymbol, Beat, MIDINoteNumber } from '../../../../store/state/types'
+import { Data, Note, Bar } from '../../../../types'
 import { InputArea } from '../../../common/templates/input_area'
-import { makeAllData } from '../../../common/templates/input_area/utils'
 import { ViewArea } from '../../../common/templates/view_area'
+import { makeAllData } from '../../../common/utils/data'
+import { saveMIDIFile } from '../../../common/utils/save_as'
 import { Frame } from '../../templates/frame'
 import { Page } from '../../templates/page'
 import * as Styles from './styles'
 
-type Props = {
+export type Props = {
+  currentValue: string
   locale: string
+  chordSymbol: ChordSymbol
+  beat: Beat
+  midiNoteNumber: MIDINoteNumber
+  onChangeValue: (value: string) => void
 }
 
-export const MobileHome: React.FC<Props> = ({ locale }) => {
-  const router = useRouter()
-
+export const MobileHome: React.FC<Props> = ({
+  locale,
+  currentValue,
+  chordSymbol,
+  beat,
+  midiNoteNumber,
+  onChangeValue,
+}) => {
   const [data, setData] = React.useState<Data[]>([])
-  const [chords, setChords] = React.useState<Chord[]>([])
   const [notes, setNotes] = React.useState<Note[]>([])
   const [bars, setBars] = React.useState<Bar[]>([])
 
-  const value = React.useMemo(() => (_.isEmpty(router.query) ? '' : String(router.query.data)), [
-    router.query,
-  ])
-
+  const memoizeCurrentValue = React.useMemo(() => currentValue, [currentValue])
+  const memoizeBeat = React.useMemo(() => beat, [beat])
+  const baseNote = React.useMemo(
+    () => ({
+      symbol: chordSymbol,
+      number: midiNoteNumber,
+    }),
+    [chordSymbol, midiNoteNumber]
+  )
   const canShare = React.useMemo(() => bars.length !== 0, [bars])
-
   const isDataError = React.useMemo(
     () => notes.some(({ isError }) => isError) || data.length === 0,
     [notes, data]
   )
 
-  const onChangeValue = React.useCallback((value: string) => {
-    Router.push({
-      pathname: '/',
-      query: { data: value },
-    })
-  }, [])
+  const handlerChangeValue = React.useCallback(
+    (value: string) => {
+      onChangeValue(value)
+    },
+    [onChangeValue]
+  )
 
   const onClickDownLoad = React.useCallback(() => {
     if (isDataError) {
       return
     }
 
-    const midi = new Midi()
-    const track = midi.addTrack()
-
-    data.forEach(({ note, time, duration }) => {
-      track.addNote({ name: note, time, duration })
-    })
-
-    const blob = new Blob([midi.toArray().buffer], { type: 'audio/midi' })
-
-    saveAs(blob, `${uuidv4()}.midi`)
+    saveMIDIFile(data)
   }, [data, isDataError])
 
   const onClickShare = React.useCallback(() => {
@@ -66,22 +66,12 @@ export const MobileHome: React.FC<Props> = ({ locale }) => {
   }, [])
 
   React.useEffect(() => {
-    Cookies.set('value', value)
-
-    const { data, notes, bars, chords } = makeAllData(
-      Cookies.get('value'),
-      {
-        symbol: 'C',
-        number: 3,
-      },
-      '4/4'
-    )
+    const { data, notes, bars } = makeAllData(memoizeCurrentValue, baseNote, memoizeBeat)
 
     setData(data)
-    setChords(chords)
     setNotes(notes)
     setBars(bars)
-  }, [value])
+  }, [memoizeCurrentValue, baseNote, memoizeBeat])
 
   return (
     <Page
@@ -90,23 +80,14 @@ export const MobileHome: React.FC<Props> = ({ locale }) => {
       onClickShare={onClickShare}
       isDisabledDownLoad={isDataError}
       isDisabledShare={!canShare}
+      isHome={true}
     >
       <Frame>
         <Styles.ViewArea>
-          <ViewArea
-            data={data}
-            chords={chords}
-            notes={notes}
-            bars={bars}
-            baseNote={{
-              symbol: 'C',
-              number: 3,
-            }}
-            beat={'4/4'}
-          />
+          <ViewArea value={currentValue} baseNote={baseNote} beat={memoizeBeat} />
         </Styles.ViewArea>
         <Styles.InputArea>
-          <InputArea onChangeValue={onChangeValue} value={Cookies.get('value')} />
+          <InputArea onChangeValue={handlerChangeValue} value={memoizeCurrentValue} />
         </Styles.InputArea>
       </Frame>
     </Page>

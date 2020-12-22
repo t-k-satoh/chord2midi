@@ -1,30 +1,27 @@
 export type Data = {
-  uuid: string
-  barUuid: string
-  chordUuid: string
-  noteUuid: string
+  index: number
+  barIndex: number
+  chordIndex: number
+  noteIndex: number
   note: string
   time: number
   duration: number
 }
 
 export type Bar = {
-  uuid: string
   index: number
   chords: string[]
 }
 
 export type Chord =
   | {
-      uuid: string
-      barUuid: string
+      barIndex: number
       index: number
       symbol: string
       isError: boolean
     }
   | {
-      uuid: string
-      barUuid: string
+      barIndex: number
       index: number
       configurationSymbol: string
       baseSymbol: string
@@ -32,19 +29,18 @@ export type Chord =
     }
 
 export type Note = {
-  uuid: string
   note: string
   index: number
   distance: string
-  barUuid: string
-  chordUuid: string
+  barIndex: number
+  chordIndex: number
   isError: boolean
 }
 
 export type Error = {
-  uuid: string
-  barUuid?: string
-  chordUuid?: string
-  dataUuid?: string
+  index: string
+  barIndex?: number
+  chordIndex?: number
+  dataIndex?: number
   code: string
 }

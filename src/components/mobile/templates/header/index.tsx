@@ -4,12 +4,12 @@ import Rail from '@spectrum-icons/workflow/Rail'
 import Share from '@spectrum-icons/workflow/Share'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
 import React from 'react'
 import * as Styles from './styles'
 
-type Props = {
+export type Props = {
   version: string
+  isHome?: boolean
   isDisabledDownLoad?: boolean
   isDisabledShare?: boolean
   onClickSettings: () => void
@@ -19,19 +19,16 @@ type Props = {
 
 export const MainHeader: React.FC<Props> = ({
   version,
+  isHome,
   isDisabledDownLoad,
   isDisabledShare,
   onClickSettings,
   onClickDownLoad,
   onClickShare,
 }) => {
-  const router = useRouter()
-
   const onClickSettingsHandler = React.useCallback(() => {
     onClickSettings()
   }, [onClickSettings])
-
-  const isHome = React.useMemo(() => router.pathname === '/', [router.pathname])
 
   return (
     <Header width={'100%'}>

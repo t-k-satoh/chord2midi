@@ -1,39 +1,40 @@
 import { Note as tonalNote } from '@tonaljs/tonal'
-import _ from 'lodash'
 import React from 'react'
 import { isBrowser } from 'react-device-detect'
-import { Beats } from '../../../../constants'
-import { Data, Chord, Bar, Note } from '../../../../types'
+import { ChordSymbol, Beat, MIDINoteNumber } from '../../../../store/state/types'
+import { makeAllData } from '../../utils/data'
 import * as Styles from './styles'
+import { makeViewData } from './utils'
 
 export type Props = {
-  bars: Bar[]
-  chords: Chord[]
-  notes: Note[]
-  data: Data[]
-  beat: typeof Beats[number]
+  value: string
+  beat: Beat
   baseNote: {
-    symbol: string
-    number: number
+    symbol: ChordSymbol
+    number: MIDINoteNumber
   }
 }
 
-export const ViewArea: React.FC<Props> = ({ bars, chords, notes, data, beat, baseNote }) => {
+export const ViewArea: React.FC<Props> = ({ value, beat, baseNote }) => {
+  const allData = React.useMemo(() => makeAllData(value, baseNote, beat), [value, baseNote, beat])
   const beatParser = React.useMemo(() => {
     return {
       molecular: Number(beat.split('/')[0]),
       denominator: Number(beat.split('/')[1]),
     }
   }, [beat])
-
   const baseNoteParser: number = React.useMemo(
     () => tonalNote.midi(`${baseNote.symbol}${baseNote.number}`),
     [baseNote]
   )
+  const parsedBars = React.useMemo(
+    () => makeViewData(allData.bars, allData.chords, allData.notes, allData.data, baseNoteParser),
+    [allData, baseNoteParser]
+  )
 
   const onClickChord = React.useCallback(
-    (uuid: string, isError: boolean) => () => {
-      console.log(uuid, isError)
+    (index: number, isError: boolean) => () => {
+      console.log(index, isError)
     },
     []
   )
@@ -41,60 +42,39 @@ export const ViewArea: React.FC<Props> = ({ bars, chords, notes, data, beat, bas
   return (
     <Styles.Main>
       <Styles.Bars>
-        {bars.map((bar) => {
-          const targetChords = chords.filter((chord) => chord.barUuid === bar.uuid)
-          const isBarError = targetChords.some((chord) => chord.isError)
-
-          if (isBarError) {
+        {parsedBars.map((bar) => {
+          if (bar.isError) {
             return (
-              <Styles.Bar key={bar.uuid} beat={beatParser.denominator}>
+              <Styles.Bar key={bar.index} beat={beatParser.denominator}>
                 <Styles.ErrorBar />
               </Styles.Bar>
             )
           }
 
           return (
-            <Styles.Bar key={bar.uuid} beat={beatParser.denominator}>
-              {targetChords.map((targetChord) => {
-                const chordDuration = _.uniq(
-                  data
-                    .filter(({ chordUuid }) => chordUuid === targetChord.uuid)
-                    .map(({ duration }) => duration)
-                )
-                const symbol =
-                  'symbol' in targetChord
-                    ? targetChord.symbol
-                    : `${targetChord.configurationSymbol}/${targetChord.baseSymbol}`
-                const targetNotes = notes.filter(({ chordUuid }) => chordUuid === targetChord.uuid)
-                const isNoteError = targetNotes.some((note) => note.isError)
-
+            <Styles.Bar key={bar.index} beat={beatParser.denominator}>
+              {bar.targetChords.map((targetChord) => {
                 return (
                   <Styles.Chord
-                    key={targetChord.uuid}
-                    duration={(chordDuration[0] / 2) * 100}
-                    onClick={onClickChord(targetChord.uuid, isNoteError)}
+                    key={String(bar.index + targetChord.index)}
+                    duration={targetChord.chordDuration}
+                    onClick={onClickChord(targetChord.index, targetChord.isNoteError)}
                   >
-                    {isNoteError ? (
+                    {targetChord.isNoteError ? (
                       <Styles.Error />
                     ) : (
                       <>
-                        {isBrowser ?? <Styles.Symbol>{symbol}</Styles.Symbol>}
-                        {targetNotes.map((targetNote) => {
-                          const targetData = data.find(
-                            ({ noteUuid }) => noteUuid === targetNote.uuid
-                          )
-
-                          if (!targetData) {
+                        {isBrowser ?? <Styles.Symbol>{targetChord.symbol}</Styles.Symbol>}
+                        {targetChord.targetNotes.map((targetNote) => {
+                          if (!targetNote.targetData) {
                             return
                           }
 
-                          const interval =
-                            tonalNote.midi(
-                              data.find(({ noteUuid }) => noteUuid === targetNote.uuid).note
-                            ) - baseNoteParser
-
                           return (
-                            <Styles.Note key={targetNote.uuid} position={interval}></Styles.Note>
+                            <Styles.Note
+                              key={String(bar.index + targetChord.index + targetNote.index)}
+                              position={targetNote.interval}
+                            ></Styles.Note>
                           )
                         })}
                       </>

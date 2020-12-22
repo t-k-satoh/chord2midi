@@ -5,8 +5,9 @@ import { MainHeader } from '../header'
 import { Nav } from '../nav'
 import * as Styles from './styles'
 
-type Props = {
+export type Props = {
   locale: string
+  isHome?: boolean
   isDisabledDownLoad?: boolean
   isDisabledShare?: boolean
   onClickDownLoad?: () => void
@@ -16,6 +17,7 @@ type Props = {
 export const Page: React.FC<Props> = ({
   locale,
   children,
+  isHome,
   isDisabledDownLoad,
   isDisabledShare,
   onClickDownLoad,
@@ -41,6 +43,7 @@ export const Page: React.FC<Props> = ({
         <Styles.Header>
           <MainHeader
             version={version}
+            isHome={isHome}
             isDisabledDownLoad={isDisabledDownLoad}
             isDisabledShare={isDisabledShare}
             onClickSettings={showSettings}

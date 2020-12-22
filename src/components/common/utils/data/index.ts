@@ -1,5 +1,4 @@
 import { Chord as tonalChord, Note as tonalNote } from '@tonaljs/tonal'
-import { v4 as uuidv4 } from 'uuid'
 import { Beats } from '../../../../constants'
 import { Bar, Chord, Note, Data } from '../../../../types'
 
@@ -10,7 +9,6 @@ export const makeBars = (chordText: string): Bar[] =>
     .map((note) => note.trim())
     .filter((note) => note !== '' && note !== ' ')
     .map((note, index) => ({
-      uuid: uuidv4(),
       index,
       chords: note.split(' '),
     }))
@@ -22,14 +20,13 @@ export const makeChords = (bars: Bar[], beat: typeof Beats[number]): Chord[] => 
   }
   const tempChords: Chord[] = []
 
-  bars.forEach(({ uuid, chords }) => {
+  bars.forEach(({ index, chords }) => {
     const isError = newBeat.molecular - chords.length < 0
 
-    chords.forEach((chord, index) => {
+    chords.forEach((chord, _index) => {
       const base = {
-        uuid: uuidv4(),
-        barUuid: uuid,
-        index,
+        barIndex: index,
+        index: _index,
       }
       const isOnChord = chord.indexOf('/') !== -1
 
@@ -57,9 +54,10 @@ export const makeChords = (bars: Bar[], beat: typeof Beats[number]): Chord[] => 
 
 export const makeNotes = (chords: Chord[]): Note[] => {
   const tempNote: Note[] = []
+
   chords.forEach((chord) => {
     if ('symbol' in chord) {
-      const { symbol, barUuid, uuid } = chord
+      const { symbol, barIndex } = chord
       const isError = symbol === ''
 
       // エラーでもそれっぽいコード入れておく
@@ -67,17 +65,16 @@ export const makeNotes = (chords: Chord[]): Note[] => {
 
       notes.forEach((note, index) => {
         tempNote.push({
-          uuid: uuidv4(),
           note,
           index,
-          barUuid,
-          chordUuid: uuid,
+          barIndex,
+          chordIndex: chord.index,
           distance: intervals[index],
           isError,
         })
       })
     } else {
-      const { configurationSymbol, baseSymbol, barUuid, uuid } = chord
+      const { configurationSymbol, baseSymbol, barIndex } = chord
       const isError = configurationSymbol === '' || baseSymbol === ''
 
       const { notes: configurationNotes, intervals: configurationIntervals } = tonalChord.get(
@@ -96,11 +93,10 @@ export const makeNotes = (chords: Chord[]): Note[] => {
 
       temp.forEach(({ note, distance }, index) => {
         tempNote.push({
-          uuid: uuidv4(),
           note,
           index,
-          barUuid,
-          chordUuid: uuid,
+          barIndex,
+          chordIndex: chord.index,
           distance,
           isError,
         })
@@ -126,36 +122,27 @@ export const makeData = (
     denominator: Number(beat.split('/')[1]),
   }
   const barLimit = newBeat.molecular / 2
-  const baseMidiNote = tonalNote.midi(`${baseNote.symbol}${baseNote.number}`)
 
-  return notes.map(({ barUuid, chordUuid, uuid, distance }) => {
-    const parentBar = bars.find((bar) => bar.uuid === barUuid)
-    const parentChord = chords.find((chord) => chord.uuid === chordUuid)
+  return notes.map((note, index) => {
+    const parentBar = bars.find((bar) => bar.index === note.barIndex)
+    const parentChord = chords.find((chord) => chord.index === note.chordIndex)
     const chordsLength = parentBar.chords.length
-
     const isInscrutable = chordsLength === newBeat.molecular - 1
-
     const barStartTime = parentBar.index * barLimit
     const baseDuration = barLimit / (isInscrutable ? chordsLength + 1 : chordsLength)
-
     const isLastInscrutableChord = isInscrutable && chordsLength === parentChord.index + 1
 
-    const _baseNote = notes.find((_note) => _note.chordUuid === chordUuid && _note.index === 0)
-
-    const newNote = tonalNote.transpose(`${_baseNote.note}${baseNote.number}`, distance)
-
-    const newMidiNote = tonalNote.midi(newNote)
-
-    const isLowNote = newMidiNote - baseMidiNote < 0
-
-    const newBaseNote = isLowNote ? baseNote.number + 1 : baseNote.number
+    const baseSymbol = notes.find(
+      ({ chordIndex, distance, barIndex }) =>
+        chordIndex === note.chordIndex && barIndex === parentBar.index && distance === '1P'
+    ).note
 
     return {
-      uuid: uuidv4(),
-      barUuid,
-      chordUuid,
-      noteUuid: uuid,
-      note: tonalNote.transpose(`${_baseNote.note}${newBaseNote}`, distance),
+      index,
+      barIndex: note.barIndex,
+      chordIndex: note.chordIndex,
+      noteIndex: note.index,
+      note: tonalNote.transpose(`${baseSymbol}${baseNote.number}`, note.distance),
       time: barStartTime + baseDuration * parentChord.index,
       duration: isLastInscrutableChord ? baseDuration * 2 : baseDuration,
     }

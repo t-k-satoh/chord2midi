@@ -37,7 +37,20 @@ export const Page: NextPage<Props> = ({ locale }) => {
   return (
     <>
       <GlobalStyle S_isNightMode={value} />
-      {isBrowser ? <Browser /> : <MobileHome locale={locale} />}
+      {isBrowser ? (
+        <Browser />
+      ) : (
+        <MobileHome
+          locale={locale}
+          currentValue={'C'}
+          chordSymbol={'C'}
+          beat={'4/4'}
+          midiNoteNumber={2}
+          onChangeValue={() => {
+            console.log()
+          }}
+        />
+      )}
     </>
   )
 }
