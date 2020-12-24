@@ -11,8 +11,9 @@ export default {
 const Template: Story<Props> = (args) => <ViewArea {...args} />
 
 const props: Props = {
-  value: 'Bm7 | D',
-  beat: '4/4',
+  isBrowser: true,
+  value: 'Bm7 | D C',
+  beat: '3/4',
   baseNote: {
     symbol: 'C',
     number: 3,

@@ -6,21 +6,21 @@ const allTestData = 'C | C/G | A B | F E D'
 test(makeBars.name, () => {
   const testData = allTestData
   const results: Bar[] = [
-    { chords: ['C'], index: 0 },
-    { chords: ['C/G'], index: 1 },
-    { chords: ['A', 'B'], index: 2 },
-    { chords: ['F', 'E', 'D'], index: 3 },
+    { chords: ['C'], index: 0, isError: false },
+    { chords: ['C/G'], index: 1, isError: false },
+    { chords: ['A', 'B'], index: 2, isError: false },
+    { chords: ['F', 'E', 'D'], index: 3, isError: false },
   ]
 
-  expect(makeBars(testData)).toEqual(results)
+  expect(makeBars(testData, '4/4')).toEqual(results)
 })
 
 test(makeChords.name, () => {
   const testData: Bar[] = [
-    { chords: ['C'], index: 0 },
-    { chords: ['C/G'], index: 1 },
-    { chords: ['A', 'B'], index: 2 },
-    { chords: ['F', 'E', 'D'], index: 3 },
+    { chords: ['C'], index: 0, isError: false },
+    { chords: ['C/G'], index: 1, isError: false },
+    { chords: ['A', 'B'], index: 2, isError: false },
+    { chords: ['F', 'E', 'D'], index: 3, isError: false },
   ]
 
   const results: Chord[] = [
@@ -39,7 +39,7 @@ test(makeChords.name, () => {
     { barIndex: 3, index: 2, symbol: 'D', isError: false },
   ]
 
-  expect(makeChords(testData, '4/4')).toEqual(results)
+  expect(makeChords(testData)).toEqual(results)
 })
 
 test(makeNotes.name, () => {
@@ -233,7 +233,7 @@ test(makeNotes.name, () => {
 })
 
 test(makeData.name, () => {
-  const testBars: Bar[] = [{ chords: ['C'], index: 0 }]
+  const testBars: Bar[] = [{ chords: ['C'], index: 0, isError: false }]
   const testChords: Chord[] = [{ barIndex: 0, index: 0, symbol: 'C', isError: false }]
   const testNotes: Note[] = [
     {

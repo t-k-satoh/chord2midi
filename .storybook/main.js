@@ -9,7 +9,8 @@ module.exports = {
   "addons": [
     "@storybook/addon-links",
     "@storybook/addon-essentials",
-    "@next/plugin-storybook"
+    "@next/plugin-storybook",
+    "@storybook/addon-actions"
   ],
   typescript: {
     check: false,

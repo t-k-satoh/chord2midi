@@ -13,7 +13,6 @@
 "@adobe/react-spectrum@3.7.0":
   version "3.7.0"
   resolved "https://registry.yarnpkg.com/@adobe/react-spectrum/-/react-spectrum-3.7.0.tgz#f62cd8d8b5b2eae5c05efb07a3b5085e94dce4b4"
-  integrity sha512-GfFBdgOhuJHNYwrEan3HezOKXq5K9Xwtc6mrPTYEtB6/ZnBChfxCMj2QGTEVsit3rpFkz1mywVZRPmFMe5NYPA==
   dependencies:
     "@react-aria/i18n" "^3.2.0"
     "@react-aria/ssr" "^3.0.1"
@@ -57,7 +56,6 @@
 "@ampproject/toolbox-core@^2.7.1-alpha.0", "@ampproject/toolbox-core@^2.7.2":
   version "2.7.2"
   resolved "https://registry.yarnpkg.com/@ampproject/toolbox-core/-/toolbox-core-2.7.2.tgz#43acd7c1d0331be1db611d781d7dc2184c0aadb5"
-  integrity sha512-deQiuOghOShoEBoTIDNsSER5gMC6qZfVqYKvlQYcQ+OxKR7J3FtA5XDz98UQsuWx1EB2x2hivrpC6G9BQaXMHw==
   dependencies:
     lru-cache "6.0.0"
     node-fetch "2.6.1"
@@ -65,7 +63,6 @@
 "@ampproject/toolbox-optimizer@2.7.1-alpha.0":
   version "2.7.1-alpha.0"
   resolved "https://registry.yarnpkg.com/@ampproject/toolbox-optimizer/-/toolbox-optimizer-2.7.1-alpha.0.tgz#1571dcd02608223ff68f6b7223102a123e381197"
-  integrity sha512-WGPZKVQvHgNYJk1XVJCCmY+NVGTGJtvn0OALDyiegN4FJWOcilQUhCIcjMkZN59u1flz/u+sEKccM5qsROqVyg==
   dependencies:
     "@ampproject/toolbox-core" "^2.7.1-alpha.0"
     "@ampproject/toolbox-runtime-version" "^2.7.1-alpha.0"
@@ -89,7 +86,6 @@
 "@ampproject/toolbox-runtime-version@^2.7.1-alpha.0":
   version "2.7.2"
   resolved "https://registry.yarnpkg.com/@ampproject/toolbox-runtime-version/-/toolbox-runtime-version-2.7.2.tgz#32d0867c4a0625b7fe0f2114df6669d9d2e63863"
-  integrity sha512-BKDl29i/cvC0xtrUHnF2YR25gMfyVnXCaV1ZaMDNcPNRJGbBSNQtW6eZt9+rPoV/hKpFxyJia30ECw42FVhh9g==
   dependencies:
     "@ampproject/toolbox-core" "^2.7.2"
 
@@ -100,7 +96,6 @@
 "@ampproject/toolbox-validator-rules@^2.7.1-alpha.0":
   version "2.7.2"
   resolved "https://registry.yarnpkg.com/@ampproject/toolbox-validator-rules/-/toolbox-validator-rules-2.7.2.tgz#6e13245418a27cc9a1c49692890a6113b087cbdf"
-  integrity sha512-/XNa5nhyZl8ET63HQv73AjgEZN03YMBZVZwZ62luxsuEsfzpVzs/tU/RaOHCnL2EuRyaAX95O7GO3Gyxp8z79g==
   dependencies:
     node-fetch "2.6.1"
 
@@ -1543,22 +1538,18 @@
 "@next/env@10.0.4":
   version "10.0.4"
   resolved "https://registry.yarnpkg.com/@next/env/-/env-10.0.4.tgz#ac759094d021853616af56a7bd6720e44a92a303"
-  integrity sha512-U+XIL75XM1pCmY4+9kYbst/0IptlfDnkFfKdgADBZulQlfng4RB3zirdzkoBtod0lVcrGgDryzOi1mM23RiiVQ==
 
 "@next/plugin-storybook@10.0.4":
   version "10.0.4"
   resolved "https://registry.yarnpkg.com/@next/plugin-storybook/-/plugin-storybook-10.0.4.tgz#16787e10ed4efac0074e8273ff535a85132298ca"
-  integrity sha512-Etre/FaL0nwpklAZKI4LDNAs36Qh5hj1IjVF1tRtEWMWIyUmrhtoidxvi27zJrhlsR4w3bH7AqEOSOtAYyaDjw==
 
 "@next/polyfill-module@10.0.4":
   version "10.0.4"
   resolved "https://registry.yarnpkg.com/@next/polyfill-module/-/polyfill-module-10.0.4.tgz#c34391a12ad80d6e373c403f96c8e2bbd793dca1"
-  integrity sha512-i2gLUa3YuZ2eQg+d91n+jS4YbPVKg1v0HHIUeJFJMMtpG/apBkTuTLBQGJXe4nKNf7/41NWLDft4ihC3Zfd+Yw==
 
 "@next/react-dev-overlay@10.0.4":
   version "10.0.4"
   resolved "https://registry.yarnpkg.com/@next/react-dev-overlay/-/react-dev-overlay-10.0.4.tgz#c578a3c71e2f8a8fe2aae8007cc40d1cf10bc768"
-  integrity sha512-8pKN0PspEtfVFqeSpNQymfXWyV95OTIT0xP9IqILJX2+52ICdU5D+YNuNIwpc4ZOZ0CssM/uYsz6K1FHbCaU7A==
   dependencies:
     "@babel/code-frame" "7.10.4"
     ally.js "1.4.1"
@@ -1574,7 +1565,6 @@
 "@next/react-refresh-utils@10.0.4":
   version "10.0.4"
   resolved "https://registry.yarnpkg.com/@next/react-refresh-utils/-/react-refresh-utils-10.0.4.tgz#5ad753572891aa7cb1010b358cc4241d7be20d20"
-  integrity sha512-kZ/37aSQaR0GCZVqh7WDLkeEZqzjPQoZUDdo6TOWiIEb+089AmfYp8A4/1ra9Fu8T4b4wnB76TRl6tp6DeJLXg==
 
 "@nodelib/fs.scandir@2.1.3":
   version "2.1.3"
@@ -1607,14 +1597,12 @@
 "@opentelemetry/api@0.14.0":
   version "0.14.0"
   resolved "https://registry.yarnpkg.com/@opentelemetry/api/-/api-0.14.0.tgz#4e17d8d2f1da72b19374efa7b6526aa001267cae"
-  integrity sha512-L7RMuZr5LzMmZiQSQDy9O1jo0q+DaLy6XpYJfIGfYSfoJA5qzYwUP3sP1uMIQ549DvxAgM3ng85EaPTM/hUHwQ==
   dependencies:
     "@opentelemetry/context-base" "^0.14.0"
 
 "@opentelemetry/context-base@^0.14.0":
   version "0.14.0"
   resolved "https://registry.yarnpkg.com/@opentelemetry/context-base/-/context-base-0.14.0.tgz#c67fc20a4d891447ca1a855d7d70fa79a3533001"
-  integrity sha512-sDOAZcYwynHFTbLo6n8kIbLiVF3a3BLkrmehJUyEbT9F+Smbi47kLGS2gG2g0fjBLR/Lr1InPD7kXL7FaTqEkw==
 
 "@pmmmwh/react-refresh-webpack-plugin@^0.4.2":
   version "0.4.3"
@@ -1947,7 +1935,6 @@
 "@react-aria/slider@^3.0.0":
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/@react-aria/slider/-/slider-3.0.0.tgz#c3172f84517f6a88de5008ed2bc00cc1f2dcd3da"
-  integrity sha512-IyAzlkgplD1NCxSF9TDL7WxasAOGB2HhosWg1W7WUI9BvzHLeHWsJdpCbTeqHYIlyjZbAdgI2G48NntZU77CyA==
   dependencies:
     "@babel/runtime" "^7.6.2"
     "@react-aria/focus" "^3.2.3"
@@ -2044,7 +2031,6 @@
 "@react-aria/utils@^3.5.0":
   version "3.5.0"
   resolved "https://registry.yarnpkg.com/@react-aria/utils/-/utils-3.5.0.tgz#b377461591f5c8e2157b1635e28ed03cd58e2a22"
-  integrity sha512-HjeqT4//N2Jz2WNg3qAg1MpxAjcP+aPR1fq8yXm812za2/bA5rUSZqN0EXHZ9/+NdQhnZoRPNyXN/BJMZJe+Ig==
   dependencies:
     "@babel/runtime" "^7.6.2"
     "@react-aria/ssr" "^3.0.1"
@@ -2516,7 +2502,6 @@
 "@react-spectrum/slider@^3.0.0":
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/@react-spectrum/slider/-/slider-3.0.0.tgz#3f41a7bc9f22741c3c3de3c0480322b6d0fc97e1"
-  integrity sha512-/h7UHvE6Z1nDoFVPdOqyPlf6Txm9X0twXuTfoTuzifdCpd23nIrynZIutEtjVQXsviyrHNdksRSBYrCybW3e1Q==
   dependencies:
     "@babel/runtime" "^7.6.2"
     "@react-aria/focus" "^3.2.3"
@@ -2786,7 +2771,6 @@
 "@react-stately/slider@^3.0.0":
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/@react-stately/slider/-/slider-3.0.0.tgz#f0dd7b6df931828b42d93e693bc4da75852bb440"
-  integrity sha512-KAzAhDOF+diyC2k3SPebK9VUKvuXT6wR3BLaAKJYvWMP4EWxoDhRCyc7tHJRKeoCqKiT2qbYd6D1lQDA01foew==
   dependencies:
     "@babel/runtime" "^7.6.2"
     "@react-aria/i18n" "^3.1.3"
@@ -2998,7 +2982,6 @@
 "@react-types/slider@^3.0.0":
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/@react-types/slider/-/slider-3.0.0.tgz#b26550b973fbe8e02b69cd9c650abe546159a81e"
-  integrity sha512-BjSnzPcxw8y+PiNQm81X7dSyJwU86UK8ig0YWA2T2m7XhTvy26AjLmUwRDxhhVXAqRQtvRDLd+uowrb9FnWMcQ==
   dependencies:
     "@react-types/shared" "^3.3.0"
 
@@ -3981,7 +3964,6 @@
 "@types/react-redux@7.1.12":
   version "7.1.12"
   resolved "https://registry.yarnpkg.com/@types/react-redux/-/react-redux-7.1.12.tgz#148f2c768687346b556e29a322ca44cfa28cc3ac"
-  integrity sha512-xZj4/8oRZP5RlJPlC5XPnawPtMn+T2bV4Hxi38AcuoZzXlN/Il/ZPfgXuIq3WG37wVL6FP7suVfmE4BopuqtTg==
   dependencies:
     "@types/hoist-non-react-statics" "^3.3.0"
     "@types/react" "*"
@@ -4013,6 +3995,12 @@
   resolved "https://registry.yarnpkg.com/@types/reactcss/-/reactcss-1.2.3.tgz#af28ae11bbb277978b99d04d1eedfd068ca71834"
   dependencies:
     "@types/react" "*"
+
+"@types/redux-logger@^3.0.8":
+  version "3.0.8"
+  resolved "https://registry.yarnpkg.com/@types/redux-logger/-/redux-logger-3.0.8.tgz#1fb6d26917bb198792bb1cf57feb31cae1532c5d"
+  dependencies:
+    redux "^4.0.0"
 
 "@types/source-list-map@*":
   version "0.1.2"
@@ -6246,6 +6234,10 @@ dedent@^0.7.0:
   version "0.7.0"
   resolved "https://registry.yarnpkg.com/dedent/-/dedent-0.7.0.tgz#2495ddbaf6eb874abb0e1be9df22d2e5a544326c"
 
+deep-diff@^0.3.5:
+  version "0.3.8"
+  resolved "https://registry.yarnpkg.com/deep-diff/-/deep-diff-0.3.8.tgz#c01de63efb0eec9798801d40c7e0dae25b582c84"
+
 deep-extend@^0.6.0:
   version "0.6.0"
   resolved "https://registry.yarnpkg.com/deep-extend/-/deep-extend-0.6.0.tgz#c4fa7c95404a17a9c3e8ca7e1537312b736330ac"
@@ -6438,7 +6430,6 @@ dom-serializer@0:
 dom-serializer@1.1.0, dom-serializer@^1.0.1:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/dom-serializer/-/dom-serializer-1.1.0.tgz#5f7c828f1bfc44887dc2a315ab5c45691d544b58"
-  integrity sha512-ox7bvGXt2n+uLWtCRLybYx60IrOlWL/aCebWJk1T0d4m3y2tzf4U3ij9wBMUb6YJZpz06HCCYuyCDveE2xXmzQ==
   dependencies:
     domelementtype "^2.0.1"
     domhandler "^3.0.0"
@@ -6463,7 +6454,6 @@ domelementtype@^2.0.1:
 domelementtype@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/domelementtype/-/domelementtype-2.1.0.tgz#a851c080a6d1c3d94344aed151d99f669edf585e"
-  integrity sha512-LsTgx/L5VpD+Q8lmsXSHW2WpA+eBlZ9HPf3erD1IoPF00/3JKHZ3BknUVA2QGDNu69ZNmyFmCWBSO45XjYKC5w==
 
 domexception@^2.0.1:
   version "2.0.1"
@@ -6486,7 +6476,6 @@ domhandler@^2.3.0:
 domhandler@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/domhandler/-/domhandler-4.0.0.tgz#01ea7821de996d85f69029e81fa873c21833098e"
-  integrity sha512-KPTbnGQ1JeEMQyO1iYXoagsI6so/C96HZiFyByU3T6iAzpXn8EGEvct6unm1ZGoed8ByO2oirxgwxBmqKF9haA==
   dependencies:
     domelementtype "^2.1.0"
 
@@ -6500,7 +6489,6 @@ domutils@1.5.1:
 domutils@2.4.2:
   version "2.4.2"
   resolved "https://registry.yarnpkg.com/domutils/-/domutils-2.4.2.tgz#7ee5be261944e1ad487d9aa0616720010123922b"
-  integrity sha512-NKbgaM8ZJOecTZsIzW5gSuplsX2IWW2mIK7xVr8hTQF2v1CJWTmLZ1HOCh5sH+IzVPAGE5IucooOkvwBRAdowA==
   dependencies:
     dom-serializer "^1.0.1"
     domelementtype "^2.0.1"
@@ -6516,7 +6504,6 @@ domutils@^1.5.1:
 domutils@^2.4.2:
   version "2.4.4"
   resolved "https://registry.yarnpkg.com/domutils/-/domutils-2.4.4.tgz#282739c4b150d022d34699797369aad8d19bbbd3"
-  integrity sha512-jBC0vOsECI4OMdD0GC9mGn7NXPLb+Qt6KW1YDQzeQYRUFKmNG8lh7mO5HiELfr+lLQE7loDVI4QcAxV80HS+RA==
   dependencies:
     dom-serializer "^1.0.1"
     domelementtype "^2.0.1"
@@ -8035,7 +8022,6 @@ html-webpack-plugin@^4.2.1:
 htmlparser2@5.0.1:
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/htmlparser2/-/htmlparser2-5.0.1.tgz#7daa6fc3e35d6107ac95a4fc08781f091664f6e7"
-  integrity sha512-vKZZra6CSe9qsJzh0BjBGXo8dvzNsq/oGvsjfRdOrrryfeD9UOBEEQdeoqCRmKZchF5h2zOBMQ6YuQ0uRUmdbQ==
   dependencies:
     domelementtype "^2.0.1"
     domhandler "^3.3.0"
@@ -8076,7 +8062,6 @@ http-errors@1.7.3, http-errors@~1.7.2:
 http-proxy-middleware@1.0.6:
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/http-proxy-middleware/-/http-proxy-middleware-1.0.6.tgz#0618557722f450375d3796d701a8ac5407b3b94e"
-  integrity sha512-NyL6ZB6cVni7pl+/IT2W0ni5ME00xR0sN27AQZZrpKn1b+qRh+mLbBxIq9Cq1oGfmTc7BUq4HB77mxwCaxAYNg==
   dependencies:
     "@types/http-proxy" "^1.17.4"
     http-proxy "^1.18.1"
@@ -9876,7 +9861,6 @@ next-compose-plugins@2.2.1:
 next-redux-wrapper@6.0.2:
   version "6.0.2"
   resolved "https://registry.yarnpkg.com/next-redux-wrapper/-/next-redux-wrapper-6.0.2.tgz#b8dcd214e7b5cedd7a2a611ddb60422384d24374"
-  integrity sha512-I9CnIYhQwI/qEoNdc9VAPjIyuq4rFFhCTa4rKhoDHWEVHGB1DXZy8TAyGpwvWizESd8IoTI/OKlP6bFpCbXsOw==
 
 next-tick@~1.0.0:
   version "1.0.0"
@@ -9892,7 +9876,6 @@ next-transpile-modules@4.1.0:
 next@10.0.4:
   version "10.0.4"
   resolved "https://registry.yarnpkg.com/next/-/next-10.0.4.tgz#0d256f58a57d6bab7db7e533900c15f322960b4a"
-  integrity sha512-WXEYr1FuR2cLuWGN8peYGM6ykmbtwaHvrI6RqR2qrTXUNsW+KU5pzIMK5WPcpqP+xOuMhlykOCJvwJH8qU9FZQ==
   dependencies:
     "@ampproject/toolbox-optimizer" "2.7.1-alpha.0"
     "@babel/runtime" "7.12.5"
@@ -10313,7 +10296,6 @@ p-finally@^1.0.0:
 p-limit@3.1.0, p-limit@^3.0.2:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/p-limit/-/p-limit-3.1.0.tgz#e1daccbe78d0d1388ca18c64fea38e3e57e3706b"
-  integrity sha512-TYOanM3wGwNGsZN2cVTYPArw454xnXj5qmWF1bEoAc4+cU/ol7GVh7odevjp1FNHduHc3KZMcFduxU5Xc6uJRQ==
   dependencies:
     yocto-queue "^0.1.0"
 
@@ -11093,7 +11075,6 @@ react-dev-utils@^10.0.0:
 react-device-detect@1.15.0:
   version "1.15.0"
   resolved "https://registry.yarnpkg.com/react-device-detect/-/react-device-detect-1.15.0.tgz#5321f94ae3c4d51ef399b0502a6c739e32d0f315"
-  integrity sha512-ywjtWW04U7vaJK87IAFHhKozZhTPeDVWsfYx5CxQSQCjU5+fnMMxWZt9HnVWaNTqBEn6g8wCNWyqav7sXJrURg==
   dependencies:
     ua-parser-js "^0.7.23"
 
@@ -11221,7 +11202,6 @@ react-popper@^2.2.4:
 react-redux@7.2.2:
   version "7.2.2"
   resolved "https://registry.yarnpkg.com/react-redux/-/react-redux-7.2.2.tgz#03862e803a30b6b9ef8582dadcc810947f74b736"
-  integrity sha512-8+CQ1EvIVFkYL/vu6Olo7JFLWop1qRUeb46sGtIMDCSpgwPQq8fPLpirIB0iTqFe9XYEFPHssdX8/UwN6pAkEA==
   dependencies:
     "@babel/runtime" "^7.12.1"
     hoist-non-react-statics "^3.3.2"
@@ -11367,10 +11347,15 @@ reduce-css-calc@^2.1.6:
     css-unit-converter "^1.1.1"
     postcss-value-parser "^3.3.0"
 
+redux-logger@^3.0.6:
+  version "3.0.6"
+  resolved "https://registry.yarnpkg.com/redux-logger/-/redux-logger-3.0.6.tgz#f7555966f3098f3c88604c449cf0baf5778274bf"
+  dependencies:
+    deep-diff "^0.3.5"
+
 redux@4.0.5, redux@^4.0.0:
   version "4.0.5"
   resolved "https://registry.yarnpkg.com/redux/-/redux-4.0.5.tgz#4db5de5816e17891de8a80c424232d06f051d93f"
-  integrity sha512-VSz1uMAH24DM6MF72vcojpYPtrTUu3ByVWfPL1nPfVRb5mZVTve5GnNCUV53QM/BZ66xfWrm0CTWoM+Xlz8V1w==
   dependencies:
     loose-envify "^1.4.0"
     symbol-observable "^1.2.0"
@@ -12634,7 +12619,6 @@ terser-webpack-plugin@^3.0.0:
 terser@5.5.1:
   version "5.5.1"
   resolved "https://registry.yarnpkg.com/terser/-/terser-5.5.1.tgz#540caa25139d6f496fdea056e414284886fb2289"
-  integrity sha512-6VGWZNVP2KTUcltUQJ25TtNjx/XgdDsBDKGt8nN0MpydU36LmbPPcMBd2kmtZNNGVVDLg44k7GKeHHj+4zPIBQ==
   dependencies:
     commander "^2.20.0"
     source-map "~0.7.2"
@@ -12805,7 +12789,6 @@ ts-pnp@^1.1.6:
 tsconfig-paths-webpack-plugin@3.3.0:
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/tsconfig-paths-webpack-plugin/-/tsconfig-paths-webpack-plugin-3.3.0.tgz#a7461723c20623ca9148621a5ce36532682ad2ff"
-  integrity sha512-MpQeZpwPY4gYASCUjY4yt2Zj8yv86O8f++3Ai4o0yI0fUC6G1syvnL9VuY71PBgimRYDQU47f12BEmJq9wRaSw==
   dependencies:
     chalk "^2.3.0"
     enhanced-resolve "^4.0.0"
@@ -12916,7 +12899,6 @@ typescript@4.1.3:
 ua-parser-js@^0.7.23:
   version "0.7.23"
   resolved "https://registry.yarnpkg.com/ua-parser-js/-/ua-parser-js-0.7.23.tgz#704d67f951e13195fbcd3d78818577f5bc1d547b"
-  integrity sha512-m4hvMLxgGHXG3O3fQVAyyAQpZzDOvwnhOTjYz5Xmr7r/+LpkNy3vJXdVRWgd1TkAb7NGROZuSy96CrlNVjA7KA==
 
 unfetch@^4.1.0:
   version "4.2.0"

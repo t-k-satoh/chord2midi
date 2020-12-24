@@ -3,11 +3,12 @@ import React from 'react'
 import * as Styles from './styles'
 
 export type Props = {
+  isError: boolean
   onChangeValue: (value: string) => void
   value: string
 }
 
-export const InputArea: React.FC<Props> = ({ onChangeValue, value }) => {
+export const InputArea: React.FC<Props> = ({ onChangeValue, value, isError }) => {
   const onChange = React.useCallback(
     (_value: string) => {
       onChangeValue(_value)
@@ -23,6 +24,7 @@ export const InputArea: React.FC<Props> = ({ onChangeValue, value }) => {
           height={'100%'}
           onChange={onChange}
           value={value}
+          validationState={isError ? 'invalid' : 'valid'}
           placeholder={'ex. C#/D6 | C C/F A | E/F A B | A B C/D | A B | A B C | A | A B C D'}
         />
       </Styles.TextArea>

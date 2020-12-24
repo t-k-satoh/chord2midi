@@ -1,9 +1,13 @@
 import { Chord as tonalChord, Note as tonalNote } from '@tonaljs/tonal'
-import { Beats } from '../../../../constants'
-import { Bar, Chord, Note, Data } from '../../../../types'
+import { Bar, Chord, Note, Data, Beat } from '../../../../types'
 
-export const makeBars = (chordText: string): Bar[] =>
-  chordText
+export const makeBars = (chordText: string, beat: Beat): Bar[] => {
+  const newBeat = {
+    molecular: Number(beat.split('/')[0]),
+    denominator: Number(beat.split('/')[1]),
+  }
+
+  return chordText
     .replace(/\r?\n/g, '|')
     .split('|')
     .map((note) => note.trim())
@@ -11,18 +15,14 @@ export const makeBars = (chordText: string): Bar[] =>
     .map((note, index) => ({
       index,
       chords: note.split(' '),
+      isError: newBeat.molecular - note.split(' ').length < 0,
     }))
+}
 
-export const makeChords = (bars: Bar[], beat: typeof Beats[number]): Chord[] => {
-  const newBeat = {
-    molecular: Number(beat.split('/')[0]),
-    denominator: Number(beat.split('/')[1]),
-  }
+export const makeChords = (bars: Bar[]): Chord[] => {
   const tempChords: Chord[] = []
 
   bars.forEach(({ index, chords }) => {
-    const isError = newBeat.molecular - chords.length < 0
-
     chords.forEach((chord, _index) => {
       const base = {
         barIndex: index,
@@ -32,18 +32,22 @@ export const makeChords = (bars: Bar[], beat: typeof Beats[number]): Chord[] => 
 
       if (isOnChord) {
         const split = chord.split('/')
+        const configurationSymbol = tonalChord.get(split[0]).symbol
+        const baseSymbol = tonalChord.get(split[1]).symbol
 
         tempChords.push({
           ...base,
-          configurationSymbol: tonalChord.get(split[0]).symbol,
-          baseSymbol: tonalChord.get(split[1]).symbol,
-          isError,
+          configurationSymbol,
+          baseSymbol,
+          isError: configurationSymbol === '' || baseSymbol === '',
         })
       } else {
+        const symbol = tonalChord.get(chord).symbol
+
         tempChords.push({
           ...base,
-          symbol: tonalChord.get(chord).symbol,
-          isError,
+          symbol,
+          isError: symbol === '',
         })
       }
     })
@@ -115,7 +119,7 @@ export const makeData = (
     symbol: string
     number: number
   },
-  beat: typeof Beats[number]
+  beat: Beat
 ): Data[] => {
   const newBeat = {
     molecular: Number(beat.split('/')[0]),
@@ -153,19 +157,26 @@ export const makeAllData = (
   chordText: string,
   baseNote: {
     symbol: string
-    number: number
+    number: number | string
   },
-  beat: typeof Beats[number]
+  beat: Beat
 ): { bars: Bar[]; chords: Chord[]; notes: Note[]; data: Data[] } => {
-  const bars = makeBars(chordText)
-  const chords = makeChords(bars, beat)
-  const notes = makeNotes(chords)
-  const data = makeData(bars, chords, notes, baseNote, beat)
+  if (typeof baseNote.number === 'number') {
+    const newBaseNote = baseNote as {
+      symbol: string
+      number: number
+    }
 
-  return {
-    bars,
-    chords,
-    notes,
-    data,
+    const bars = makeBars(chordText, beat)
+    const chords = makeChords(bars)
+    const notes = makeNotes(chords)
+    const data = makeData(bars, chords, notes, newBaseNote, beat)
+
+    return {
+      bars,
+      chords,
+      notes,
+      data,
+    }
   }
 }

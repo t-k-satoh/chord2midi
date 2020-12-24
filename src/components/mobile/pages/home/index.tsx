@@ -1,7 +1,7 @@
 // import { DialogContainer, AlertDialog } from '@adobe/react-spectrum'
 import React from 'react'
-import { ChordSymbol, Beat, MIDINoteNumber } from '../../../../store/state/types'
-import { Data, Note, Bar } from '../../../../types'
+import { ChordSymbol, Beat, MIDINoteNumber } from '../../../../types'
+import { Data, Note, Bar, Chord } from '../../../../types'
 import { InputArea } from '../../../common/templates/input_area'
 import { ViewArea } from '../../../common/templates/view_area'
 import { makeAllData } from '../../../common/utils/data'
@@ -11,6 +11,7 @@ import { Page } from '../../templates/page'
 import * as Styles from './styles'
 
 export type Props = {
+  isDarkMode: boolean
   currentValue: string
   locale: string
   chordSymbol: ChordSymbol
@@ -20,6 +21,7 @@ export type Props = {
 }
 
 export const MobileHome: React.FC<Props> = ({
+  isDarkMode,
   locale,
   currentValue,
   chordSymbol,
@@ -28,6 +30,7 @@ export const MobileHome: React.FC<Props> = ({
   onChangeValue,
 }) => {
   const [data, setData] = React.useState<Data[]>([])
+  const [chords, setChords] = React.useState<Chord[]>([])
   const [notes, setNotes] = React.useState<Note[]>([])
   const [bars, setBars] = React.useState<Bar[]>([])
 
@@ -44,6 +47,13 @@ export const MobileHome: React.FC<Props> = ({
   const isDataError = React.useMemo(
     () => notes.some(({ isError }) => isError) || data.length === 0,
     [notes, data]
+  )
+  const isError = React.useMemo(
+    () =>
+      notes.some(({ isError }) => isError) ||
+      chords.some(({ isError }) => isError) ||
+      bars.some(({ isError }) => isError),
+    [chords, notes, bars]
   )
 
   const handlerChangeValue = React.useCallback(
@@ -66,10 +76,11 @@ export const MobileHome: React.FC<Props> = ({
   }, [])
 
   React.useEffect(() => {
-    const { data, notes, bars } = makeAllData(memoizeCurrentValue, baseNote, memoizeBeat)
+    const { data, notes, bars, chords } = makeAllData(memoizeCurrentValue, baseNote, memoizeBeat)
 
     setData(data)
     setNotes(notes)
+    setChords(chords)
     setBars(bars)
   }, [memoizeCurrentValue, baseNote, memoizeBeat])
 
@@ -81,13 +92,18 @@ export const MobileHome: React.FC<Props> = ({
       isDisabledDownLoad={isDataError}
       isDisabledShare={!canShare}
       isHome={true}
+      isDarkMode={isDarkMode}
     >
       <Frame>
         <Styles.ViewArea>
-          <ViewArea value={currentValue} baseNote={baseNote} beat={memoizeBeat} />
+          <ViewArea value={currentValue} baseNote={baseNote} beat={memoizeBeat} isBrowser={false} />
         </Styles.ViewArea>
         <Styles.InputArea>
-          <InputArea onChangeValue={handlerChangeValue} value={memoizeCurrentValue} />
+          <InputArea
+            onChangeValue={handlerChangeValue}
+            value={memoizeCurrentValue}
+            isError={isError}
+          />
         </Styles.InputArea>
       </Frame>
     </Page>

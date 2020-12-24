@@ -1,7 +1,7 @@
 import React from 'react'
 import * as Styles from './styles'
 
-type Props = {
+export type Props = {
   text: string
 }
 

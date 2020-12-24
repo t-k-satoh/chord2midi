@@ -13,6 +13,7 @@ const Template: Story<Props> = (args) => <MainHeader {...args} />
 const props: Props = {
   version: '0.1.0',
   isHome: false,
+  isDarkMode: true,
   isDisabledDownLoad: false,
   isDisabledShare: false,
   onClickSettings: () => {

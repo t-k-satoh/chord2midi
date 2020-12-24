@@ -7,6 +7,7 @@ import * as Styles from './styles'
 
 export type Props = {
   locale: string
+  isDarkMode: boolean
   isHome?: boolean
   isDisabledDownLoad?: boolean
   isDisabledShare?: boolean
@@ -18,6 +19,7 @@ export const Page: React.FC<Props> = ({
   locale,
   children,
   isHome,
+  isDarkMode,
   isDisabledDownLoad,
   isDisabledShare,
   onClickDownLoad,
@@ -44,6 +46,7 @@ export const Page: React.FC<Props> = ({
           <MainHeader
             version={version}
             isHome={isHome}
+            isDarkMode={isDarkMode}
             isDisabledDownLoad={isDisabledDownLoad}
             isDisabledShare={isDisabledShare}
             onClickSettings={showSettings}

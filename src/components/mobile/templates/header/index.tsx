@@ -9,6 +9,7 @@ import * as Styles from './styles'
 
 export type Props = {
   version: string
+  isDarkMode: boolean
   isHome?: boolean
   isDisabledDownLoad?: boolean
   isDisabledShare?: boolean
@@ -20,6 +21,7 @@ export type Props = {
 export const MainHeader: React.FC<Props> = ({
   version,
   isHome,
+  isDarkMode,
   isDisabledDownLoad,
   isDisabledShare,
   onClickSettings,
@@ -35,7 +37,12 @@ export const MainHeader: React.FC<Props> = ({
       <Styles.Main>
         <Styles.Logo>
           <Link prefetch href={'/'} passHref>
-            <Image src="/icon_wh.png" alt={`Chord to MIDI v.${version}`} width={40} height={40} />
+            <Image
+              src={isDarkMode ? '/icon_wh.png' : '/icon_blk.png'}
+              alt={`Chord to MIDI v.${version}`}
+              width={40}
+              height={40}
+            />
           </Link>
         </Styles.Logo>
         <Styles.Nav>

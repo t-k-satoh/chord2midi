@@ -1,3 +1,5 @@
+import { CHORD_SYMBOL, BEAT } from '../constants'
+
 export type Data = {
   index: number
   barIndex: number
@@ -11,6 +13,7 @@ export type Data = {
 export type Bar = {
   index: number
   chords: string[]
+  isError: boolean
 }
 
 export type Chord =
@@ -44,3 +47,13 @@ export type Error = {
   dataIndex?: number
   code: string
 }
+
+export type Init = 'init'
+
+export type ChordSymbol = typeof CHORD_SYMBOL[number] | Init
+
+export type Beat = typeof BEAT[number] | Init
+
+export type MIDINoteNumber = number | Init
+
+export type Locale = 'en' | 'ja' | Init
