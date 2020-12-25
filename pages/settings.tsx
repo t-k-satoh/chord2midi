@@ -7,8 +7,8 @@ import { MobileSetting } from '../src/components/mobile/pages/settings'
 import { wrapper, State } from '../src/store/store'
 import { GlobalStyle } from '../src/styles/global_styles'
 
-export const getStaticProps = wrapper.getStaticProps(() => {
-  console.log('2. Page.getStaticProps uses the store to dispatch things')
+export const getStaticProps = wrapper.getStaticProps((ctx) => {
+  ctx.store.dispatch({ type: 'LOCALE', payload: 'ja' })
 })
 
 const Page: NextPage = () => {
@@ -28,11 +28,11 @@ const Page: NextPage = () => {
           chordSymbol={state.chordSymbol}
           beat={state.beat}
           midiNoteNumber={state.midiNoteNumber}
-          onChangeBaseNoteNumber={(arg) => {
-            console.log({ arg })
+          onChangeBaseNoteNumber={(payload) => {
+            dispatch({ type: 'MIDI_NOTE_NUMBER', payload })
           }}
-          onChangeBaseNoteSymbol={(arg) => {
-            console.log({ arg })
+          onChangeBaseNoteSymbol={(payload) => {
+            dispatch({ type: 'CHORD_SYMBOL', payload })
           }}
           onChangeBeat={(payload) => {
             dispatch({ type: 'BEAT', payload })

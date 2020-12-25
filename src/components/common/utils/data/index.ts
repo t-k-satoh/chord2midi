@@ -179,4 +179,11 @@ export const makeAllData = (
       data,
     }
   }
+
+  return {
+    bars: [],
+    chords: [],
+    notes: [],
+    data: [],
+  }
 }

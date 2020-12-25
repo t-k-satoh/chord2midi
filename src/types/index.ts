@@ -57,3 +57,7 @@ export type Beat = typeof BEAT[number] | Init
 export type MIDINoteNumber = number | Init
 
 export type Locale = 'en' | 'ja' | Init
+
+export type From = 'url' | 'app' | Init
+
+export type Value = string | Init
