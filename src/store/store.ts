@@ -1,32 +1,13 @@
-import { MakeStore, createWrapper, HYDRATE } from 'next-redux-wrapper'
-import { createStore, AnyAction, applyMiddleware } from 'redux'
+import { MakeStore, createWrapper } from 'next-redux-wrapper'
+import { createStore, applyMiddleware } from 'redux'
 import logger from 'redux-logger'
+import { ActionTypes } from './actions'
+import { reducers } from './reducer'
 import { initialState } from './state'
-import { generateHydrateState } from './utils'
+import { InitialState } from './state/types'
 
-export type State = typeof initialState
-
-const reducer = (state: State = initialState, action: AnyAction): State => {
-  switch (action.type) {
-    case HYDRATE:
-      return { ...state, ...generateHydrateState(action.payload) }
-    case 'VALUE':
-      return { ...state, value: action.payload }
-    case 'CHORD_SYMBOL':
-      return { ...state, chordSymbol: action.payload }
-    case 'BEAT':
-      return { ...state, beat: action.payload }
-    case 'MIDI_NOTE_NUMBER':
-      return { ...state, midiNoteNumber: action.payload }
-    case 'LOCALE':
-      return { ...state, locale: action.payload }
-    default:
-      return state
-  }
+export const makeStore: MakeStore<InitialState, ActionTypes> = () => {
+  return createStore(reducers, initialState, applyMiddleware(logger))
 }
 
-export const makeStore: MakeStore<State> = () => {
-  return createStore(reducer, applyMiddleware(logger))
-}
-
-export const wrapper = createWrapper<State>(makeStore)
+export const wrapper = createWrapper<InitialState, ActionTypes>(makeStore)

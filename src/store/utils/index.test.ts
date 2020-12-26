@@ -5,14 +5,22 @@ import { generateHydrateState } from '.'
 describe(generateHydrateState.name, () => {
   test('All Init value', () => {
     const testValue: typeof initialState = {
-      chordSymbol: INIT,
-      chordSymbolFrom: INIT,
-      beat: INIT,
-      beatFrom: INIT,
-      midiNoteNumber: INIT,
-      midiNoteNumberFrom: INIT,
-      value: INIT,
-      valueFrom: INIT,
+      chordSymbol: {
+        value: INIT,
+        from: INIT,
+      },
+      beat: {
+        value: INIT,
+        from: INIT,
+      },
+      midiNoteNumber: {
+        value: INIT,
+        from: INIT,
+      },
+      value: {
+        value: INIT,
+        from: INIT,
+      },
       locale: INIT,
     }
 
@@ -21,20 +29,34 @@ describe(generateHydrateState.name, () => {
 
   test('一部に値がある場合', () => {
     const testValue: typeof initialState = {
-      chordSymbol: 'C',
-      chordSymbolFrom: INIT,
-      beat: INIT,
-      beatFrom: INIT,
-      midiNoteNumber: 3,
-      midiNoteNumberFrom: INIT,
-      value: INIT,
-      valueFrom: INIT,
+      chordSymbol: {
+        value: 'C',
+        from: 'app',
+      },
+      beat: {
+        value: INIT,
+        from: INIT,
+      },
+      midiNoteNumber: {
+        value: 3,
+        from: 'url',
+      },
+      value: {
+        value: INIT,
+        from: INIT,
+      },
       locale: INIT,
     }
 
     expect(generateHydrateState(testValue)).toEqual({
-      chordSymbol: 'C',
-      midiNoteNumber: 3,
+      chordSymbol: {
+        value: 'C',
+        from: 'app',
+      },
+      midiNoteNumber: {
+        value: 3,
+        from: 'url',
+      },
     })
   })
 })

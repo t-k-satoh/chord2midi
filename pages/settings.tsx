@@ -1,20 +1,31 @@
-import { NextPage } from 'next'
+import { NextPage, GetStaticPropsContext } from 'next'
 import { isBrowser } from 'react-device-detect'
 import { useSelector, shallowEqual, useDispatch } from 'react-redux'
+import { Store } from 'redux'
 import useDarkMode from 'use-dark-mode'
 import { Browser } from '../src/components/browser/pages/home'
 import { MobileSetting } from '../src/components/mobile/pages/settings'
-import { wrapper, State } from '../src/store/store'
+import { wrapper } from '../src/store'
+import { actions } from '../src/store/actions'
+import { ActionTypes } from '../src/store/actions'
+import { InitialState } from '../src/store/state/types'
 import { GlobalStyle } from '../src/styles/global_styles'
+import { Locale } from '../src/types'
 
 export const getStaticProps = wrapper.getStaticProps((ctx) => {
-  ctx.store.dispatch({ type: 'LOCALE', payload: 'ja' })
+  const newCtx = ctx as GetStaticPropsContext & { store: Store<InitialState, ActionTypes> }
+  const locale = newCtx.locale as Locale
+
+  newCtx.store.dispatch(actions.locale({ locale }))
 })
 
 const Page: NextPage = () => {
   const dispatch = useDispatch()
   const { value } = useDarkMode(false)
-  const state = useSelector<State, State>((state: State) => state, shallowEqual)
+  const state = useSelector<InitialState, InitialState>(
+    (state: InitialState) => state,
+    shallowEqual
+  )
 
   return (
     <>
@@ -25,17 +36,17 @@ const Page: NextPage = () => {
         <MobileSetting
           locale={state.locale}
           isDarkMode={value}
-          chordSymbol={state.chordSymbol}
-          beat={state.beat}
-          midiNoteNumber={state.midiNoteNumber}
-          onChangeBaseNoteNumber={(payload) => {
-            dispatch({ type: 'MIDI_NOTE_NUMBER', payload })
+          chordSymbol={state.chordSymbol.value}
+          beat={state.beat.value}
+          midiNoteNumber={state.midiNoteNumber.value}
+          onChangeBaseNoteNumber={(value) => {
+            dispatch(actions.midiNoteNumber({ midiNoteNumber: { value, from: 'app' } }))
           }}
-          onChangeBaseNoteSymbol={(payload) => {
-            dispatch({ type: 'CHORD_SYMBOL', payload })
+          onChangeBaseNoteSymbol={(value) => {
+            dispatch(actions.chordSymbol({ chordSymbol: { value, from: 'app' } }))
           }}
-          onChangeBeat={(payload) => {
-            dispatch({ type: 'BEAT', payload })
+          onChangeBeat={(value) => {
+            dispatch(actions.beat({ beat: { value, from: 'app' } }))
           }}
         />
       )}

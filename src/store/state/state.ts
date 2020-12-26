@@ -1,24 +1,22 @@
 import { INIT } from '../../constants'
-import { ChordSymbol, Beat, MIDINoteNumber, Locale, From, Value } from '../../types'
+import { InitialState } from './types'
 
-export const initialState: {
-  chordSymbol: ChordSymbol
-  chordSymbolFrom: From
-  beat: Beat
-  beatFrom: From
-  midiNoteNumber: MIDINoteNumber
-  midiNoteNumberFrom: From
-  value: Value
-  valueFrom: From
-  locale: Locale
-} = {
-  chordSymbol: INIT,
-  chordSymbolFrom: INIT,
-  beat: INIT,
-  beatFrom: INIT,
-  midiNoteNumber: INIT,
-  midiNoteNumberFrom: INIT,
-  value: INIT,
-  valueFrom: INIT,
+export const initialState: InitialState = {
+  chordSymbol: {
+    value: INIT,
+    from: INIT,
+  },
+  beat: {
+    value: INIT,
+    from: INIT,
+  },
+  midiNoteNumber: {
+    value: INIT,
+    from: INIT,
+  },
+  value: {
+    value: INIT,
+    from: INIT,
+  },
   locale: INIT,
 }

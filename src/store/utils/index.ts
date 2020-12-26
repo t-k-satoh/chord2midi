@@ -1,18 +1,24 @@
 import { INIT } from '../../constants'
-import { initialState } from '../state/index'
+import { InitialState } from '../state/types'
 
-export const generateHydrateState = (
-  payload: typeof initialState
-): Partial<typeof initialState> => {
-  const tempObject: Partial<typeof initialState> = {}
+export const generateHydrateState = (payload: InitialState): Partial<InitialState> => {
+  const tempObject: Partial<InitialState> = {}
 
-  for (const property in payload) {
-    const value = payload[property]
+  Object.entries(payload).forEach((entry) => {
+    const key = entry[0]
+    const value = entry[1]
+
+    if (typeof value === 'object') {
+      if (value.from !== INIT && value.value !== INIT) {
+        tempObject[key] = value
+      }
+      return
+    }
 
     if (value !== INIT) {
-      tempObject[property] = value
+      tempObject[key] = value
     }
-  }
+  })
 
   return tempObject
 }
