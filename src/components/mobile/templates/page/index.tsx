@@ -8,6 +8,7 @@ import * as Styles from './styles'
 export type Props = {
   locale: string
   isDarkMode: boolean
+  asPath: string
   isHome?: boolean
   isDisabledDownLoad?: boolean
   isDisabledShare?: boolean
@@ -22,6 +23,7 @@ export const Page: React.FC<Props> = ({
   isDarkMode,
   isDisabledDownLoad,
   isDisabledShare,
+  asPath,
   onClickDownLoad,
   onClickShare,
 }) => {
@@ -40,7 +42,7 @@ export const Page: React.FC<Props> = ({
       <Styles.Main>
         <Styles.Layer S_isShow={isShowSettings} onClick={closeSettings} />
         <Styles.Settings S_isShow={isShowSettings}>
-          <Nav locale={locale} version={version} />
+          <Nav locale={locale} version={version} isHome={isHome} asPath={asPath} />
         </Styles.Settings>
         <Styles.Header>
           <MainHeader

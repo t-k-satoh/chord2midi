@@ -13,6 +13,8 @@ const Template: Story<Props> = (args) => <Nav {...args} />
 const props: Props = {
   version: '0.1.0',
   locale: 'ja',
+  isHome: true,
+  asPath: '/?beat=3/4',
 }
 
 export const Component = Template.bind({})

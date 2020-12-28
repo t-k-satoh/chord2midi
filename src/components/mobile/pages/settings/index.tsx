@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router'
 import React from 'react'
 import { ChordSymbol, Beat, MIDINoteNumber } from '../../../../types'
 import { Setting } from '../../../common/templates/settings'
@@ -16,8 +17,10 @@ export type Props = {
 }
 
 export const MobileSetting: React.FC<Props> = (props) => {
+  const router = useRouter()
+
   return (
-    <Page locale={props.locale} isDarkMode={props.isDarkMode}>
+    <Page locale={props.locale} isDarkMode={props.isDarkMode} asPath={router.asPath}>
       <Frame>
         <Setting {...props} />
       </Frame>

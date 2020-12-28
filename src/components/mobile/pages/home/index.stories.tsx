@@ -20,6 +20,10 @@ const props: Props = {
   onChangeValue: (value: string) => {
     console.log(value)
   },
+  onClickShare: () => {
+    console.log()
+  },
+  asPath: '',
 }
 
 export const Component = Template.bind({})

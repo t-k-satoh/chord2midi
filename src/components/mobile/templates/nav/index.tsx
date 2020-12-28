@@ -12,12 +12,14 @@ import * as Styles from './styles'
 export type Props = {
   locale: string
   version: string
+  isHome: boolean
+  asPath: string
 }
 
-export const Nav: React.FC<Props> = ({ locale, version }) => {
+export const Nav: React.FC<Props> = ({ locale, version, asPath, isHome }) => {
   const navList: { label: string; path: string; key: string }[] = React.useMemo(() => {
     return [
-      { label: locale === 'ja' ? 'ホーム' : 'Home', path: '/', key: 'home' },
+      { label: locale === 'ja' ? 'ホーム' : 'Home', path: `${isHome ? asPath : '/'}`, key: 'home' },
       { label: locale === 'ja' ? '設定' : 'Settings', path: '/settings', key: 'settings' },
       { label: locale === 'ja' ? '使い方' : 'How to use', path: '/how_to_use', key: 'how_to_use' },
       { label: locale === 'ja' ? 'お問い合わせ' : 'Contact', path: '/contact', key: 'contact' },
@@ -27,7 +29,7 @@ export const Nav: React.FC<Props> = ({ locale, version }) => {
         key: 'specifications',
       },
     ]
-  }, [locale])
+  }, [locale, asPath, isHome])
 
   const generateIcon = React.useCallback((key: string): JSX.Element => {
     const size = 20

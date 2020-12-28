@@ -14,10 +14,12 @@ export type Props = {
   isDarkMode: boolean
   currentValue: string
   locale: string
+  asPath: string
   chordSymbol: ChordSymbol
   beat: Beat
   midiNoteNumber: MIDINoteNumber
   onChangeValue: (value: string) => void
+  onClickShare: () => void
 }
 
 export const MobileHome: React.FC<Props> = ({
@@ -25,9 +27,11 @@ export const MobileHome: React.FC<Props> = ({
   locale,
   currentValue,
   chordSymbol,
+  asPath,
   beat,
   midiNoteNumber,
   onChangeValue,
+  onClickShare,
 }) => {
   const [data, setData] = React.useState<Data[]>([])
   const [chords, setChords] = React.useState<Chord[]>([])
@@ -71,9 +75,9 @@ export const MobileHome: React.FC<Props> = ({
     saveMIDIFile(data)
   }, [data, isDataError])
 
-  const onClickShare = React.useCallback(() => {
-    console.log(onClickShare)
-  }, [])
+  const handlerShare = React.useCallback(() => {
+    onClickShare()
+  }, [onClickShare])
 
   React.useEffect(() => {
     const { data, notes, bars, chords } = makeAllData(memoizeCurrentValue, baseNote, memoizeBeat)
@@ -88,11 +92,12 @@ export const MobileHome: React.FC<Props> = ({
     <Page
       locale={locale}
       onClickDownLoad={onClickDownLoad}
-      onClickShare={onClickShare}
+      onClickShare={handlerShare}
       isDisabledDownLoad={isDataError}
       isDisabledShare={!canShare}
       isHome={true}
       isDarkMode={isDarkMode}
+      asPath={asPath}
     >
       <Frame>
         <Styles.ViewArea>

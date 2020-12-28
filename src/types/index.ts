@@ -58,6 +58,13 @@ export type MIDINoteNumber = number | Init
 
 export type Locale = 'en' | 'ja' | Init
 
-export type From = 'url' | 'app' | Init
+export type From = 'url' | 'app' | 'launch' | Init
 
 export type Value = string | Init
+
+export type Query = {
+  value: string
+  chordSymbol: typeof CHORD_SYMBOL[number]
+  beat: typeof BEAT[number]
+  midiNoteNumber: string
+}
