@@ -4,10 +4,10 @@ import logger from 'redux-logger'
 import { ActionTypes } from './actions'
 import { reducers } from './reducer'
 import { initialState } from './state'
-import { InitialState } from './state/types'
+import { State } from './state/types'
 
-export const makeStore: MakeStore<InitialState, ActionTypes> = () => {
+export const makeStore: MakeStore<State, ActionTypes> = () => {
   return createStore(reducers, initialState, applyMiddleware(logger))
 }
 
-export const wrapper = createWrapper<InitialState, ActionTypes>(makeStore)
+export const wrapper = createWrapper<State, ActionTypes>(makeStore)

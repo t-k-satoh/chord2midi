@@ -14,7 +14,11 @@ const props: Props = {
   version: '0.1.0',
   locale: 'ja',
   isHome: true,
-  asPath: '/?beat=3/4',
+  isDarkMode: true,
+  query: {
+    beat: '3/4',
+    midiNoteNumber: '3',
+  },
 }
 
 export const Component = Template.bind({})

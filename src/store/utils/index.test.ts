@@ -4,31 +4,14 @@ import { generateHydrateState } from '.'
 
 describe(generateHydrateState.name, () => {
   test('All Init value', () => {
-    const testValue: typeof initialState = {
-      chordSymbol: {
-        value: INIT,
-        from: INIT,
-      },
-      beat: {
-        value: INIT,
-        from: INIT,
-      },
-      midiNoteNumber: {
-        value: INIT,
-        from: INIT,
-      },
-      value: {
-        value: INIT,
-        from: INIT,
-      },
-      locale: INIT,
-    }
+    const testValue: typeof initialState = initialState
 
     expect(generateHydrateState(testValue)).toEqual({})
   })
 
   test('一部に値がある場合', () => {
     const testValue: typeof initialState = {
+      ...initialState,
       chordSymbol: {
         value: 'C',
         from: 'app',

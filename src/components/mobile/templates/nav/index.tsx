@@ -5,21 +5,25 @@ import Home from '@spectrum-icons/workflow/Home'
 import Info from '@spectrum-icons/workflow/Info'
 import Settings from '@spectrum-icons/workflow/Settings'
 import Link from 'next/link'
-
 import React from 'react'
+import { INIT } from '../../../../constants'
+import { StateToProps } from '../../../../containers/mobile/templates/nav'
+import { generateQuery } from '../../../../utils/generate_query'
 import * as Styles from './styles'
 
-export type Props = {
-  locale: string
-  version: string
-  isHome: boolean
-  asPath: string
-}
+export type Props = StateToProps
 
-export const Nav: React.FC<Props> = ({ locale, version, asPath, isHome }) => {
+export const Nav: React.FC<Props> = ({ locale, query, isHome, version }) => {
+  const newQuery = React.useMemo(() => (query !== INIT ? query : {}), [query])
+  const homePath = React.useMemo(() => generateQuery(newQuery), [newQuery])
+
   const navList: { label: string; path: string; key: string }[] = React.useMemo(() => {
     return [
-      { label: locale === 'ja' ? 'ホーム' : 'Home', path: `${isHome ? asPath : '/'}`, key: 'home' },
+      {
+        label: locale === 'ja' ? 'ホーム' : 'Home',
+        path: `${isHome ? homePath : '/'}`,
+        key: 'home',
+      },
       { label: locale === 'ja' ? '設定' : 'Settings', path: '/settings', key: 'settings' },
       { label: locale === 'ja' ? '使い方' : 'How to use', path: '/how_to_use', key: 'how_to_use' },
       { label: locale === 'ja' ? 'お問い合わせ' : 'Contact', path: '/contact', key: 'contact' },
@@ -29,7 +33,7 @@ export const Nav: React.FC<Props> = ({ locale, version, asPath, isHome }) => {
         key: 'specifications',
       },
     ]
-  }, [locale, asPath, isHome])
+  }, [locale, homePath, isHome])
 
   const generateIcon = React.useCallback((key: string): JSX.Element => {
     const size = 20

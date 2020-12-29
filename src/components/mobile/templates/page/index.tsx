@@ -1,60 +1,29 @@
 import React from 'react'
 import Div100vh from 'react-div-100vh'
-import { version } from '../../../../../package.json'
-import { MainHeader } from '../header'
-import { Nav } from '../nav'
+import { HeaderContainer } from '../../../../containers/mobile/templates/header'
+import { NavContainer } from '../../../../containers/mobile/templates/nav'
+import { StateToProps, DispatchToProps } from '../../../../containers/mobile/templates/page'
+import { generateInitBool } from '../../../../utils/generate_init_bool'
 import * as Styles from './styles'
 
-export type Props = {
-  locale: string
-  isDarkMode: boolean
-  asPath: string
-  isHome?: boolean
-  isDisabledDownLoad?: boolean
-  isDisabledShare?: boolean
-  onClickDownLoad?: () => void
-  onClickShare?: () => void
-}
+export type Props = StateToProps & DispatchToProps
 
-export const Page: React.FC<Props> = ({
-  locale,
-  children,
-  isHome,
-  isDarkMode,
-  isDisabledDownLoad,
-  isDisabledShare,
-  asPath,
-  onClickDownLoad,
-  onClickShare,
-}) => {
-  const [isShowSettings, setIsShowSettings] = React.useState<boolean>(false)
+export const Page: React.FC<Props> = ({ children, isShowNav, onCloseNav }) => {
+  const newIsShowNav = React.useMemo(() => generateInitBool(isShowNav, false), [isShowNav])
 
-  const showSettings = React.useCallback(() => {
-    setIsShowSettings(true)
-  }, [])
-
-  const closeSettings = React.useCallback(() => {
-    setIsShowSettings(false)
-  }, [])
+  const handlerCloseNav = React.useCallback(() => {
+    onCloseNav()
+  }, [onCloseNav])
 
   return (
     <Div100vh>
       <Styles.Main>
-        <Styles.Layer S_isShow={isShowSettings} onClick={closeSettings} />
-        <Styles.Settings S_isShow={isShowSettings}>
-          <Nav locale={locale} version={version} isHome={isHome} asPath={asPath} />
+        <Styles.Layer S_isShow={newIsShowNav} onClick={handlerCloseNav} />
+        <Styles.Settings S_isShow={newIsShowNav}>
+          <NavContainer />
         </Styles.Settings>
         <Styles.Header>
-          <MainHeader
-            version={version}
-            isHome={isHome}
-            isDarkMode={isDarkMode}
-            isDisabledDownLoad={isDisabledDownLoad}
-            isDisabledShare={isDisabledShare}
-            onClickSettings={showSettings}
-            onClickDownLoad={onClickDownLoad}
-            onClickShare={onClickShare}
-          />
+          <HeaderContainer />
         </Styles.Header>
         {children}
       </Styles.Main>

@@ -8,12 +8,12 @@ import { MobileSetting } from '../src/components/mobile/pages/settings'
 import { wrapper } from '../src/store'
 import { actions } from '../src/store/actions'
 import { ActionTypes } from '../src/store/actions'
-import { InitialState } from '../src/store/state/types'
+import { State } from '../src/store/state/types'
 import { GlobalStyle } from '../src/styles/global_styles'
 import { Locale } from '../src/types'
 
 export const getStaticProps = wrapper.getStaticProps((ctx) => {
-  const newCtx = ctx as GetStaticPropsContext & { store: Store<InitialState, ActionTypes> }
+  const newCtx = ctx as GetStaticPropsContext & { store: Store<State, ActionTypes> }
   const locale = newCtx.locale as Locale
 
   newCtx.store.dispatch(actions.locale({ locale }))
@@ -22,10 +22,7 @@ export const getStaticProps = wrapper.getStaticProps((ctx) => {
 const Page: NextPage = () => {
   const dispatch = useDispatch()
   const { value } = useDarkMode(false)
-  const state = useSelector<InitialState, InitialState>(
-    (state: InitialState) => state,
-    shallowEqual
-  )
+  const state = useSelector<State, State>((state: State) => state, shallowEqual)
 
   return (
     <>

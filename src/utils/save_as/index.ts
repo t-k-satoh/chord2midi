@@ -1,7 +1,7 @@
 import { Midi } from '@tonejs/midi'
 import { saveAs } from 'file-saver'
 import { v4 as uuidv4 } from 'uuid'
-import { Data } from '../../../../types'
+import { Data } from '../../types'
 
 export const saveMIDIFile = (data: Data[], name?: string): void => {
   const midi = new Midi()

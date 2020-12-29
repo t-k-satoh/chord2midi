@@ -1,4 +1,4 @@
-import { Init, ChordSymbol, Beat, MIDINoteNumber } from '../types'
+import { Init, ChordSymbol, Beat, MIDINoteNumber, Url, App, Launch } from '../types'
 
 export const HeaderHight = 60
 
@@ -23,12 +23,26 @@ export const INIT: Init = 'init'
 
 export const LOCALES = ['en', 'ja'] as const
 
-export const initValue: {
+export const FROM: {
+  URL: Url
+  APP: App
+  LAUNCH: Launch
+  INIT: Init
+} = {
+  URL: 'url',
+  APP: 'app',
+  LAUNCH: 'launch',
+  INIT: 'init',
+}
+
+export const INIT_VALUE: {
   chordSymbol: ChordSymbol
   beat: Beat
   midiNoteNumber: MIDINoteNumber
+  value: string
 } = {
   chordSymbol: 'C',
   beat: '4/4',
   midiNoteNumber: 3,
+  value: '',
 }

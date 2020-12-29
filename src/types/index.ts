@@ -50,6 +50,12 @@ export type Error = {
 
 export type Init = 'init'
 
+export type Url = 'url'
+
+export type App = 'app'
+
+export type Launch = 'launch'
+
 export type ChordSymbol = typeof CHORD_SYMBOL[number] | Init
 
 export type Beat = typeof BEAT[number] | Init
@@ -58,7 +64,7 @@ export type MIDINoteNumber = number | Init
 
 export type Locale = 'en' | 'ja' | Init
 
-export type From = 'url' | 'app' | 'launch' | Init
+export type From = Url | App | Launch | Init
 
 export type Value = string | Init
 

@@ -11,19 +11,13 @@ export default {
 const Template: Story<Props> = (args) => <MobileHome {...args} />
 
 const props: Props = {
-  currentValue: 'C',
-  locale: 'ja',
-  chordSymbol: 'C',
-  beat: '4/4',
-  midiNoteNumber: 3,
-  isDarkMode: true,
+  value: { value: 'C', from: 'init' },
+  chordSymbol: { value: 'C', from: 'init' },
+  beat: { value: '3/4', from: 'init' },
+  midiNoteNumber: { value: 3, from: 'init' },
   onChangeValue: (value: string) => {
     console.log(value)
   },
-  onClickShare: () => {
-    console.log()
-  },
-  asPath: '',
 }
 
 export const Component = Template.bind({})

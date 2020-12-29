@@ -1,56 +1,35 @@
-// import { DialogContainer, AlertDialog } from '@adobe/react-spectrum'
 import React from 'react'
-import { ChordSymbol, Beat, MIDINoteNumber } from '../../../../types'
-import { Data, Note, Bar, Chord } from '../../../../types'
+import { INIT } from '../../../../constants'
+import { StateToProps, DispatchToProps } from '../../../../containers/mobile/pages/home'
+import { PageContainer } from '../../../../containers/mobile/templates/page'
+import { Note, Bar, Chord } from '../../../../types'
+import { makeAllData } from '../../../../utils/data'
 import { InputArea } from '../../../common/templates/input_area'
 import { ViewArea } from '../../../common/templates/view_area'
-import { makeAllData } from '../../../common/utils/data'
-import { saveMIDIFile } from '../../../common/utils/save_as'
 import { Frame } from '../../templates/frame'
-import { Page } from '../../templates/page'
 import * as Styles from './styles'
 
-export type Props = {
-  isDarkMode: boolean
-  currentValue: string
-  locale: string
-  asPath: string
-  chordSymbol: ChordSymbol
-  beat: Beat
-  midiNoteNumber: MIDINoteNumber
-  onChangeValue: (value: string) => void
-  onClickShare: () => void
-}
+export type Props = StateToProps & DispatchToProps
 
 export const MobileHome: React.FC<Props> = ({
-  isDarkMode,
-  locale,
-  currentValue,
+  value,
   chordSymbol,
-  asPath,
   beat,
   midiNoteNumber,
   onChangeValue,
-  onClickShare,
 }) => {
-  const [data, setData] = React.useState<Data[]>([])
   const [chords, setChords] = React.useState<Chord[]>([])
   const [notes, setNotes] = React.useState<Note[]>([])
   const [bars, setBars] = React.useState<Bar[]>([])
 
-  const memoizeCurrentValue = React.useMemo(() => currentValue, [currentValue])
-  const memoizeBeat = React.useMemo(() => beat, [beat])
+  const memoizeValue = React.useMemo(() => (value.value === INIT ? '' : value.value), [value.value])
+  const memoizeBeat = React.useMemo(() => beat.value, [beat.value])
   const baseNote = React.useMemo(
     () => ({
-      symbol: chordSymbol,
-      number: midiNoteNumber,
+      symbol: chordSymbol.value,
+      number: midiNoteNumber.value,
     }),
-    [chordSymbol, midiNoteNumber]
-  )
-  const canShare = React.useMemo(() => bars.length !== 0, [bars])
-  const isDataError = React.useMemo(
-    () => notes.some(({ isError }) => isError) || data.length === 0,
-    [notes, data]
+    [chordSymbol.value, midiNoteNumber.value]
   )
   const isError = React.useMemo(
     () =>
@@ -67,50 +46,23 @@ export const MobileHome: React.FC<Props> = ({
     [onChangeValue]
   )
 
-  const onClickDownLoad = React.useCallback(() => {
-    if (isDataError) {
-      return
-    }
-
-    saveMIDIFile(data)
-  }, [data, isDataError])
-
-  const handlerShare = React.useCallback(() => {
-    onClickShare()
-  }, [onClickShare])
-
   React.useEffect(() => {
-    const { data, notes, bars, chords } = makeAllData(memoizeCurrentValue, baseNote, memoizeBeat)
-
-    setData(data)
+    const { notes, bars, chords } = makeAllData(memoizeValue, baseNote, memoizeBeat)
     setNotes(notes)
     setChords(chords)
     setBars(bars)
-  }, [memoizeCurrentValue, baseNote, memoizeBeat])
+  }, [memoizeValue, baseNote, memoizeBeat])
 
   return (
-    <Page
-      locale={locale}
-      onClickDownLoad={onClickDownLoad}
-      onClickShare={handlerShare}
-      isDisabledDownLoad={isDataError}
-      isDisabledShare={!canShare}
-      isHome={true}
-      isDarkMode={isDarkMode}
-      asPath={asPath}
-    >
+    <PageContainer>
       <Frame>
         <Styles.ViewArea>
-          <ViewArea value={currentValue} baseNote={baseNote} beat={memoizeBeat} isBrowser={false} />
+          <ViewArea value={memoizeValue} baseNote={baseNote} beat={memoizeBeat} isBrowser={false} />
         </Styles.ViewArea>
         <Styles.InputArea>
-          <InputArea
-            onChangeValue={handlerChangeValue}
-            value={memoizeCurrentValue}
-            isError={isError}
-          />
+          <InputArea onChangeValue={handlerChangeValue} value={memoizeValue} isError={isError} />
         </Styles.InputArea>
       </Frame>
-    </Page>
+    </PageContainer>
   )
 }

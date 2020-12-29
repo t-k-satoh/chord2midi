@@ -1,7 +1,7 @@
 import { INIT } from '../../constants'
-import { InitialState } from './types'
+import { State } from './types'
 
-export const initialState: InitialState = {
+export const initialState: State = {
   chordSymbol: {
     value: INIT,
     from: INIT,
@@ -19,4 +19,12 @@ export const initialState: InitialState = {
     from: INIT,
   },
   locale: INIT,
+  query: INIT,
+  version: INIT,
+  isDarkMode: INIT,
+  isBrowser: INIT,
+  isHome: INIT,
+  isDisabledDownLoad: INIT,
+  isDisabledShare: INIT,
+  isShowNav: INIT,
 }

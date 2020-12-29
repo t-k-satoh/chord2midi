@@ -1,5 +1,5 @@
 import { Chord as tonalChord, Note as tonalNote } from '@tonaljs/tonal'
-import { Bar, Chord, Note, Data, Beat } from '../../../../types'
+import { Bar, Chord, Note, Data, Beat } from '../../types'
 
 export const makeBars = (chordText: string, beat: Beat): Bar[] => {
   const newBeat = {

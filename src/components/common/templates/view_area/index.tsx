@@ -1,7 +1,7 @@
 import { Note as tonalNote } from '@tonaljs/tonal'
 import React from 'react'
 import { ChordSymbol, Beat, MIDINoteNumber } from '../../../../types'
-import { makeAllData } from '../../utils/data'
+import { makeAllData } from '../../../../utils/data'
 import * as Styles from './styles'
 import { makeViewData } from './utils'
 

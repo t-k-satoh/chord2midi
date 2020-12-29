@@ -1,9 +1,8 @@
-import { useRouter } from 'next/router'
 import React from 'react'
+import { PageContainer } from '../../../../containers/mobile/templates/page'
 import { ChordSymbol, Beat, MIDINoteNumber } from '../../../../types'
 import { Setting } from '../../../common/templates/settings'
 import { Frame } from '../../templates/frame'
-import { Page } from '../../templates/page'
 
 export type Props = {
   locale: string
@@ -17,13 +16,11 @@ export type Props = {
 }
 
 export const MobileSetting: React.FC<Props> = (props) => {
-  const router = useRouter()
-
   return (
-    <Page locale={props.locale} isDarkMode={props.isDarkMode} asPath={router.asPath}>
+    <PageContainer>
       <Frame>
         <Setting {...props} />
       </Frame>
-    </Page>
+    </PageContainer>
   )
 }

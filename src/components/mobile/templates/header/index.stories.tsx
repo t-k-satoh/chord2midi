@@ -16,14 +16,9 @@ const props: Props = {
   isDarkMode: true,
   isDisabledDownLoad: false,
   isDisabledShare: false,
-  onClickSettings: () => {
-    'clicked'
-  },
-  onClickDownLoad: () => {
-    'clicked'
-  },
-  onClickShare: () => {
-    'clicked'
+  isShowNav: false,
+  onClickNav: (value) => {
+    console.log({ value })
   },
 }
 

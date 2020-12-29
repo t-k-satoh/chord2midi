@@ -1,4 +1,4 @@
-import { Bar, Chord, Note, Data } from '../../../../types'
+import { Bar, Chord, Note, Data } from '../../types'
 import { makeBars, makeChords, makeNotes, makeData } from '.'
 
 const allTestData = 'C | C/G | A B | F E D'
