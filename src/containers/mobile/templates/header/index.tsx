@@ -9,14 +9,19 @@ export type DispatchToProps = {
   onClickNav: (isShowNav: State['isShowNav']) => void
 }
 
-export type StateToProps = {
-  version: State['version']
-  isDarkMode: State['isDarkMode']
-  isHome: State['isHome']
-  isDisabledDownLoad: State['isDisabledDownLoad']
-  isDisabledShare: State['isDisabledShare']
-  isShowNav: State['isShowNav']
-}
+export type StateToProps = Pick<
+  State,
+  | 'value'
+  | 'chordSymbol'
+  | 'beat'
+  | 'midiNoteNumber'
+  | 'version'
+  | 'isDarkMode'
+  | 'isHome'
+  | 'isDisabledDownLoad'
+  | 'isDisabledShare'
+  | 'isShowNav'
+>
 
 export const HeaderContainer = (): JSX.Element => {
   const dispatch = useDispatch()
@@ -40,11 +45,16 @@ export const HeaderContainer = (): JSX.Element => {
   const stateToProps = React.useMemo(
     () =>
       utilitySelector<StateToProps>(state, [
+        'value',
+        'chordSymbol',
+        'beat',
+        'midiNoteNumber',
         'version',
         'isDarkMode',
         'isHome',
         'isDisabledDownLoad',
         'isDisabledShare',
+        'isShowNav',
       ]),
     [state]
   )

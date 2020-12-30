@@ -20,6 +20,10 @@ const props: Props = {
   onClickNav: (value) => {
     console.log({ value })
   },
+  value: { value: 'C', from: 'init' },
+  chordSymbol: { value: 'C', from: 'init' },
+  beat: { value: '3/4', from: 'init' },
+  midiNoteNumber: { value: 3, from: 'init' },
 }
 
 export const Component = Template.bind({})

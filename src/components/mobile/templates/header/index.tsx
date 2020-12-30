@@ -6,7 +6,11 @@ import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 import { DispatchToProps, StateToProps } from '../../../../containers/mobile/templates/header'
+import { makeAllData } from '../../../../utils/data'
 import { generateInitBool } from '../../../../utils/generate_init_bool'
+import { generateQuery } from '../../../../utils/generate_query'
+import { makeAllDataArg } from '../../../../utils/make_all_data_arg'
+import { saveMIDIFile } from '../../../../utils/save_as'
 import * as Styles from './styles'
 
 export type Props = DispatchToProps & StateToProps
@@ -19,6 +23,10 @@ export const MainHeader: React.FC<Props> = ({
   isDisabledShare,
   isShowNav,
   onClickNav,
+  value,
+  beat,
+  midiNoteNumber,
+  chordSymbol,
 }) => {
   const iconImage: string = React.useMemo(() => (isDarkMode ? '/icon_wh.png' : '/icon_blk.png'), [
     isDarkMode,
@@ -38,11 +46,26 @@ export const MainHeader: React.FC<Props> = ({
     onClickNav(!isShowNav)
   }, [isShowNav, onClickNav])
   const onClickShare = React.useCallback(() => {
-    console.log('onClickShare')
-  }, [])
+    console.log(
+      generateQuery({
+        value: value.value,
+        beat: beat.value,
+        midiNoteNumber: String(midiNoteNumber.value),
+        chordSymbol: chordSymbol.value,
+      })
+    )
+  }, [value.value, beat.value, midiNoteNumber.value, chordSymbol.value])
   const onClickDownLoad = React.useCallback(() => {
-    console.log('onClickDownLoad')
-  }, [])
+    const [chordText, baseNote, newBeat] = makeAllDataArg({
+      value,
+      beat,
+      midiNoteNumber,
+      chordSymbol,
+    })
+    const { data } = makeAllData(chordText, baseNote, newBeat)
+
+    saveMIDIFile(data)
+  }, [value, beat, midiNoteNumber, chordSymbol])
 
   return (
     <Header width={'100%'}>

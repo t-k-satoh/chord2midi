@@ -23,16 +23,12 @@ export const launch = (
     version,
   ]
 
-  if (!allValues.some((value) => value === INIT)) {
-    return
-  }
-
   // Add Beat
   if (
     query !== INIT &&
     BEAT.includes(query.beat) &&
     query.beat !== undefined &&
-    state.beat.from !== FROM.URL
+    state.beat.from === FROM.INIT
   ) {
     dispatch(actions.beat({ beat: { value: query.beat, from: FROM.URL } }))
   } else if (state.beat.from === FROM.INIT) {
@@ -44,7 +40,8 @@ export const launch = (
     query !== INIT &&
     CHORD_SYMBOL.includes(query.chordSymbol) &&
     query.chordSymbol !== undefined &&
-    state.chordSymbol.from !== FROM.URL
+    state.chordSymbol.from !== FROM.URL &&
+    state.chordSymbol.from !== FROM.APP
   ) {
     dispatch(actions.chordSymbol({ chordSymbol: { value: query.chordSymbol, from: FROM.URL } }))
   } else if (state.chordSymbol.from === FROM.INIT) {
@@ -58,7 +55,8 @@ export const launch = (
     query !== INIT &&
     _.isNumber(Number(query.midiNoteNumber)) &&
     query.midiNoteNumber !== undefined &&
-    state.midiNoteNumber.from !== FROM.URL
+    state.midiNoteNumber.from !== FROM.URL &&
+    state.midiNoteNumber.from !== FROM.APP
   ) {
     dispatch(
       actions.midiNoteNumber({
@@ -74,21 +72,28 @@ export const launch = (
   }
 
   // Add Value
-  if (query !== INIT && query.value !== undefined && state.value.from !== FROM.URL) {
+  if (
+    query !== INIT &&
+    query.value !== undefined &&
+    state.value.from !== FROM.URL &&
+    state.value.from !== FROM.APP
+  ) {
     dispatch(actions.value({ value: { value: query.value, from: FROM.URL } }))
   } else if (state.value.from === FROM.INIT) {
     dispatch(actions.value({ value: { value: INIT_VALUE.value, from: FROM.LAUNCH } }))
   }
 
-  // Add Query
-  dispatch(actions.query({ query }))
+  if (allValues.some((value) => value === INIT)) {
+    // Add Query
+    dispatch(actions.query({ query }))
 
-  // Add IsDarkMode
-  dispatch(actions.isDarkMode({ isDarkMode }))
+    // Add IsDarkMode
+    dispatch(actions.isDarkMode({ isDarkMode }))
 
-  // Add IsBrowser
-  dispatch(actions.isBrowser({ isBrowser }))
+    // Add IsBrowser
+    dispatch(actions.isBrowser({ isBrowser }))
 
-  // Add Version
-  dispatch(actions.version({ version }))
+    // Add Version
+    dispatch(actions.version({ version }))
+  }
 }
