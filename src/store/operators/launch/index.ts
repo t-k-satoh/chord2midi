@@ -28,7 +28,8 @@ export const launch = (
     query !== INIT &&
     BEAT.includes(query.beat) &&
     query.beat !== undefined &&
-    state.beat.from === FROM.INIT
+    state.beat.from !== FROM.URL &&
+    state.beat.from !== FROM.APP
   ) {
     dispatch(actions.beat({ beat: { value: query.beat, from: FROM.URL } }))
   } else if (state.beat.from === FROM.INIT) {
