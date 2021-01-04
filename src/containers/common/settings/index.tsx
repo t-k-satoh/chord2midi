@@ -4,7 +4,7 @@ import { isBrowser } from 'react-device-detect'
 import { useSelector, shallowEqual, useDispatch } from 'react-redux'
 import useDarkMode from 'use-dark-mode'
 import { version } from '../../../../package.json'
-import { Home } from '../../../components/common/pages/home'
+import { Setting } from '../../../components/common/pages/settings'
 import * as operators from '../../../store/operators'
 import { State } from '../../../store/state/types'
 import * as utils from '../../../utils'
@@ -18,7 +18,7 @@ export type StateToProps = {
   isLoading: boolean
 }
 
-export const HomeContainer: React.FC = () => {
+export const SettingContainer = (): JSX.Element => {
   const dispatch = useDispatch()
   const router = useRouter()
   const state = useSelector<State, State>((state: State) => state, shallowEqual)
@@ -38,10 +38,6 @@ export const HomeContainer: React.FC = () => {
   }, [query, isDarkMode])
 
   React.useEffect(() => {
-    console.log({ router })
-  }, [router])
-
-  React.useEffect(() => {
     dispatch(operators.changeIsHome(router.pathname === '/'))
   }, [router.pathname, dispatch])
 
@@ -49,5 +45,5 @@ export const HomeContainer: React.FC = () => {
     dispatch(operators.launch(launchArg))
   }, [dispatch, launchArg])
 
-  return <Home onLaunch={onLaunch} isLoading={hasInit} isBrowser={isBrowser} />
+  return <Setting onLaunch={onLaunch} isLoading={hasInit} isBrowser={isBrowser} />
 }

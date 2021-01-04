@@ -4,7 +4,7 @@ import React from 'react'
 import { Setting, Props } from '.'
 
 export default {
-  title: `/common/${Setting.name}`,
+  title: `/common/templates/${Setting.name}`,
   component: Setting,
   argTypes: { onChangeBaseNoteNumber: { action: 'clicked' } },
 } as Meta

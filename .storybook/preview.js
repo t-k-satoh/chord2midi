@@ -17,18 +17,18 @@ export const parameters = {
 export const decorators = [
   (Story) => (
     <RouterContext.Provider
-      value={{
-        push: () => Promise.resolve(),
-        replace: () => Promise.resolve(),
-        prefetch: () => Promise.resolve(),
-      }}
-    >
-      <UIProvider theme={defaultTheme} minHeight="100%">
-        <ThemeProvider theme={theme}>
-          <Reset />
-          <Story />
-        </ThemeProvider>
-      </UIProvider>
-    </RouterContext.Provider>
+        value={{
+          push: () => Promise.resolve(),
+          replace: () => Promise.resolve(),
+          prefetch: () => Promise.resolve(),
+        }}
+      >
+        <UIProvider theme={defaultTheme} minHeight="100%">
+          <ThemeProvider theme={theme}>
+            <Reset />
+            <Story />
+          </ThemeProvider>
+        </UIProvider>
+      </RouterContext.Provider>
   ),
 ]

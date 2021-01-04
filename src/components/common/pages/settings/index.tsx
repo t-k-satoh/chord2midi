@@ -1,12 +1,12 @@
 import React from 'react'
-import { DispatchToProps, StateToProps } from '../../../../containers/common/home'
-import { MobileHomeContainer } from '../../../../containers/mobile/pages/home'
+import { DispatchToProps, StateToProps } from '../../../../containers/common/settings'
+import { MobileSettingsContainer } from '../../../../containers/mobile/pages/settings'
 import { generateInitBool } from '../../../../utils/generate_init_bool'
 import { Loading } from '../../templates/loading'
 
 export type Props = DispatchToProps & StateToProps
 
-export const Home: React.FC<Props> = ({ onLaunch, isBrowser, isLoading }) => {
+export const Setting: React.FC<Props> = ({ onLaunch, isBrowser, isLoading }) => {
   const memoizeIsBrowser = React.useMemo(() => generateInitBool(isBrowser, true), [isBrowser])
 
   React.useEffect(() => {
@@ -14,6 +14,8 @@ export const Home: React.FC<Props> = ({ onLaunch, isBrowser, isLoading }) => {
   }, [onLaunch])
 
   return (
-    <Loading isLoading={isLoading}>{memoizeIsBrowser ? <></> : <MobileHomeContainer />}</Loading>
+    <Loading isLoading={isLoading}>
+      {memoizeIsBrowser ? <></> : <MobileSettingsContainer />}
+    </Loading>
   )
 }

@@ -36,14 +36,14 @@ export const selector = {
   ),
 }
 
-export const utilitySelector = <T extends Partial<State>>(
-  state: State,
-  keys: Array<keyof State>
-): T => {
-  const tempState = {}
+export const utilitySelector = <T extends Partial<State>, K extends ReadonlyArray<keyof T>>(
+  state: T,
+  keys: K
+): Pick<T, K[number]> => {
+  const tempState: Partial<T> = {}
 
   keys.forEach((key) => {
-    const selector = createSelector<State, State[typeof key], State[typeof key]>(
+    const selector = createSelector<T, T[typeof key], T[typeof key]>(
       () => state[key],
       (value) => value
     )
@@ -51,5 +51,5 @@ export const utilitySelector = <T extends Partial<State>>(
     tempState[key] = selector(state)
   })
 
-  return tempState as T
+  return tempState as Pick<T, K[number]>
 }

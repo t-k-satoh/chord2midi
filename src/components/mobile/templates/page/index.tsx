@@ -1,31 +1,37 @@
 import React from 'react'
 import Div100vh from 'react-div-100vh'
-import { HeaderContainer } from '../../../../containers/mobile/templates/header'
+import { MainHeader } from '../../../../components/mobile/templates/header'
 import { NavContainer } from '../../../../containers/mobile/templates/nav'
-import { StateToProps, DispatchToProps } from '../../../../containers/mobile/templates/page'
-import { generateInitBool } from '../../../../utils/generate_init_bool'
+import { StateToProps } from '../../../../containers/mobile/templates/page'
 import * as Styles from './styles'
 
-export type Props = StateToProps & DispatchToProps
+export type Props = StateToProps
 
-export const Page: React.FC<Props> = ({ children, isShowNav, onCloseNav }) => {
-  const newIsShowNav = React.useMemo(() => generateInitBool(isShowNav, false), [isShowNav])
+export const Page: React.FC<Props> = (props) => {
+  const [isShowNav, setIsShowNav] = React.useState<boolean>(false)
 
   const handlerCloseNav = React.useCallback(() => {
-    onCloseNav()
-  }, [onCloseNav])
+    setIsShowNav(false)
+  }, [setIsShowNav])
+
+  const onClickNav = React.useCallback(
+    (newIsShowNav: typeof isShowNav) => {
+      setIsShowNav(newIsShowNav)
+    },
+    [setIsShowNav]
+  )
 
   return (
     <Div100vh>
       <Styles.Main>
-        <Styles.Layer S_isShow={newIsShowNav} onClick={handlerCloseNav} />
-        <Styles.Settings S_isShow={newIsShowNav}>
+        <Styles.Layer S_isShow={isShowNav} onClick={handlerCloseNav} />
+        <Styles.Settings S_isShow={isShowNav}>
           <NavContainer />
         </Styles.Settings>
         <Styles.Header>
-          <HeaderContainer />
+          <MainHeader {...props} onClickNav={onClickNav} isShowNav={isShowNav} />
         </Styles.Header>
-        {children}
+        {props.children}
       </Styles.Main>
     </Div100vh>
   )

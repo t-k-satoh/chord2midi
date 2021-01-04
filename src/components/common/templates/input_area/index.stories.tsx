@@ -4,7 +4,7 @@ import React from 'react'
 import { InputArea, Props } from '.'
 
 export default {
-  title: `/common/${InputArea.name}`,
+  title: `/common/templates/${InputArea.name}`,
   component: InputArea,
 } as Meta
 

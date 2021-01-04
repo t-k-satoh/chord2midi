@@ -1,10 +1,7 @@
 import { NextPage, GetStaticPropsContext } from 'next'
-import { isBrowser } from 'react-device-detect'
-import { useSelector, shallowEqual, useDispatch } from 'react-redux'
 import { Store } from 'redux'
 import useDarkMode from 'use-dark-mode'
-import { Browser } from '../src/components/browser/pages/home'
-import { MobileSetting } from '../src/components/mobile/pages/settings'
+import { SettingContainer } from '../src/containers/common/settings'
 import { wrapper } from '../src/store'
 import { actions } from '../src/store/actions'
 import { ActionTypes } from '../src/store/actions'
@@ -20,33 +17,12 @@ export const getStaticProps = wrapper.getStaticProps((ctx) => {
 })
 
 const Page: NextPage = () => {
-  const dispatch = useDispatch()
   const { value } = useDarkMode(false)
-  const state = useSelector<State, State>((state: State) => state, shallowEqual)
 
   return (
     <>
       <GlobalStyle S_isNightMode={value} />
-      {isBrowser ? (
-        <Browser />
-      ) : (
-        <MobileSetting
-          locale={state.locale}
-          isDarkMode={value}
-          chordSymbol={state.chordSymbol.value}
-          beat={state.beat.value}
-          midiNoteNumber={state.midiNoteNumber.value}
-          onChangeBaseNoteNumber={(value) => {
-            dispatch(actions.midiNoteNumber({ midiNoteNumber: { value, from: 'app' } }))
-          }}
-          onChangeBaseNoteSymbol={(value) => {
-            dispatch(actions.chordSymbol({ chordSymbol: { value, from: 'app' } }))
-          }}
-          onChangeBeat={(value) => {
-            dispatch(actions.beat({ beat: { value, from: 'app' } }))
-          }}
-        />
-      )}
+      <SettingContainer />
     </>
   )
 }

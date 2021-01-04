@@ -18,8 +18,7 @@ export const NavContainer = (): JSX.Element => {
   const state = useSelector<State, State>((state: State) => state, shallowEqual)
 
   const stateToProps = React.useMemo(
-    () =>
-      utilitySelector<StateToProps>(state, ['locale', 'isDarkMode', 'query', 'isHome', 'version']),
+    () => utilitySelector(state, ['locale', 'isDarkMode', 'query', 'isHome', 'version']),
     [state]
   )
 

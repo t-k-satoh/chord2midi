@@ -12,10 +12,18 @@ const Template: Story<Props> = (args) => <MobileSetting {...args} />
 
 const props: Props = {
   locale: 'ja',
-  midiNoteNumber: 3,
-  chordSymbol: 'C',
-  isDarkMode: true,
-  beat: '4/4',
+  midiNoteNumber: {
+    value: 3,
+    from: 'app',
+  },
+  chordSymbol: {
+    value: 'C',
+    from: 'app',
+  },
+  beat: {
+    value: '4/4',
+    from: 'app',
+  },
   onChangeBaseNoteNumber: (value) => {
     console.log(JSON.stringify(value))
   },

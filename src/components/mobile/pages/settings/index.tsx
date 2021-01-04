@@ -1,25 +1,32 @@
 import React from 'react'
+import { StateToProps, DispatchToProps } from '../../../../containers/mobile/pages/settings'
 import { PageContainer } from '../../../../containers/mobile/templates/page'
-import { ChordSymbol, Beat, MIDINoteNumber } from '../../../../types'
 import { Setting } from '../../../common/templates/settings'
 import { Frame } from '../../templates/frame'
 
-export type Props = {
-  locale: string
-  chordSymbol: ChordSymbol
-  beat: Beat
-  midiNoteNumber: MIDINoteNumber
-  isDarkMode: boolean
-  onChangeBaseNoteSymbol: (baseNoteSymbol: ChordSymbol) => void
-  onChangeBaseNoteNumber: (baseNoteNumber: MIDINoteNumber) => void
-  onChangeBeat: (beat: Beat) => void
-}
+export type Props = StateToProps & DispatchToProps
 
-export const MobileSetting: React.FC<Props> = (props) => {
+export const MobileSetting: React.FC<Props> = ({
+  onChangeBaseNoteNumber,
+  onChangeBaseNoteSymbol,
+  onChangeBeat,
+  locale,
+  chordSymbol,
+  beat,
+  midiNoteNumber,
+}) => {
   return (
     <PageContainer>
       <Frame>
-        <Setting {...props} />
+        <Setting
+          onChangeBaseNoteNumber={onChangeBaseNoteNumber}
+          onChangeBaseNoteSymbol={onChangeBaseNoteSymbol}
+          onChangeBeat={onChangeBeat}
+          locale={locale}
+          chordSymbol={chordSymbol.value}
+          beat={beat.value}
+          midiNoteNumber={midiNoteNumber.value}
+        />
       </Frame>
     </PageContainer>
   )

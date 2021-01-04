@@ -44,7 +44,7 @@ export const HeaderContainer = (): JSX.Element => {
 
   const stateToProps = React.useMemo(
     () =>
-      utilitySelector<StateToProps>(state, [
+      utilitySelector(state, [
         'value',
         'chordSymbol',
         'beat',

@@ -1,29 +1,25 @@
 import _ from 'lodash'
 import { Dispatch } from 'react'
+import { ThunkAction } from 'redux-thunk'
 import { BEAT, CHORD_SYMBOL, INIT_VALUE, FROM } from '../../../constants'
 import { INIT } from '../../../constants'
-import { ActionTypes } from '../../actions'
-import { actions } from '../../actions'
+import { ActionTypes, actions } from '../../actions'
 import { State } from '../../state/types'
 
 export const launch = (
+  payload: Pick<
+    State,
+    'query' | 'isDarkMode' | 'isBrowser' | 'version' | 'isDisabledDownLoad' | 'isDisabledShare'
+  >
+): ThunkAction<Promise<void>, State, void, ActionTypes> => async (
   dispatch: Dispatch<ActionTypes>,
-  state: Pick<State, 'beat' | 'chordSymbol' | 'midiNoteNumber' | 'value'>
-) => (
-  query: State['query'],
-  isDarkMode: State['isDarkMode'],
-  isBrowser: State['isBrowser'],
-  version: State['version']
-): void => {
-  const allValues = [
-    ...Object.values(state).map(({ value }) => value),
-    query,
-    isDarkMode,
-    isBrowser,
-    version,
-  ]
+  getState: () => State
+) => {
+  const { query, isDarkMode, isBrowser, version, isDisabledDownLoad, isDisabledShare } = payload
+  const state = getState()
 
-  // Add Beat
+  dispatch(actions.query({ query }))
+
   if (
     query !== INIT &&
     BEAT.includes(query.beat) &&
@@ -36,7 +32,6 @@ export const launch = (
     dispatch(actions.beat({ beat: { value: INIT_VALUE.beat, from: FROM.LAUNCH } }))
   }
 
-  // Add ChordSymbol
   if (
     query !== INIT &&
     CHORD_SYMBOL.includes(query.chordSymbol) &&
@@ -51,7 +46,6 @@ export const launch = (
     )
   }
 
-  // Add MidiNoteNumber
   if (
     query !== INIT &&
     _.isNumber(Number(query.midiNoteNumber)) &&
@@ -72,7 +66,6 @@ export const launch = (
     )
   }
 
-  // Add Value
   if (
     query !== INIT &&
     query.value !== undefined &&
@@ -84,17 +77,10 @@ export const launch = (
     dispatch(actions.value({ value: { value: INIT_VALUE.value, from: FROM.LAUNCH } }))
   }
 
-  if (allValues.some((value) => value === INIT)) {
-    // Add Query
-    dispatch(actions.query({ query }))
-
-    // Add IsDarkMode
-    dispatch(actions.isDarkMode({ isDarkMode }))
-
-    // Add IsBrowser
-    dispatch(actions.isBrowser({ isBrowser }))
-
-    // Add Version
-    dispatch(actions.version({ version }))
-  }
+  dispatch(actions.query({ query }))
+  dispatch(actions.isDarkMode({ isDarkMode }))
+  dispatch(actions.isBrowser({ isBrowser }))
+  dispatch(actions.version({ version }))
+  dispatch(actions.isDisabledDownLoad({ isDisabledDownLoad }))
+  dispatch(actions.isDisabledShare({ isDisabledShare }))
 }
