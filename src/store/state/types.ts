@@ -20,5 +20,4 @@ export type State = {
   isHome: MergeInit<boolean>
   isDisabledDownLoad: MergeInit<boolean>
   isDisabledShare: MergeInit<boolean>
-  isShowNav: MergeInit<boolean>
 }

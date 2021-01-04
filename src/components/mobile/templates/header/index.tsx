@@ -5,7 +5,7 @@ import Share from '@spectrum-icons/workflow/Share'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
-import { DispatchToProps, StateToProps } from '../../../../containers/mobile/templates/header'
+import { State } from '../../../../store/state/types'
 import { makeAllData } from '../../../../utils/data'
 import { generateInitBool } from '../../../../utils/generate_init_bool'
 import { generateQuery } from '../../../../utils/generate_query'
@@ -13,7 +13,21 @@ import { makeAllDataArg } from '../../../../utils/make_all_data_arg'
 import { saveMIDIFile } from '../../../../utils/save_as'
 import * as Styles from './styles'
 
-export type Props = DispatchToProps & StateToProps
+export type Props = Pick<
+  State,
+  | 'value'
+  | 'chordSymbol'
+  | 'beat'
+  | 'midiNoteNumber'
+  | 'version'
+  | 'isDarkMode'
+  | 'isHome'
+  | 'isDisabledDownLoad'
+  | 'isDisabledShare'
+> & {
+  isShowNav: boolean
+  onClickNav: (isShowNav: boolean) => void
+}
 
 export const MainHeader: React.FC<Props> = ({
   version,
@@ -21,8 +35,8 @@ export const MainHeader: React.FC<Props> = ({
   isDarkMode,
   isDisabledDownLoad,
   isDisabledShare,
-  isShowNav,
   onClickNav,
+  isShowNav,
   value,
   beat,
   midiNoteNumber,

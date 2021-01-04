@@ -34,7 +34,6 @@ export const PageContainer: React.FC = ({ children }) => {
         'isHome',
         'isDisabledDownLoad',
         'isDisabledShare',
-        'isShowNav',
       ]),
     [state]
   )

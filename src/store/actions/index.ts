@@ -18,7 +18,6 @@ export const actions = {
   >(),
   isDisabledShare: createAction(ACTION_TYPES.IS_DISABLED_SHARE)<Pick<State, 'isDisabledShare'>>(),
   version: createAction(ACTION_TYPES.VERSION)<Pick<State, 'version'>>(),
-  isShowNav: createAction(ACTION_TYPES.IS_SHOW_NAV)<Pick<State, 'isShowNav'>>(),
 } as const
 
 export type ActionTypes = ActionType<typeof actions>

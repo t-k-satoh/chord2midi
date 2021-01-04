@@ -1,7 +1,6 @@
 export { changeValue } from './change_value'
 export { changeQuery } from './change_query'
 export { changeIsDarkMode } from './change_is_dark_mode'
-export { changeIsShowNav } from './change_is_show_nav'
 export { launch } from './launch'
 export { setDefaultValues } from './set_default_values'
 export { changeBeat } from './change_beat'
