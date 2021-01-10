@@ -30,3 +30,12 @@ export const DownLoad = styled.div`
   display: flex;
   align-items: center;
 `
+
+export const ToolTipField = styled.div`
+  display: flex;
+  width: 100%;
+`
+
+export const ToolTipText = styled.p`
+  font-size: 10px;
+`

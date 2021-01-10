@@ -10,7 +10,10 @@ export type DispatchToProps = {
   onChangeValue: (value: State['value']['value']) => void
 }
 
-export type StateToProps = Pick<State, 'value' | 'chordSymbol' | 'beat' | 'midiNoteNumber'>
+export type StateToProps = Pick<
+  State,
+  'value' | 'chordSymbol' | 'beat' | 'midiNoteNumber' | 'locale'
+>
 
 export const MobileHomeContainer = (): JSX.Element => {
   const dispatch = useDispatch()
@@ -36,7 +39,7 @@ export const MobileHomeContainer = (): JSX.Element => {
   )
 
   const stateToProps: StateToProps = React.useMemo(
-    () => utilitySelector(state, ['value', 'chordSymbol', 'beat', 'midiNoteNumber']),
+    () => utilitySelector(state, ['value', 'chordSymbol', 'beat', 'midiNoteNumber', 'locale']),
     [state]
   )
 

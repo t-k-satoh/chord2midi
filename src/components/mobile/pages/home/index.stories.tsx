@@ -18,6 +18,7 @@ const props: Props = {
   onChangeValue: (value: string) => {
     console.log(value)
   },
+  locale: 'en',
 }
 
 export const Component = Template.bind({})

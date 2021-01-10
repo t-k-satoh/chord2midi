@@ -1,10 +1,11 @@
-import { Header, ActionButton } from '@adobe/react-spectrum'
+import { Header, ActionButton, Tooltip, TooltipTrigger } from '@adobe/react-spectrum'
 import Download from '@spectrum-icons/workflow/Download'
 import Rail from '@spectrum-icons/workflow/Rail'
 import Share from '@spectrum-icons/workflow/Share'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
+import { CopyToClipboard } from 'react-copy-to-clipboard'
 import { State } from '../../../../store/state/types'
 import { makeAllData } from '../../../../utils/data'
 import { generateInitBool } from '../../../../utils/generate_init_bool'
@@ -42,6 +43,8 @@ export const MainHeader: React.FC<Props> = ({
   midiNoteNumber,
   chordSymbol,
 }) => {
+  const [copied, setCopied] = React.useState<boolean>(false)
+
   const iconImage: string = React.useMemo(() => (isDarkMode ? '/icon_wh.png' : '/icon_blk.png'), [
     isDarkMode,
   ])
@@ -55,20 +58,24 @@ export const MainHeader: React.FC<Props> = ({
   const newIsDisabledDownLoad = React.useMemo(() => generateInitBool(isDisabledDownLoad, true), [
     isDisabledDownLoad,
   ])
+  const sharedUrl: string = React.useMemo(() => {
+    const { protocol, port, hostname } = window.location
+    const newPort = port === '' ? '' : `:${port}`
+
+    return `${protocol}//${hostname}${newPort}/${generateQuery({
+      value: encodeURI(value.value),
+      beat: beat.value,
+      midiNoteNumber: String(midiNoteNumber.value),
+      chordSymbol: chordSymbol.value,
+    })}`
+  }, [value.value, beat.value, midiNoteNumber.value, chordSymbol.value])
 
   const handlerClickNav = React.useCallback(() => {
     onClickNav(!isShowNav)
   }, [isShowNav, onClickNav])
   const onClickShare = React.useCallback(() => {
-    console.log(
-      generateQuery({
-        value: value.value,
-        beat: beat.value,
-        midiNoteNumber: String(midiNoteNumber.value),
-        chordSymbol: chordSymbol.value,
-      })
-    )
-  }, [value.value, beat.value, midiNoteNumber.value, chordSymbol.value])
+    setCopied(true)
+  }, [])
   const onClickDownLoad = React.useCallback(() => {
     const [chordText, baseNote, newBeat] = makeAllDataArg({
       value,
@@ -80,6 +87,16 @@ export const MainHeader: React.FC<Props> = ({
 
     saveMIDIFile(data)
   }, [value, beat, midiNoteNumber, chordSymbol])
+
+  React.useEffect(() => {
+    if (copied) {
+      const timeoutId = setTimeout(() => setCopied(false), 3000)
+
+      return () => {
+        clearTimeout(timeoutId)
+      }
+    }
+  }, [copied])
 
   return (
     <Header width={'100%'}>
@@ -96,15 +113,24 @@ export const MainHeader: React.FC<Props> = ({
         </Styles.Nav>
         {isHome ? (
           <Styles.DownLoad>
-            <ActionButton
-              isQuiet
-              isDisabled={newIsDisabledShare}
-              width={buttonSize}
-              height={buttonSize}
-              onPress={onClickShare}
-            >
-              <Share width={buttonIconSize} />
-            </ActionButton>
+            <TooltipTrigger isOpen={copied}>
+              <CopyToClipboard text={sharedUrl}>
+                <ActionButton
+                  isQuiet
+                  isDisabled={newIsDisabledShare}
+                  width={buttonSize}
+                  height={buttonSize}
+                  onPress={onClickShare}
+                >
+                  <Share width={buttonIconSize} />
+                </ActionButton>
+              </CopyToClipboard>
+              <Tooltip>
+                <Styles.ToolTipField>
+                  <Styles.ToolTipText>Copied to clipboard!!</Styles.ToolTipText>
+                </Styles.ToolTipField>
+              </Tooltip>
+            </TooltipTrigger>
             <ActionButton
               isQuiet
               isDisabled={newIsDisabledDownLoad}

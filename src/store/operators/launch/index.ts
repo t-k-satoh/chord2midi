@@ -3,14 +3,13 @@ import { Dispatch } from 'react'
 import { ThunkAction } from 'redux-thunk'
 import { BEAT, CHORD_SYMBOL, INIT_VALUE, FROM } from '../../../constants'
 import { INIT } from '../../../constants'
+import * as utils from '../../../utils'
 import { ActionTypes, actions } from '../../actions'
 import { State } from '../../state/types'
 
 export const launch = (
-  payload: Pick<
-    State,
-    'query' | 'isDarkMode' | 'isBrowser' | 'version' | 'isDisabledDownLoad' | 'isDisabledShare'
-  >
+  payload: Pick<State, 'query' | 'isDarkMode' | 'isBrowser' | 'version'> &
+    Partial<Pick<State, 'isDisabledDownLoad' | 'isDisabledShare'>>
 ): ThunkAction<Promise<void>, State, void, ActionTypes> => async (
   dispatch: Dispatch<ActionTypes>,
   getState: () => State
@@ -72,15 +71,31 @@ export const launch = (
     state.value.from !== FROM.URL &&
     state.value.from !== FROM.APP
   ) {
-    dispatch(actions.value({ value: { value: query.value, from: FROM.URL } }))
+    dispatch(actions.value({ value: { value: decodeURI(query.value), from: FROM.URL } }))
   } else if (state.value.from === FROM.INIT) {
     dispatch(actions.value({ value: { value: INIT_VALUE.value, from: FROM.LAUNCH } }))
+  }
+
+  if (isDisabledDownLoad) {
+    dispatch(actions.isDisabledDownLoad({ isDisabledDownLoad }))
+  }
+
+  if (isDisabledShare) {
+    dispatch(actions.isDisabledShare({ isDisabledShare }))
+  }
+
+  if (typeof isDisabledDownLoad === 'undefined' && typeof isDisabledShare === 'undefined') {
+    const arg = utils.pickState(getState(), ['value', 'chordSymbol', 'beat', 'midiNoteNumber'])
+    const newDisabledState = utils.generateDisabledState(arg)
+
+    dispatch(
+      actions.isDisabledDownLoad({ isDisabledDownLoad: newDisabledState.isDisabledDownLoad })
+    )
+    dispatch(actions.isDisabledShare({ isDisabledShare: newDisabledState.isDisabledShare }))
   }
 
   dispatch(actions.query({ query }))
   dispatch(actions.isDarkMode({ isDarkMode }))
   dispatch(actions.isBrowser({ isBrowser }))
   dispatch(actions.version({ version }))
-  dispatch(actions.isDisabledDownLoad({ isDisabledDownLoad }))
-  dispatch(actions.isDisabledShare({ isDisabledShare }))
 }

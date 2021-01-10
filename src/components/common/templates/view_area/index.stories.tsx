@@ -18,6 +18,7 @@ const props: Props = {
     symbol: 'C',
     number: 3,
   },
+  locale: 'en',
 }
 
 export const Component = Template.bind({})

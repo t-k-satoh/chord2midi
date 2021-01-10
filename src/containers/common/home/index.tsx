@@ -32,14 +32,8 @@ export const HomeContainer: React.FC = () => {
       isDarkMode,
       isBrowser,
       version,
-      isDisabledDownLoad: true,
-      isDisabledShare: true,
     }
   }, [query, isDarkMode])
-
-  React.useEffect(() => {
-    console.log({ router })
-  }, [router])
 
   React.useEffect(() => {
     dispatch(operators.changeIsHome(router.pathname === '/'))

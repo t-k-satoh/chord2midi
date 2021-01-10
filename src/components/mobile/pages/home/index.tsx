@@ -16,6 +16,7 @@ export const MobileHome: React.FC<Props> = ({
   chordSymbol,
   beat,
   midiNoteNumber,
+  locale,
   onChangeValue,
 }) => {
   const [chords, setChords] = React.useState<Chord[]>([])
@@ -57,7 +58,13 @@ export const MobileHome: React.FC<Props> = ({
     <PageContainer>
       <Frame>
         <Styles.ViewArea>
-          <ViewArea value={memoizeValue} baseNote={baseNote} beat={memoizeBeat} isBrowser={false} />
+          <ViewArea
+            value={memoizeValue}
+            baseNote={baseNote}
+            beat={memoizeBeat}
+            isBrowser={false}
+            locale={locale}
+          />
         </Styles.ViewArea>
         <Styles.InputArea>
           <InputArea onChangeValue={handlerChangeValue} value={memoizeValue} isError={isError} />
