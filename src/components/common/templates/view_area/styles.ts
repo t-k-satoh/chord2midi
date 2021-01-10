@@ -1,7 +1,7 @@
 import gradient from 'gradient-color'
 import styled from 'styled-components'
 
-const colors: string[] = gradient(['#00FF00', '#6495ED', '#ADD8E6'], 48)
+const colors: string[] = gradient(['#ff2f00', '#6495ED', '#001aff'], 48)
 
 export const Main = styled.div`
   width: 100%;
