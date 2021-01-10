@@ -1,7 +1,9 @@
 import styled from 'styled-components'
 
 export const Main = styled.main`
+  height: 100%;
   padding-bottom: 1em;
+  overflow: scroll;
 `
 
 export const Section = styled.section`
