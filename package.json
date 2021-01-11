@@ -6,7 +6,8 @@
     "build": "next build",
     "build-storybook": "build-storybook",
     "dev": "next dev -H 0.0.0.0",
-    "lint": "eslint --ext ts --ext tsx --fix",
+    "eslint": "eslint --ext ts --ext tsx --fix",
+    "lint": "npm-run-all --parallel eslint type-check sort",
     "sort": "sort-package-json",
     "start": "next start",
     "storybook": "start-storybook -p 6006",
@@ -15,7 +16,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": "yarn lint"
     }
   },
   "dependencies": {
@@ -75,6 +76,7 @@
     "next-compose-plugins": "2.2.1",
     "next-redux-wrapper": "6.0.2",
     "next-transpile-modules": "4.1.0",
+    "npm-run-all": "^4.1.5",
     "prettier": "2.2.1",
     "react-device-detect": "1.15.0",
     "react-div-100vh": "0.5.6",
