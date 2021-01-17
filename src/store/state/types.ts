@@ -12,10 +12,10 @@ export type State = {
   beat: MergeValueAndFrom<Beat>
   midiNoteNumber: MergeValueAndFrom<MIDINoteNumber>
   value: MergeValueAndFrom<Value>
-  locale: Locale
+  locale: MergeInit<Locale>
   query: MergeInit<Partial<Query>>
   version: MergeInit<string>
-  isDarkMode: MergeInit<boolean>
+  isDarkMode: MergeValueAndFrom<boolean>
   isBrowser: MergeInit<boolean>
   isHome: MergeInit<boolean>
   isDisabledDownLoad: MergeInit<boolean>

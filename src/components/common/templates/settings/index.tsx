@@ -1,7 +1,9 @@
-import { TextField, RadioGroup, Radio, Form, Picker, Item } from '@adobe/react-spectrum'
+import { TextField, RadioGroup, Radio, Form, Picker, Item, Switch } from '@adobe/react-spectrum'
+import { useRouter } from 'next/router'
 import React from 'react'
 import { BEAT, CHORD_SYMBOL, INIT } from '../../../../constants'
 import { ChordSymbol, Beat, MIDINoteNumber, Locale } from '../../../../types'
+import * as utils from '../../../../utils'
 import { Title } from '../../molecules/title'
 import { dictionary as _dictionary, options } from './constants'
 import * as Styles from './styles'
@@ -11,9 +13,11 @@ export type Props = {
   chordSymbol: ChordSymbol
   beat: Beat
   midiNoteNumber: MIDINoteNumber
+  isDarkMode: boolean
   onChangeBaseNoteSymbol: (baseNoteSymbol: ChordSymbol) => void
   onChangeBaseNoteNumber: (baseNoteNumber: MIDINoteNumber) => void
   onChangeBeat: (beat: Beat) => void
+  onChangeIsDarkMode: (isDarkMode: boolean) => void
 }
 
 export const Setting: React.FC<Props> = ({
@@ -21,10 +25,14 @@ export const Setting: React.FC<Props> = ({
   chordSymbol,
   beat,
   midiNoteNumber,
+  isDarkMode,
   onChangeBaseNoteSymbol,
   onChangeBaseNoteNumber,
   onChangeBeat,
+  onChangeIsDarkMode,
 }) => {
+  const router = useRouter()
+
   const defaultMidiNoteNumber = React.useMemo(
     () => (midiNoteNumber === INIT ? '' : midiNoteNumber),
     [midiNoteNumber]
@@ -32,6 +40,13 @@ export const Setting: React.FC<Props> = ({
   const dictionary = React.useMemo(() => (locale === 'ja' ? _dictionary.ja : _dictionary.en), [
     locale,
   ])
+  const langs: { id: Locale; value: string }[] = React.useMemo(
+    () => [
+      { id: 'en', value: 'English' },
+      { id: 'ja', value: '日本語' },
+    ],
+    []
+  )
 
   const changeHandlerBaseNoteSymbol = React.useCallback(
     (baseNoteSymbol: string) => {
@@ -70,6 +85,20 @@ export const Setting: React.FC<Props> = ({
     [onChangeBeat]
   )
 
+  const changeLanguage = React.useCallback(
+    (locale: Locale) => {
+      router.push('/settings', '/settings', { locale })
+    },
+    [router]
+  )
+
+  const changeIsDarkMode = React.useCallback(
+    (isDarkMode: boolean) => {
+      onChangeIsDarkMode(isDarkMode)
+    },
+    [onChangeIsDarkMode]
+  )
+
   return (
     <Styles.Main>
       <Title text={dictionary.title} />
@@ -98,6 +127,16 @@ export const Setting: React.FC<Props> = ({
             </Radio>
           ))}
         </RadioGroup>
+        <RadioGroup label={dictionary.lang} defaultValue={locale} onChange={changeLanguage}>
+          {langs.map(({ id, value }) => (
+            <Radio key={id} value={id}>
+              {value}
+            </Radio>
+          ))}
+        </RadioGroup>
+        <Switch defaultSelected={isDarkMode} onChange={changeIsDarkMode}>
+          {utils.switchLangText(locale, 'ダークモード', 'Dark mode')}
+        </Switch>
       </Form>
     </Styles.Main>
   )

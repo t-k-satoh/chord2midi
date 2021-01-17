@@ -16,6 +16,7 @@ const props: Props = {
   midiNoteNumber: 3,
   chordSymbol: 'C',
   beat: '4/4',
+  isDarkMode: false,
   onChangeBaseNoteNumber: (value) => {
     console.log(JSON.stringify(value))
   },
@@ -23,6 +24,9 @@ const props: Props = {
     console.log()
   },
   onChangeBeat: () => {
+    console.log()
+  },
+  onChangeIsDarkMode: () => {
     console.log()
   },
 }

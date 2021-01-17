@@ -11,15 +11,19 @@ export const Main = styled.div`
   overflow: scroll;
 `
 
+export const Handle = styled.div`
+  height: 72px;
+`
+
 export const Bars = styled.div`
   display: flex;
   flex-wrap: wrap;
 `
 
-export const Bar = styled.div<{ beat: number }>`
+export const Bar = styled.div`
   display: flex;
   height: 72px;
-  width: calc(100% / ${(props) => props.beat});
+  width: calc(100% / 4);
   position: relative;
   margin-bottom: 16px;
   box-sizing: border-box;

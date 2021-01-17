@@ -51,7 +51,11 @@ export const ViewArea: React.FC<Props> = ({ value, beat, baseNote, isBrowser, lo
       ),
     [allData, baseNoteParser, beatParser]
   )
-  const selectedChordForComponent: { title: string; texts: string[] } = React.useMemo(() => {
+  const selectedChordForComponent: {
+    title: string
+    texts: string[]
+    isError: boolean
+  } = React.useMemo(() => {
     const currentBar = allData.bars.find((bar) => bar.index === selectedChord.barIndex)
     const currentChord = allData.chords.find(
       (chord) =>
@@ -70,6 +74,7 @@ export const ViewArea: React.FC<Props> = ({ value, beat, baseNote, isBrowser, lo
       return {
         title: 'Error',
         texts: ['Error'],
+        isError: true,
       }
     }
 
@@ -77,6 +82,7 @@ export const ViewArea: React.FC<Props> = ({ value, beat, baseNote, isBrowser, lo
       return {
         title: currentBar.chords[currentChord.index],
         texts: [`${locale === 'ja' ? '不正なコードです' : 'Invalid chord'}`],
+        isError: true,
       }
     }
 
@@ -86,6 +92,7 @@ export const ViewArea: React.FC<Props> = ({ value, beat, baseNote, isBrowser, lo
           ? currentChord.symbol
           : `${currentChord.configurationSymbol}/${currentChord.baseSymbol}`,
       texts: currentNotes.map(({ note, distance }) => `${distance}: ${note}`),
+      isError: false,
     }
   }, [selectedChord, allData.bars, allData.chords, allData.notes, locale])
 
@@ -137,7 +144,7 @@ export const ViewArea: React.FC<Props> = ({ value, beat, baseNote, isBrowser, lo
         {isOpen && (
           <AlertDialog
             title={selectedChordForComponent.title}
-            variant="information"
+            variant={selectedChordForComponent.isError ? 'error' : 'information'}
             primaryActionLabel={locale === 'ja' ? '閉じる' : 'Close'}
           >
             {selectedChordForComponent.texts.map((text, index) => (
@@ -165,14 +172,14 @@ export const ViewArea: React.FC<Props> = ({ value, beat, baseNote, isBrowser, lo
         {parsedBars.map((bar) => {
           if (bar.isError) {
             return (
-              <Styles.Bar key={bar.index} beat={beatParser.molecular}>
+              <Styles.Bar key={bar.index}>
                 <Styles.ErrorBar onClick={onClickBarError(bar.index)} />
               </Styles.Bar>
             )
           }
 
           return (
-            <Styles.Bar key={bar.index} beat={beatParser.molecular}>
+            <Styles.Bar key={bar.index}>
               {bar.targetChords.map((targetChord) => (
                 <Styles.Chord
                   key={String(bar.index + targetChord.index)}

@@ -24,6 +24,10 @@ const props: Props = {
     value: '4/4',
     from: 'app',
   },
+  isDarkMode: {
+    value: true,
+    from: 'app',
+  },
   onChangeBaseNoteNumber: (value) => {
     console.log(JSON.stringify(value))
   },
@@ -31,6 +35,9 @@ const props: Props = {
     console.log()
   },
   onChangeBeat: () => {
+    console.log()
+  },
+  onChangeIsDarkMode: () => {
     console.log()
   },
 }

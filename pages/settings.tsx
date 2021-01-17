@@ -1,6 +1,9 @@
+import { Provider, defaultTheme } from '@adobe/react-spectrum'
 import { NextPage, GetStaticPropsContext } from 'next'
+import { ComponentProps } from 'react'
+import React from 'react'
+import { useSelector, shallowEqual } from 'react-redux'
 import { Store } from 'redux'
-import useDarkMode from 'use-dark-mode'
 import { SettingContainer } from '../src/containers/common/settings'
 import { wrapper } from '../src/store'
 import { actions } from '../src/store/actions'
@@ -17,13 +20,18 @@ export const getStaticProps = wrapper.getStaticProps((ctx) => {
 })
 
 const Page: NextPage = () => {
-  const { value } = useDarkMode(false)
+  const { isDarkMode } = useSelector<State, State>((state: State) => state, shallowEqual)
+
+  const colorScheme: ComponentProps<typeof Provider>['colorScheme'] = React.useMemo(
+    () => (isDarkMode.value ? 'dark' : 'light'),
+    [isDarkMode]
+  )
 
   return (
-    <>
-      <GlobalStyle S_isNightMode={value} />
+    <Provider theme={defaultTheme} colorScheme={colorScheme}>
+      <GlobalStyle S_isNightMode={isDarkMode.value} />
       <SettingContainer />
-    </>
+    </Provider>
   )
 }
 

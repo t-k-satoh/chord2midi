@@ -21,7 +21,10 @@ export const initialState: State = {
   locale: INIT,
   query: INIT,
   version: INIT,
-  isDarkMode: INIT,
+  isDarkMode: {
+    value: false,
+    from: INIT,
+  },
   isBrowser: INIT,
   isHome: INIT,
   isDisabledDownLoad: INIT,

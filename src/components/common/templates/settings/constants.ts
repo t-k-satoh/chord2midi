@@ -19,11 +19,13 @@ export const dictionary = {
     baseNoteSymbol: '基準となる音名',
     baseNoteNumber: '基準となるノートナンバー',
     beat: '拍子',
+    lang: '言語',
   },
   en: {
     title: 'Settings',
     baseNoteSymbol: 'Base note symbol',
     baseNoteNumber: 'Base Note Number',
     beat: 'Beat',
+    lang: 'Language',
   },
 }

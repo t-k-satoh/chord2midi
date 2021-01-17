@@ -5,6 +5,7 @@ import { useSelector, shallowEqual, useDispatch } from 'react-redux'
 import useDarkMode from 'use-dark-mode'
 import { version } from '../../../../package.json'
 import { Setting } from '../../../components/common/pages/settings'
+import { FROM } from '../../../constants'
 import * as operators from '../../../store/operators'
 import { State } from '../../../store/state/types'
 import * as utils from '../../../utils'
@@ -29,7 +30,7 @@ export const SettingContainer = (): JSX.Element => {
   const launchArg: Parameters<typeof operators.launch>[0] = React.useMemo(() => {
     return {
       query,
-      isDarkMode,
+      isDarkMode: { from: FROM.LAUNCH, value: isDarkMode },
       isBrowser,
       version,
       isDisabledDownLoad: true,

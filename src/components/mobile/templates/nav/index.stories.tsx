@@ -14,7 +14,7 @@ const props: Props = {
   version: '0.1.0',
   locale: 'ja',
   isHome: true,
-  isDarkMode: true,
+  isDarkMode: { value: true, from: 'app' },
   query: {
     beat: '3/4',
     midiNoteNumber: '3',

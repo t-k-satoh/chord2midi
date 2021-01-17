@@ -28,9 +28,7 @@ class WrappedApp extends App<AppInitialProps> {
       <>
         <Reset />
         <SSRProvider>
-          <Provider theme={defaultTheme}>
-            <Component {...pageProps} />
-          </Provider>
+          <Component {...pageProps} />
         </SSRProvider>
       </>
     )

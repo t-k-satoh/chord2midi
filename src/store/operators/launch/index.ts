@@ -94,8 +94,11 @@ export const launch = (
     dispatch(actions.isDisabledShare({ isDisabledShare: newDisabledState.isDisabledShare }))
   }
 
+  if (state.isDarkMode.from === FROM.INIT) {
+    dispatch(actions.isDarkMode({ isDarkMode }))
+  }
+
   dispatch(actions.query({ query }))
-  dispatch(actions.isDarkMode({ isDarkMode }))
   dispatch(actions.isBrowser({ isBrowser }))
   dispatch(actions.version({ version }))
 }

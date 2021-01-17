@@ -45,9 +45,10 @@ export const MainHeader: React.FC<Props> = ({
 }) => {
   const [copied, setCopied] = React.useState<boolean>(false)
 
-  const iconImage: string = React.useMemo(() => (isDarkMode ? '/icon_wh.png' : '/icon_blk.png'), [
-    isDarkMode,
-  ])
+  const iconImage: string = React.useMemo(
+    () => (isDarkMode.value ? '/icon_wh.png' : '/icon_blk.png'),
+    [isDarkMode.value]
+  )
   const altImage: string = React.useMemo(() => `Chord to MIDI v.${version}`, [version])
   const logoSize: 40 = React.useMemo(() => 40, [])
   const buttonSize: 32 = React.useMemo(() => 32, [])
