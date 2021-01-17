@@ -12027,9 +12027,10 @@ sort-package-json@1.48.1:
     is-plain-obj "2.1.0"
     sort-object-keys "^1.1.3"
 
-soundfont-player@^0.12.0:
+soundfont-player@0.12.0:
   version "0.12.0"
   resolved "https://registry.yarnpkg.com/soundfont-player/-/soundfont-player-0.12.0.tgz#2b26149f28aba471d2285d3df9a2e1e5793ceaf1"
+  integrity sha512-8BJIsAt7h1PK3thSZDgF6zecgGhYkK74JnZO8WRZi3h34qG6H/DYlnv7cpRvL7Q9C8N6qld4Qwj7nJsX1gYjEA==
   dependencies:
     audio-loader "^0.5.0"
     note-parser "^2.0.0"
