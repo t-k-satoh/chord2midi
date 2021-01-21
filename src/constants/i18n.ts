@@ -23,8 +23,8 @@ export const I18N = {
       en: 'Settings',
     } as const,
     DARK_MODE: {
-      ja: '設定',
-      en: 'Settings',
+      ja: 'ダークモード',
+      en: 'Dark mode',
     } as const,
   },
   HOW_TO_USE: {
