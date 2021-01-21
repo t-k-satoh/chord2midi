@@ -7,11 +7,10 @@ import { State } from '../../../../store/state/types'
 export type StateToProps = Pick<State, 'locale'>
 
 export const MobileHowToUseContainer = (): JSX.Element => {
-  const state = useSelector<State, State>((state: State) => state, shallowEqual)
-
-  const stateToProps: StateToProps = React.useMemo(() => utilitySelector(state, ['locale']), [
-    state,
-  ])
+  const stateToProps = useSelector<State, StateToProps>(
+    (state: State) => utilitySelector(state, ['locale']),
+    shallowEqual
+  )
 
   return <MobileHowToUse {...stateToProps} />
 }

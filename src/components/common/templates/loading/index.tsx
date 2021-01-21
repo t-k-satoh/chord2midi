@@ -6,7 +6,7 @@ export type Props = {
   children: React.ReactNode
 }
 
-export const Loading: React.FC<Props> = ({ isLoading, children }) => {
+export const Loading: React.FC<Props> = React.memo(function Component({ isLoading, children }) {
   const canRender = React.useMemo(() => !isLoading, [isLoading])
 
   return (
@@ -22,4 +22,4 @@ export const Loading: React.FC<Props> = ({ isLoading, children }) => {
       )}
     </>
   )
-}
+})

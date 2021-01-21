@@ -1,13 +1,27 @@
 import styled from 'styled-components'
 
 export const ViewArea = styled.div`
-  height: 80%;
+  height: 65%;
   position: relative;
 `
 
-export const InputArea = styled.div`
+export const PlayerArea = styled.div`
+  height: 10%;
+  padding: 8px 0;
+`
+
+export const ControlArea = styled.div`
+  height: 25%;
+`
+
+export const Player = styled.div`
   height: 20%;
-  padding: 16px 0;
+  display: flex;
+`
+
+export const InputArea = styled.div`
+  height: 80%;
+  padding: 8px 0;
 `
 
 export const DownLoad = styled.div`

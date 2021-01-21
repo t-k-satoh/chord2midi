@@ -1,5 +1,6 @@
 import * as utils from '../'
 import { State } from '../../store/state/types'
+import { ExcludeInitObject } from '../../types'
 
 export const generateDisabledState = (
   payload: Pick<State, 'chordSymbol' | 'beat' | 'midiNoteNumber' | 'value'>
@@ -7,8 +8,16 @@ export const generateDisabledState = (
   isDisabledDownLoad: boolean
   isDisabledShare: boolean
 } => {
-  const [chordText, baseNote, beat] = utils.makeAllDataArg(payload)
-  const { notes, bars, chords } = utils.makeAllData(chordText, baseNote, beat)
+  const data = utils.pickValues(payload)
+
+  if (utils.checkInit(data).hasInit) {
+    return {
+      isDisabledDownLoad: true,
+      isDisabledShare: true,
+    }
+  }
+
+  const { notes, bars, chords } = utils.makeAllData(data as ExcludeInitObject<typeof data>)
 
   return {
     isDisabledDownLoad:

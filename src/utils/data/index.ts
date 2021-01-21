@@ -1,5 +1,5 @@
 import { Chord as tonalChord, Note as tonalNote } from '@tonaljs/tonal'
-import { Bar, Chord, Note, Data, Beat } from '../../types'
+import { Bar, Chord, Note, Data, Beat, ExcludeInit, ChordSymbol, MIDINoteNumber } from '../../types'
 
 export const makeBars = (chordText: string, beat: Beat): Bar[] => {
   const newBeat = {
@@ -153,37 +153,26 @@ export const makeData = (
   })
 }
 
-export const makeAllData = (
-  chordText: string,
-  baseNote: {
-    symbol: string
-    number: number | string
-  },
-  beat: Beat
-): { bars: Bar[]; chords: Chord[]; notes: Note[]; data: Data[] } => {
-  if (typeof baseNote.number === 'number') {
-    const newBaseNote = baseNote as {
-      symbol: string
-      number: number
-    }
-
-    const bars = makeBars(chordText, beat)
-    const chords = makeChords(bars)
-    const notes = makeNotes(chords)
-    const data = makeData(bars, chords, notes, newBaseNote, beat)
-
-    return {
-      bars,
-      chords,
-      notes,
-      data,
-    }
-  }
+export const makeAllData: (payload: {
+  value: string
+  chordSymbol: ExcludeInit<ChordSymbol>
+  beat: ExcludeInit<Beat>
+  midiNoteNumber: ExcludeInit<MIDINoteNumber>
+}) => { bars: Bar[]; chords: Chord[]; notes: Note[]; data: Data[] } = ({
+  chordSymbol,
+  value,
+  beat,
+  midiNoteNumber,
+}) => {
+  const bars = makeBars(value, beat)
+  const chords = makeChords(bars)
+  const notes = makeNotes(chords)
+  const data = makeData(bars, chords, notes, { symbol: chordSymbol, number: midiNoteNumber }, beat)
 
   return {
-    bars: [],
-    chords: [],
-    notes: [],
-    data: [],
+    bars,
+    chords,
+    notes,
+    data,
   }
 }

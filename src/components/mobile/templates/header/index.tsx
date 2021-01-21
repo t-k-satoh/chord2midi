@@ -6,70 +6,62 @@ import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
-import { State } from '../../../../store/state/types'
-import { makeAllData } from '../../../../utils/data'
-import { generateInitBool } from '../../../../utils/generate_init_bool'
-import { generateQuery } from '../../../../utils/generate_query'
-import { makeAllDataArg } from '../../../../utils/make_all_data_arg'
-import { saveMIDIFile } from '../../../../utils/save_as'
+import { ChordSymbol, Beat, MIDINoteNumber, ExcludeInit } from '../../../../types'
+import * as utils from '../../../../utils'
+import * as CONSTANTS from './constants'
 import * as Styles from './styles'
 
-export type Props = Pick<
-  State,
-  | 'value'
-  | 'chordSymbol'
-  | 'beat'
-  | 'midiNoteNumber'
-  | 'version'
-  | 'isDarkMode'
-  | 'isHome'
-  | 'isDisabledDownLoad'
-  | 'isDisabledShare'
-> & {
+export type Props = {
+  value: string
+  chordSymbol: ExcludeInit<ChordSymbol>
+  beat: ExcludeInit<Beat>
+  midiNoteNumber: ExcludeInit<MIDINoteNumber>
+  version: string
+  isDarkMode: boolean
+  isHome: boolean
+  isDisabledDownLoad: boolean
+  isDisabledShare: boolean
   isShowNav: boolean
   onClickNav: (isShowNav: boolean) => void
 }
 
-export const MainHeader: React.FC<Props> = ({
+export const MainHeader: React.FC<Props> = React.memo(function Component({
   version,
   isHome,
   isDarkMode,
   isDisabledDownLoad,
   isDisabledShare,
-  onClickNav,
   isShowNav,
   value,
   beat,
   midiNoteNumber,
   chordSymbol,
-}) => {
+  onClickNav,
+}) {
   const [copied, setCopied] = React.useState<boolean>(false)
 
   const iconImage: string = React.useMemo(
-    () => (isDarkMode.value ? '/icon_wh.png' : '/icon_blk.png'),
-    [isDarkMode.value]
+    () => (isDarkMode ? CONSTANTS.ICON_WH_PATH : CONSTANTS.ICON_BLK_PATH),
+    [isDarkMode]
   )
-  const altImage: string = React.useMemo(() => `Chord to MIDI v.${version}`, [version])
-  const logoSize: 40 = React.useMemo(() => 40, [])
-  const buttonSize: 32 = React.useMemo(() => 32, [])
-  const buttonIconSize: 20 = React.useMemo(() => 20, [])
-  const newIsDisabledShare = React.useMemo(() => generateInitBool(isDisabledShare, true), [
+  const altImage: string = React.useMemo(() => utils.generateTitle(version), [version])
+  const newIsDisabledShare = React.useMemo(() => utils.generateInitBool(isDisabledShare, true), [
     isDisabledShare,
   ])
-  const newIsDisabledDownLoad = React.useMemo(() => generateInitBool(isDisabledDownLoad, true), [
-    isDisabledDownLoad,
-  ])
-  const sharedUrl: string = React.useMemo(() => {
-    const { protocol, port, hostname } = window.location
-    const newPort = port === '' ? '' : `:${port}`
-
-    return `${protocol}//${hostname}${newPort}/${generateQuery({
-      value: encodeURI(value.value),
-      beat: beat.value,
-      midiNoteNumber: String(midiNoteNumber.value),
-      chordSymbol: chordSymbol.value,
-    })}`
-  }, [value.value, beat.value, midiNoteNumber.value, chordSymbol.value])
+  const newIsDisabledDownLoad = React.useMemo(
+    () => utils.generateInitBool(isDisabledDownLoad, true),
+    [isDisabledDownLoad]
+  )
+  const sharedUrl: string = React.useMemo(
+    () =>
+      `${window.location.origin}${utils.generateQuery({
+        value: encodeURI(value),
+        beat: beat,
+        midiNoteNumber: String(midiNoteNumber),
+        chordSymbol: chordSymbol,
+      })}`,
+    [value, beat, midiNoteNumber, chordSymbol]
+  )
 
   const handlerClickNav = React.useCallback(() => {
     onClickNav(!isShowNav)
@@ -78,52 +70,46 @@ export const MainHeader: React.FC<Props> = ({
     setCopied(true)
   }, [])
   const onClickDownLoad = React.useCallback(() => {
-    const [chordText, baseNote, newBeat] = makeAllDataArg({
-      value,
-      beat,
-      midiNoteNumber,
-      chordSymbol,
-    })
-    const { data } = makeAllData(chordText, baseNote, newBeat)
+    const { data } = utils.makeAllData({ value, beat, midiNoteNumber, chordSymbol })
 
-    saveMIDIFile(data)
+    utils.saveMIDIFile(data)
   }, [value, beat, midiNoteNumber, chordSymbol])
-
-  React.useEffect(() => {
-    if (copied) {
-      const timeoutId = setTimeout(() => setCopied(false), 3000)
-
-      return () => {
-        clearTimeout(timeoutId)
-      }
-    }
-  }, [copied])
 
   return (
     <Header width={'100%'}>
       <Styles.Main>
         <Styles.Logo>
           <Link prefetch href={'/'} passHref>
-            <Image src={iconImage} alt={altImage} width={logoSize} height={logoSize} />
+            <Image
+              src={iconImage}
+              alt={altImage}
+              width={CONSTANTS.LOGO_SIZE}
+              height={CONSTANTS.LOGO_SIZE}
+            />
           </Link>
         </Styles.Logo>
         <Styles.Nav>
-          <ActionButton isQuiet width={buttonSize} height={buttonSize} onPress={handlerClickNav}>
-            <Rail width={24} />
+          <ActionButton
+            isQuiet
+            width={CONSTANTS.BUTTON_SIZE}
+            height={CONSTANTS.BUTTON_SIZE}
+            onPress={handlerClickNav}
+          >
+            <Rail width={CONSTANTS.BUTTON_ICON_SIZE} />
           </ActionButton>
         </Styles.Nav>
-        {isHome ? (
+        {isHome && (
           <Styles.DownLoad>
             <TooltipTrigger isOpen={copied}>
               <CopyToClipboard text={sharedUrl}>
                 <ActionButton
                   isQuiet
                   isDisabled={newIsDisabledShare}
-                  width={buttonSize}
-                  height={buttonSize}
+                  width={CONSTANTS.BUTTON_SIZE}
+                  height={CONSTANTS.BUTTON_SIZE}
                   onPress={onClickShare}
                 >
-                  <Share width={buttonIconSize} />
+                  <Share width={CONSTANTS.BUTTON_ICON_SIZE} />
                 </ActionButton>
               </CopyToClipboard>
               <Tooltip>
@@ -135,15 +121,15 @@ export const MainHeader: React.FC<Props> = ({
             <ActionButton
               isQuiet
               isDisabled={newIsDisabledDownLoad}
-              width={buttonSize}
-              height={buttonSize}
+              width={CONSTANTS.BUTTON_SIZE}
+              height={CONSTANTS.BUTTON_SIZE}
               onPress={onClickDownLoad}
             >
-              <Download width={buttonIconSize} />
+              <Download width={CONSTANTS.BUTTON_ICON_SIZE} />
             </ActionButton>
           </Styles.DownLoad>
-        ) : null}
+        )}
       </Styles.Main>
     </Header>
   )
-}
+})

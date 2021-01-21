@@ -1,14 +1,26 @@
 import { INIT } from '../../constants'
-import { State } from '../../store/state/types'
+import { MergeValueAndFrom, MergeInit } from '../../types'
 
-export const checkInitFromValue = (value: State[keyof State]): boolean =>
-  typeof value === 'object' && 'from' in value && 'value' in value
-    ? value.from === INIT || value.value === INIT
-    : value === INIT
+export const checkInitFromValue = (
+  value: MergeValueAndFrom<unknown> | MergeInit<unknown>
+): boolean => {
+  if (value === INIT) {
+    return true
+  }
+  const newValue = value as MergeValueAndFrom<unknown>
 
-export const checkInit = <T extends Partial<State>>(
-  state: T
-): { hasInit: boolean; initKeys: Array<keyof T> } => ({
-  hasInit: Object.values(state).some((value) => checkInitFromValue(value)),
-  initKeys: Object.keys(state).filter((key) => checkInitFromValue(state[key])) as Array<keyof T>,
+  if (newValue.value === INIT || newValue.from === INIT) {
+    return true
+  }
+
+  return false
+}
+
+export const checkInit = <
+  T extends Record<string, MergeValueAndFrom<unknown> | MergeInit<unknown>>
+>(
+  values: T
+): { hasInit: boolean; initKeys: (keyof T)[] } => ({
+  hasInit: Object.values(values).some((value) => checkInitFromValue(value)),
+  initKeys: Object.keys(values).filter((key) => checkInitFromValue(values[key])) as Array<keyof T>,
 })

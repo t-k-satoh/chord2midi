@@ -1,7 +1,9 @@
 import { DialogContainer, AlertDialog, Text } from '@adobe/react-spectrum'
 import { Note as tonalNote } from '@tonaljs/tonal'
 import React from 'react'
-import { ChordSymbol, Beat, MIDINoteNumber, Locale } from '../../../../types'
+import { I18N } from '../../../../constants/i18n'
+import { ChordSymbol, Beat, MIDINoteNumber, Locale, ExcludeInit } from '../../../../types'
+import * as utils from '../../../../utils'
 import { makeAllData } from '../../../../utils/data'
 import * as Styles from './styles'
 import { makeViewData } from './utils'
@@ -9,25 +11,41 @@ import { makeViewData } from './utils'
 export type Props = {
   isBrowser: boolean
   value: string
-  beat: Beat
-  baseNote: {
-    symbol: ChordSymbol
-    number: MIDINoteNumber
-  }
-  locale: Locale
+  chordSymbol: ExcludeInit<ChordSymbol>
+  beat: ExcludeInit<Beat>
+  midiNoteNumber: ExcludeInit<MIDINoteNumber>
+  locale: ExcludeInit<Locale>
+  barPosition: number
+  currentBar: number
 }
 
-export const ViewArea: React.FC<Props> = ({ value, beat, baseNote, isBrowser, locale }) => {
+export const ViewArea: React.FC<Props> = React.memo(function Component({
+  value,
+  beat,
+  isBrowser,
+  chordSymbol,
+  midiNoteNumber,
+  locale,
+  barPosition,
+  currentBar,
+}) {
   const [isOpen, setIsOpen] = React.useState<boolean>(false)
   const [isOpenBarError, setIsOpenBarError] = React.useState<boolean>(false)
   const [selectedBar, setSelectedBar] = React.useState<number>(NaN)
-
   const [selectedChord, setSelectedChord] = React.useState<{
     barIndex: number
     chordIndex: number
   }>({ barIndex: NaN, chordIndex: NaN })
 
-  const allData = React.useMemo(() => makeAllData(value, baseNote, beat), [value, baseNote, beat])
+  const closeText = React.useMemo(() => utils.switchLangText(I18N.UTILS.CLOSE, locale, null), [
+    locale,
+  ])
+  const allData = React.useMemo(() => makeAllData({ value, chordSymbol, beat, midiNoteNumber }), [
+    value,
+    chordSymbol,
+    beat,
+    midiNoteNumber,
+  ])
   const beatParser = React.useMemo(
     () => ({
       molecular: Number(beat.split('/')[0]),
@@ -35,10 +53,10 @@ export const ViewArea: React.FC<Props> = ({ value, beat, baseNote, isBrowser, lo
     }),
     [beat]
   )
-  const baseNoteParser: number = React.useMemo(
-    () => tonalNote.midi(`${baseNote.symbol}${baseNote.number}`),
-    [baseNote]
-  )
+  const baseNote: number = React.useMemo(() => tonalNote.midi(`${chordSymbol}${midiNoteNumber}`), [
+    midiNoteNumber,
+    chordSymbol,
+  ])
   const parsedBars = React.useMemo(
     () =>
       makeViewData(
@@ -46,10 +64,10 @@ export const ViewArea: React.FC<Props> = ({ value, beat, baseNote, isBrowser, lo
         allData.chords,
         allData.notes,
         allData.data,
-        baseNoteParser,
+        baseNote,
         beatParser.molecular
       ),
-    [allData, baseNoteParser, beatParser]
+    [allData, baseNote, beatParser]
   )
   const selectedChordForComponent: {
     title: string
@@ -71,9 +89,11 @@ export const ViewArea: React.FC<Props> = ({ value, beat, baseNote, isBrowser, lo
       typeof currentChord === 'undefined' ||
       typeof currentNotes === 'undefined'
     ) {
+      const errorText = utils.switchLangText(I18N.UTILS.ERROR, locale, null)
+
       return {
-        title: 'Error',
-        texts: ['Error'],
+        title: errorText,
+        texts: [errorText],
         isError: true,
       }
     }
@@ -81,7 +101,7 @@ export const ViewArea: React.FC<Props> = ({ value, beat, baseNote, isBrowser, lo
     if (currentChord.isError) {
       return {
         title: currentBar.chords[currentChord.index],
-        texts: [`${locale === 'ja' ? '不正なコードです' : 'Invalid chord'}`],
+        texts: [utils.switchLangText(I18N.HOME.INVALID_CHORD, locale, null)],
         isError: true,
       }
     }
@@ -95,7 +115,6 @@ export const ViewArea: React.FC<Props> = ({ value, beat, baseNote, isBrowser, lo
       isError: false,
     }
   }, [selectedChord, allData.bars, allData.chords, allData.notes, locale])
-
   const barErrorText = React.useMemo(() => {
     const currentBar = allData.bars.find((bar) => bar.index === selectedBar)
 
@@ -103,15 +122,19 @@ export const ViewArea: React.FC<Props> = ({ value, beat, baseNote, isBrowser, lo
       return ''
     }
 
-    return locale === 'ja'
-      ? `小節に四分音符が${
-          currentBar.chords.length
-        }つ入っています。現在${beat}なので四分音符は一小節に${beat.split('/')[0]}つまでです。`
-      : `There are ${
-          currentBar.chords.length
-        } quarter notes in a measure. Since we are currently in ${beat},
-    there can be no more than ${beat.split('/')[0]} quarter notes in a measure.`
+    return utils.switchLangText(I18N.HOME.OVERFLOW_NOTES, locale, {
+      CURRENT_NOTE_LENGTH: currentBar.chords.length,
+      CURRENT_BEAT_LIMIT: beat.split('/')[0],
+      CURRENT_BEAT: beat,
+    })
   }, [locale, beat, selectedBar, allData.bars])
+  const handlePosition = React.useMemo(() => {
+    const newBarPos = barPosition - 1
+    const bottom = (currentBar - 1) * 4
+    const top = currentBar * 4
+
+    return (newBarPos - bottom) / (top - bottom)
+  }, [barPosition, currentBar])
 
   const onClickChord = React.useCallback(
     (barIndex: number, chordIndex: number) => () => {
@@ -145,7 +168,7 @@ export const ViewArea: React.FC<Props> = ({ value, beat, baseNote, isBrowser, lo
           <AlertDialog
             title={selectedChordForComponent.title}
             variant={selectedChordForComponent.isError ? 'error' : 'information'}
-            primaryActionLabel={locale === 'ja' ? '閉じる' : 'Close'}
+            primaryActionLabel={closeText}
           >
             {selectedChordForComponent.texts.map((text, index) => (
               <Styles.NoteText key={index}>
@@ -158,11 +181,11 @@ export const ViewArea: React.FC<Props> = ({ value, beat, baseNote, isBrowser, lo
       <DialogContainer onDismiss={onCloseBarError}>
         {isOpenBarError && (
           <AlertDialog
-            title={
-              locale === 'ja' ? `エラー: ${selectedBar + 1}小節目` : `Error: ${selectedBar + 1} Bar`
-            }
+            title={utils.switchLangText(I18N.HOME.ERROR_BAR, locale, {
+              ERROR_BAR_INDEX: selectedBar + 1,
+            })}
             variant="error"
-            primaryActionLabel={locale === 'ja' ? '閉じる' : 'Close'}
+            primaryActionLabel={closeText}
           >
             <Text>{barErrorText}</Text>
           </AlertDialog>
@@ -170,41 +193,40 @@ export const ViewArea: React.FC<Props> = ({ value, beat, baseNote, isBrowser, lo
       </DialogContainer>
       <Styles.Bars>
         {parsedBars.map((bar) => {
-          if (bar.isError) {
-            return (
-              <Styles.Bar key={bar.index}>
-                <Styles.ErrorBar onClick={onClickBarError(bar.index)} />
-              </Styles.Bar>
-            )
-          }
-
           return (
             <Styles.Bar key={bar.index}>
-              {bar.targetChords.map((targetChord) => (
-                <Styles.Chord
-                  key={String(bar.index + targetChord.index)}
-                  duration={targetChord.chordDuration}
-                  onClick={onClickChord(bar.index, targetChord.index)}
-                >
-                  {targetChord.isNoteError ? (
-                    <Styles.Error />
-                  ) : (
-                    <>
-                      {isBrowser && <Styles.Symbol>{targetChord.symbol}</Styles.Symbol>}
-                      {targetChord.targetNotes.map((targetNote) => (
-                        <Styles.Note
-                          key={String(bar.index + targetChord.index + targetNote.index)}
-                          position={targetNote.interval}
-                        ></Styles.Note>
-                      ))}
-                    </>
-                  )}
-                </Styles.Chord>
-              ))}
+              {bar.index + 1 === currentBar && <Styles.Handle S_left={handlePosition * 100} />}
+              {bar.isError ? (
+                <Styles.ErrorBar onClick={onClickBarError(bar.index)} />
+              ) : (
+                bar.targetChords.map((targetChord) => {
+                  return (
+                    <Styles.Chord
+                      key={String(bar.index + targetChord.index)}
+                      duration={targetChord.chordDuration}
+                      onClick={onClickChord(bar.index, targetChord.index)}
+                    >
+                      {targetChord.isNoteError ? (
+                        <Styles.Error />
+                      ) : (
+                        <>
+                          {isBrowser && <Styles.Symbol>{targetChord.symbol}</Styles.Symbol>}
+                          {targetChord.targetNotes.map((targetNote) => (
+                            <Styles.Note
+                              key={String(bar.index + targetChord.index + targetNote.index)}
+                              position={targetNote.interval}
+                            ></Styles.Note>
+                          ))}
+                        </>
+                      )}
+                    </Styles.Chord>
+                  )
+                })
+              )}
             </Styles.Bar>
           )
         })}
       </Styles.Bars>
     </Styles.Main>
   )
-}
+})

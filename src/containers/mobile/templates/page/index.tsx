@@ -20,10 +20,8 @@ export type StateToProps = Pick<
 >
 
 export const PageContainer: React.FC = ({ children }) => {
-  const state = useSelector<State, State>((state: State) => state, shallowEqual)
-
-  const stateToProps = React.useMemo(
-    () =>
+  const stateToProps = useSelector<State, StateToProps>(
+    (state: State) =>
       utilitySelector(state, [
         'value',
         'chordSymbol',
@@ -35,7 +33,7 @@ export const PageContainer: React.FC = ({ children }) => {
         'isDisabledDownLoad',
         'isDisabledShare',
       ]),
-    [state]
+    shallowEqual
   )
 
   return <Page {...stateToProps}>{children}</Page>

@@ -1,4 +1,4 @@
-import { CHORD_SYMBOL, BEAT } from '../constants'
+import { CHORD_SYMBOL, BEAT, PATHS } from '../constants'
 
 export type Data = {
   index: number
@@ -74,3 +74,30 @@ export type Query = {
   beat: typeof BEAT[number]
   midiNoteNumber: string
 }
+
+export type MergeInit<T> = T | Init
+
+export type MergeValueAndFrom<T> = {
+  value: T
+  from: From
+}
+
+export type PickValue<T extends MergeValueAndFrom<unknown>> = T['value']
+
+export type LanguageObject = {
+  ja: string
+  en: string
+}
+
+export type ShouldReplaceText = {
+  replaceKeys: ReadonlyArray<string>
+}
+
+export type ExcludeInit<T extends MergeInit<unknown>> = Exclude<T, Init>
+
+export type ExcludeInitObject<
+  T extends Record<string, MergeInit<unknown>>,
+  U = { [K in keyof T]: ExcludeInit<T[K]> }
+> = U
+
+export type PathKeys = keyof typeof PATHS

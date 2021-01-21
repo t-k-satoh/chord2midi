@@ -2,7 +2,6 @@ import Document from 'next/document'
 import NextDocument, { Html, Head, Main, NextScript, DocumentContext } from 'next/document'
 import React from 'react'
 import { ServerStyleSheet } from 'styled-components'
-import { version } from '../package.json'
 
 export default class MyDocument extends NextDocument {
   static async getInitialProps(
@@ -40,7 +39,6 @@ export default class MyDocument extends NextDocument {
     return (
       <Html className={'spectrum'}>
         <Head>
-          <title>Chord to MIDI v.{version}</title>
           <meta name="viewport" content="initial-scale=1.0, width=device-width" />
         </Head>
         <body>

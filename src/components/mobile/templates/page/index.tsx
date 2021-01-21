@@ -3,12 +3,43 @@ import Div100vh from 'react-div-100vh'
 import { MainHeader } from '../../../../components/mobile/templates/header'
 import { NavContainer } from '../../../../containers/mobile/templates/nav'
 import { StateToProps } from '../../../../containers/mobile/templates/page'
+import * as utils from '../../../../utils'
 import * as Styles from './styles'
 
 export type Props = StateToProps
 
-export const Page: React.FC<Props> = (props) => {
+export const Page: React.FC<Props> = React.memo(function Component({
+  version,
+  children,
+  chordSymbol,
+  beat,
+  midiNoteNumber,
+  value,
+  isDarkMode,
+  isHome,
+  isDisabledDownLoad,
+  isDisabledShare,
+}) {
   const [isShowNav, setIsShowNav] = React.useState<boolean>(false)
+
+  const tempValues = React.useMemo(
+    () => utils.pickValues({ chordSymbol, beat, midiNoteNumber, value, isDarkMode }),
+    [chordSymbol, beat, midiNoteNumber, value, isDarkMode]
+  )
+  const { hasInit } = React.useMemo(
+    () => utils.checkInit({ ...tempValues, isHome, isDisabledDownLoad, isDisabledShare }),
+    [tempValues, isHome, isDisabledDownLoad, isDisabledShare]
+  )
+  const newProps = React.useMemo(
+    () =>
+      utils.convertExcludeObject({
+        ...tempValues,
+        isHome,
+        isDisabledDownLoad,
+        isDisabledShare,
+      }),
+    [tempValues, isHome, isDisabledDownLoad, isDisabledShare]
+  )
 
   const handlerCloseNav = React.useCallback(() => {
     setIsShowNav(false)
@@ -21,6 +52,10 @@ export const Page: React.FC<Props> = (props) => {
     [setIsShowNav]
   )
 
+  if (hasInit) {
+    return null
+  }
+
   return (
     <Div100vh>
       <Styles.Main>
@@ -29,10 +64,22 @@ export const Page: React.FC<Props> = (props) => {
           <NavContainer />
         </Styles.Settings>
         <Styles.Header>
-          <MainHeader {...props} onClickNav={onClickNav} isShowNav={isShowNav} />
+          <MainHeader
+            onClickNav={onClickNav}
+            isShowNav={isShowNav}
+            value={newProps.value}
+            chordSymbol={newProps.chordSymbol}
+            beat={newProps.beat}
+            midiNoteNumber={newProps.midiNoteNumber}
+            version={version}
+            isDarkMode={newProps.isDarkMode}
+            isHome={newProps.isHome}
+            isDisabledDownLoad={newProps.isDisabledDownLoad}
+            isDisabledShare={newProps.isDisabledShare}
+          />
         </Styles.Header>
-        {props.children}
+        {children}
       </Styles.Main>
     </Div100vh>
   )
-}
+})

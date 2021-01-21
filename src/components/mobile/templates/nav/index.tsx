@@ -13,7 +13,12 @@ import * as Styles from './styles'
 
 export type Props = StateToProps
 
-export const Nav: React.FC<Props> = ({ locale, query, isHome, version }) => {
+export const Nav: React.FC<Props> = React.memo(function Component({
+  locale,
+  query,
+  isHome,
+  version,
+}) {
   const newQuery = React.useMemo(() => (query !== INIT ? query : {}), [query])
   const homePath = React.useMemo(() => generateQuery(newQuery), [newQuery])
 
@@ -84,4 +89,4 @@ export const Nav: React.FC<Props> = ({ locale, query, isHome, version }) => {
       </Styles.Version>
     </Styles.Main>
   )
-}
+})

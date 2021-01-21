@@ -4,6 +4,8 @@ import { ComponentProps } from 'react'
 import React from 'react'
 import { useSelector, shallowEqual } from 'react-redux'
 import { Store } from 'redux'
+import { version } from '../package.json'
+import { Head } from '../src/components/common/utils/head'
 import { HomeContainer } from '../src/containers/common/home'
 import { actions } from '../src/store/actions'
 import { ActionTypes } from '../src/store/actions'
@@ -28,10 +30,13 @@ const Page: NextPage = () => {
   )
 
   return (
-    <Provider theme={defaultTheme} colorScheme={colorScheme}>
-      <GlobalStyle S_isNightMode={isDarkMode.value} />
-      <HomeContainer />
-    </Provider>
+    <>
+      <Head title={`Chord to MIDI v.${version}`} />
+      <Provider theme={defaultTheme} colorScheme={colorScheme}>
+        <GlobalStyle S_isNightMode={isDarkMode.value} />
+        <HomeContainer />
+      </Provider>
+    </>
   )
 }
 

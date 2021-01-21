@@ -11,10 +11,6 @@ export const Main = styled.div`
   overflow: scroll;
 `
 
-export const Handle = styled.div`
-  height: 72px;
-`
-
 export const Bars = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -27,6 +23,16 @@ export const Bar = styled.div`
   position: relative;
   margin-bottom: 16px;
   box-sizing: border-box;
+`
+
+export const Handle = styled.div<{ S_left: number }>`
+  width: 1px;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: calc(${(props) => `${props.S_left}%`} - 0.5px);
+  background: rgba(255, 255, 255, 0.7);
+  z-index: 3;
 `
 
 export const ErrorBar = styled.button`

@@ -1,18 +1,19 @@
 import { TextField, RadioGroup, Radio, Form, Picker, Item, Switch } from '@adobe/react-spectrum'
 import { useRouter } from 'next/router'
 import React from 'react'
-import { BEAT, CHORD_SYMBOL, INIT } from '../../../../constants'
-import { ChordSymbol, Beat, MIDINoteNumber, Locale } from '../../../../types'
+import { BEAT, CHORD_SYMBOL, INIT, PAGE_TITLES, EN, JA } from '../../../../constants'
+import { I18N } from '../../../../constants/i18n'
+import { ChordSymbol, Beat, MIDINoteNumber, Locale, ExcludeInit } from '../../../../types'
 import * as utils from '../../../../utils'
 import { Title } from '../../molecules/title'
 import { dictionary as _dictionary, options } from './constants'
 import * as Styles from './styles'
 
 export type Props = {
-  locale: Locale
-  chordSymbol: ChordSymbol
-  beat: Beat
-  midiNoteNumber: MIDINoteNumber
+  locale: ExcludeInit<Locale>
+  chordSymbol: ExcludeInit<ChordSymbol>
+  beat: ExcludeInit<Beat>
+  midiNoteNumber: ExcludeInit<MIDINoteNumber>
   isDarkMode: boolean
   onChangeBaseNoteSymbol: (baseNoteSymbol: ChordSymbol) => void
   onChangeBaseNoteNumber: (baseNoteNumber: MIDINoteNumber) => void
@@ -20,7 +21,7 @@ export type Props = {
   onChangeIsDarkMode: (isDarkMode: boolean) => void
 }
 
-export const Setting: React.FC<Props> = ({
+export const Setting: React.FC<Props> = React.memo(function Component({
   locale,
   chordSymbol,
   beat,
@@ -30,20 +31,20 @@ export const Setting: React.FC<Props> = ({
   onChangeBaseNoteNumber,
   onChangeBeat,
   onChangeIsDarkMode,
-}) => {
+}) {
   const router = useRouter()
 
-  const defaultMidiNoteNumber = React.useMemo(
-    () => (midiNoteNumber === INIT ? '' : midiNoteNumber),
-    [midiNoteNumber]
-  )
-  const dictionary = React.useMemo(() => (locale === 'ja' ? _dictionary.ja : _dictionary.en), [
+  const title = React.useMemo(() => PAGE_TITLES[router.asPath.split('/')[1]][locale], [
+    router.asPath,
+    locale,
+  ])
+  const dictionary = React.useMemo(() => (locale === JA ? _dictionary.ja : _dictionary.en), [
     locale,
   ])
   const langs: { id: Locale; value: string }[] = React.useMemo(
     () => [
-      { id: 'en', value: 'English' },
-      { id: 'ja', value: '日本語' },
+      { id: EN, value: 'English' },
+      { id: JA, value: '日本語' },
     ],
     []
   )
@@ -52,7 +53,7 @@ export const Setting: React.FC<Props> = ({
     (baseNoteSymbol: string) => {
       const _baseNoteSymbol = baseNoteSymbol as ChordSymbol
 
-      if (_baseNoteSymbol === 'init') {
+      if (_baseNoteSymbol === INIT) {
         return
       }
 
@@ -72,11 +73,7 @@ export const Setting: React.FC<Props> = ({
 
   const changeHandlerBeat = React.useCallback(
     (beat: string) => {
-      const _beat = beat as Beat
-
-      if (_beat === 'init') {
-        return
-      }
+      const _beat = beat as Props['beat']
 
       if (BEAT.includes(_beat)) {
         onChangeBeat(_beat)
@@ -87,7 +84,7 @@ export const Setting: React.FC<Props> = ({
 
   const changeLanguage = React.useCallback(
     (locale: Locale) => {
-      router.push('/settings', '/settings', { locale })
+      router.push(router.asPath, router.asPath, { locale })
     },
     [router]
   )
@@ -101,7 +98,7 @@ export const Setting: React.FC<Props> = ({
 
   return (
     <Styles.Main>
-      <Title text={dictionary.title} />
+      <Title text={title} />
       <Form>
         <Picker
           label={dictionary.baseNoteSymbol}
@@ -114,7 +111,7 @@ export const Setting: React.FC<Props> = ({
         </Picker>
         <TextField
           label={dictionary.baseNoteNumber}
-          defaultValue={String(defaultMidiNoteNumber)}
+          defaultValue={String(midiNoteNumber)}
           onChange={changeHandlerBaseNoteNumber}
           inputMode={'tel'}
           validationState={'valid'}
@@ -135,9 +132,9 @@ export const Setting: React.FC<Props> = ({
           ))}
         </RadioGroup>
         <Switch defaultSelected={isDarkMode} onChange={changeIsDarkMode}>
-          {utils.switchLangText(locale, 'ダークモード', 'Dark mode')}
+          {utils.switchLangText(I18N.SETTINGS.DARK_MODE, locale, null)}
         </Switch>
       </Form>
     </Styles.Main>
   )
-}
+})

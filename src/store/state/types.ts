@@ -1,11 +1,13 @@
-import { ChordSymbol, Beat, MIDINoteNumber, Locale, From, Value, Query, Init } from '../../types'
-
-type MergeValueAndFrom<T> = {
-  value: T
-  from: From
-}
-
-export type MergeInit<T> = T | Init
+import {
+  ChordSymbol,
+  Beat,
+  MIDINoteNumber,
+  Locale,
+  Value,
+  Query,
+  MergeValueAndFrom,
+  MergeInit,
+} from '../../types'
 
 export type State = {
   chordSymbol: MergeValueAndFrom<ChordSymbol>

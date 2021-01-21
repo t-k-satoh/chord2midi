@@ -6,7 +6,11 @@ import { Loading } from '../../templates/loading'
 
 export type Props = DispatchToProps & StateToProps
 
-export const HowToUse: React.FC<Props> = ({ onLaunch, isBrowser, isLoading }) => {
+export const HowToUse: React.FC<Props> = React.memo(function Component({
+  onLaunch,
+  isBrowser,
+  isLoading,
+}) {
   const memoizeIsBrowser = React.useMemo(() => generateInitBool(isBrowser, true), [isBrowser])
 
   React.useEffect(() => {
@@ -18,4 +22,4 @@ export const HowToUse: React.FC<Props> = ({ onLaunch, isBrowser, isLoading }) =>
       {memoizeIsBrowser ? <></> : <MobileHowToUseContainer />}
     </Loading>
   )
-}
+})

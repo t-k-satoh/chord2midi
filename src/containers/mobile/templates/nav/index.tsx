@@ -6,20 +6,13 @@ import { State } from '../../../../store/state/types'
 
 export type DispatchToProps = null
 
-export type StateToProps = {
-  locale: State['locale']
-  isDarkMode: State['isDarkMode']
-  query: State['query']
-  isHome: State['isHome']
-  version: State['version']
-}
+export type StateToProps = Pick<State, 'locale' | 'isDarkMode' | 'query' | 'version' | 'isHome'>
 
 export const NavContainer = (): JSX.Element => {
-  const state = useSelector<State, State>((state: State) => state, shallowEqual)
-
-  const stateToProps = React.useMemo(
-    () => utilitySelector(state, ['locale', 'isDarkMode', 'query', 'isHome', 'version']),
-    [state]
+  const stateToProps = useSelector<State, StateToProps>(
+    (state: State) =>
+      utilitySelector(state, ['locale', 'isDarkMode', 'query', 'isHome', 'version']),
+    shallowEqual
   )
 
   return <Nav {...stateToProps} />

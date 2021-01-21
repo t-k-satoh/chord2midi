@@ -1,4 +1,4 @@
-import { SSRProvider, Provider, defaultTheme } from '@adobe/react-spectrum'
+import { SSRProvider } from '@adobe/react-spectrum'
 import App, { AppInitialProps, AppContext } from 'next/app'
 import React from 'react'
 import { Reset } from 'styled-reset'

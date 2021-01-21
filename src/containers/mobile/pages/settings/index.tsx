@@ -10,12 +10,13 @@ import {
 } from '../../../../store/operators'
 import { utilitySelector } from '../../../../store/selector'
 import { State } from '../../../../store/state/types'
+import { PickValue } from '../../../../types'
 
 export type DispatchToProps = {
-  onChangeBaseNoteSymbol: (baseNoteSymbol: State['chordSymbol']['value']) => void
-  onChangeBaseNoteNumber: (baseNoteNumber: State['midiNoteNumber']['value']) => void
-  onChangeBeat: (beat: State['beat']['value']) => void
-  onChangeIsDarkMode: (isDarkMode: State['isDarkMode']['value']) => void
+  onChangeBaseNoteSymbol: (baseNoteSymbol: PickValue<State['chordSymbol']>) => void
+  onChangeBaseNoteNumber: (baseNoteNumber: PickValue<State['midiNoteNumber']>) => void
+  onChangeBeat: (beat: PickValue<State['beat']>) => void
+  onChangeIsDarkMode: (isDarkMode: PickValue<State['isDarkMode']>) => void
 }
 
 export type StateToProps = Pick<
