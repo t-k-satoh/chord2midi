@@ -25,12 +25,11 @@ export const Bar = styled.div`
   box-sizing: border-box;
 `
 
-export const Handle = styled.div<{ S_left: number }>`
+export const Handle = styled.div`
   width: 1px;
   height: 100%;
   position: absolute;
   top: 0;
-  left: calc(${(props) => `${props.S_left}%`} - 0.5px);
   background: rgba(255, 255, 255, 0.7);
   z-index: 3;
 `

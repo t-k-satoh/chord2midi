@@ -46,28 +46,15 @@ export const ViewArea: React.FC<Props> = React.memo(function Component({
     beat,
     midiNoteNumber,
   ])
-  const beatParser = React.useMemo(
-    () => ({
-      molecular: Number(beat.split('/')[0]),
-      denominator: Number(beat.split('/')[1]),
-    }),
-    [beat]
-  )
+  const { molecular } = React.useMemo(() => utils.beatToFraction(beat), [beat])
   const baseNote: number = React.useMemo(() => tonalNote.midi(`${chordSymbol}${midiNoteNumber}`), [
     midiNoteNumber,
     chordSymbol,
   ])
   const parsedBars = React.useMemo(
     () =>
-      makeViewData(
-        allData.bars,
-        allData.chords,
-        allData.notes,
-        allData.data,
-        baseNote,
-        beatParser.molecular
-      ),
-    [allData, baseNote, beatParser]
+      makeViewData(allData.bars, allData.chords, allData.notes, allData.data, baseNote, molecular),
+    [allData, baseNote, molecular]
   )
   const selectedChordForComponent: {
     title: string
@@ -128,13 +115,25 @@ export const ViewArea: React.FC<Props> = React.memo(function Component({
       CURRENT_BEAT: beat,
     })
   }, [locale, beat, selectedBar, allData.bars])
+  const isResetHandle = React.useMemo(() => currentBar === 0 && barPosition === 0, [
+    currentBar,
+    barPosition,
+  ])
   const handlePosition = React.useMemo(() => {
+    if (isResetHandle) {
+      return 0
+    }
+
     const newBarPos = barPosition - 1
-    const bottom = (currentBar - 1) * 4
-    const top = currentBar * 4
+    const bottom = (currentBar - 1) * molecular
+    const top = currentBar * molecular
 
     return (newBarPos - bottom) / (top - bottom)
-  }, [barPosition, currentBar])
+  }, [barPosition, currentBar, molecular, isResetHandle])
+  const handleBar = React.useMemo(() => (isResetHandle ? 1 : currentBar), [
+    currentBar,
+    isResetHandle,
+  ])
 
   const onClickChord = React.useCallback(
     (barIndex: number, chordIndex: number) => () => {
@@ -195,7 +194,9 @@ export const ViewArea: React.FC<Props> = React.memo(function Component({
         {parsedBars.map((bar) => {
           return (
             <Styles.Bar key={bar.index}>
-              {bar.index + 1 === currentBar && <Styles.Handle S_left={handlePosition * 100} />}
+              {bar.index + 1 === handleBar && (
+                <Styles.Handle style={{ left: `calc(${handlePosition * 100}% - 0.5px)` }} />
+              )}
               {bar.isError ? (
                 <Styles.ErrorBar onClick={onClickBarError(bar.index)} />
               ) : (

@@ -3877,7 +3877,6 @@
 "@types/lodash@4.14.168":
   version "4.14.168"
   resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.168.tgz#fe24632e79b7ade3f132891afff86caa5e5ce008"
-  integrity sha512-oVfRvqHV/V6D1yifJbVRU3TMp8OT6o6BG+U9MkwuJ3U8/CsDHvalRpsxBqivn71ztOFZBTfJMvETbqHiaNSj7Q==
 
 "@types/markdown-to-jsx@^6.11.0":
   version "6.11.3"
@@ -3915,7 +3914,6 @@
 "@types/node@14.14.22":
   version "14.14.22"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-14.14.22.tgz#0d29f382472c4ccf3bd96ff0ce47daf5b7b84b18"
-  integrity sha512-g+f/qj/cNcqKkc3tFqlXOYjrmZA+jNBiDzbP3kH+B+otKFqAdPgVTGP1IeKRdMml/aE69as5S4FqtxAbl+LaMw==
 
 "@types/normalize-package-data@^2.4.0":
   version "2.4.0"
@@ -3972,7 +3970,6 @@
 "@types/react-redux@7.1.16":
   version "7.1.16"
   resolved "https://registry.yarnpkg.com/@types/react-redux/-/react-redux-7.1.16.tgz#0fbd04c2500c12105494c83d4a3e45c084e3cb21"
-  integrity sha512-f/FKzIrZwZk7YEO9E1yoxIuDNRiDducxkFlkw/GNMGEnK9n4K8wJzlJBghpSuOVDgEUHoDkDF7Gi9lHNQR4siw==
   dependencies:
     "@types/hoist-non-react-statics" "^3.3.0"
     "@types/react" "*"
@@ -4081,7 +4078,6 @@
 "@typescript-eslint/eslint-plugin@4.14.0":
   version "4.14.0"
   resolved "https://registry.yarnpkg.com/@typescript-eslint/eslint-plugin/-/eslint-plugin-4.14.0.tgz#92db8e7c357ed7d69632d6843ca70b71be3a721d"
-  integrity sha512-IJ5e2W7uFNfg4qh9eHkHRUCbgZ8VKtGwD07kannJvM5t/GU8P8+24NX8gi3Hf5jST5oWPY8kyV1s/WtfiZ4+Ww==
   dependencies:
     "@typescript-eslint/experimental-utils" "4.14.0"
     "@typescript-eslint/scope-manager" "4.14.0"
@@ -4095,7 +4091,6 @@
 "@typescript-eslint/experimental-utils@4.14.0":
   version "4.14.0"
   resolved "https://registry.yarnpkg.com/@typescript-eslint/experimental-utils/-/experimental-utils-4.14.0.tgz#5aa7b006736634f588a69ee343ca959cd09988df"
-  integrity sha512-6i6eAoiPlXMKRbXzvoQD5Yn9L7k9ezzGRvzC/x1V3650rUk3c3AOjQyGYyF9BDxQQDK2ElmKOZRD0CbtdkMzQQ==
   dependencies:
     "@types/json-schema" "^7.0.3"
     "@typescript-eslint/scope-manager" "4.14.0"
@@ -4107,7 +4102,6 @@
 "@typescript-eslint/parser@4.14.0":
   version "4.14.0"
   resolved "https://registry.yarnpkg.com/@typescript-eslint/parser/-/parser-4.14.0.tgz#62d4cd2079d5c06683e9bfb200c758f292c4dee7"
-  integrity sha512-sUDeuCjBU+ZF3Lzw0hphTyScmDDJ5QVkyE21pRoBo8iDl7WBtVFS+WDN3blY1CH3SBt7EmYCw6wfmJjF0l/uYg==
   dependencies:
     "@typescript-eslint/scope-manager" "4.14.0"
     "@typescript-eslint/types" "4.14.0"
@@ -4117,7 +4111,6 @@
 "@typescript-eslint/scope-manager@4.14.0":
   version "4.14.0"
   resolved "https://registry.yarnpkg.com/@typescript-eslint/scope-manager/-/scope-manager-4.14.0.tgz#55a4743095d684e1f7b7180c4bac2a0a3727f517"
-  integrity sha512-/J+LlRMdbPh4RdL4hfP1eCwHN5bAhFAGOTsvE6SxsrM/47XQiPSgF5MDgLyp/i9kbZV9Lx80DW0OpPkzL+uf8Q==
   dependencies:
     "@typescript-eslint/types" "4.14.0"
     "@typescript-eslint/visitor-keys" "4.14.0"
@@ -4125,12 +4118,10 @@
 "@typescript-eslint/types@4.14.0":
   version "4.14.0"
   resolved "https://registry.yarnpkg.com/@typescript-eslint/types/-/types-4.14.0.tgz#d8a8202d9b58831d6fd9cee2ba12f8a5a5dd44b6"
-  integrity sha512-VsQE4VvpldHrTFuVPY1ZnHn/Txw6cZGjL48e+iBxTi2ksa9DmebKjAeFmTVAYoSkTk7gjA7UqJ7pIsyifTsI4A==
 
 "@typescript-eslint/typescript-estree@4.14.0":
   version "4.14.0"
   resolved "https://registry.yarnpkg.com/@typescript-eslint/typescript-estree/-/typescript-estree-4.14.0.tgz#4bcd67486e9acafc3d0c982b23a9ab8ac8911ed7"
-  integrity sha512-wRjZ5qLao+bvS2F7pX4qi2oLcOONIB+ru8RGBieDptq/SudYwshveORwCVU4/yMAd4GK7Fsf8Uq1tjV838erag==
   dependencies:
     "@typescript-eslint/types" "4.14.0"
     "@typescript-eslint/visitor-keys" "4.14.0"
@@ -4144,7 +4135,6 @@
 "@typescript-eslint/visitor-keys@4.14.0":
   version "4.14.0"
   resolved "https://registry.yarnpkg.com/@typescript-eslint/visitor-keys/-/visitor-keys-4.14.0.tgz#b1090d9d2955b044b2ea2904a22496849acbdf54"
-  integrity sha512-MeHHzUyRI50DuiPgV9+LxcM52FCJFYjJiWHtXlbyC27b80mfOwKeiKI+MHOTEpcpfmoPFm/vvQS88bYIx6PZTA==
   dependencies:
     "@typescript-eslint/types" "4.14.0"
     eslint-visitor-keys "^2.0.0"
@@ -4360,10 +4350,6 @@ adjust-sourcemap-loader@3.0.0:
   dependencies:
     loader-utils "^2.0.0"
     regex-parser "^2.2.11"
-
-adsr@^1.0.0:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/adsr/-/adsr-1.0.1.tgz#a7bc08e5ef8a71e6364abc96fce7df1c44881cc3"
 
 agent-base@6:
   version "6.0.2"
@@ -4691,10 +4677,6 @@ at-least-node@^1.0.0:
 atob@^2.1.2:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/atob/-/atob-2.1.2.tgz#6d9517eb9e030d2436666651e86bd9f6f13533c9"
-
-audio-loader@^0.5.0:
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/audio-loader/-/audio-loader-0.5.0.tgz#9c125d1b25c33cd9626084054d9f6b7f31ddc908"
 
 autoprefixer@^9.7.2:
   version "9.8.6"
@@ -6799,7 +6781,6 @@ escodegen@^1.12.0, escodegen@^1.14.1:
 eslint-config-prettier@7.2.0:
   version "7.2.0"
   resolved "https://registry.yarnpkg.com/eslint-config-prettier/-/eslint-config-prettier-7.2.0.tgz#f4a4bd2832e810e8cc7c1411ec85b3e85c0c53f9"
-  integrity sha512-rV4Qu0C3nfJKPOAhFujFxB7RMP+URFyQqqOZW9DMRD7ZDTFyjaIlETU3xzHELt++4ugC0+Jm084HQYkkJe+Ivg==
 
 eslint-import-resolver-node@^0.3.4:
   version "0.3.4"
@@ -9617,10 +9598,6 @@ midi-file@^1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/midi-file/-/midi-file-1.1.2.tgz#57fafe2dcb605ef29f06652ac45e7a475873dc77"
 
-midimessage@^1.0.5:
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/midimessage/-/midimessage-1.0.5.tgz#ad99f04d863a053a2563d553c5bf35070b48802c"
-
 miller-rabin@^4.0.0:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/miller-rabin/-/miller-rabin-4.0.1.tgz#f080351c865b0dc562a8462966daa53543c78a4d"
@@ -9851,7 +9828,6 @@ next-compose-plugins@2.2.1:
 next-google-fonts@1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/next-google-fonts/-/next-google-fonts-1.2.1.tgz#0b517cff3f34b8f7836f81eb9427973c8b4ac03e"
-  integrity sha512-BhVSldP1oZBTwXeJdMtjmu2qbDT1EkbQO2rG83Oj6APYm6aUsIcMu00Pzkzd8TTkrQW9HyC08Pzr10PY4pE6jA==
 
 next-redux-wrapper@6.0.2:
   version "6.0.2"
@@ -10039,14 +10015,6 @@ normalize-path@^3.0.0, normalize-path@~3.0.0:
 normalize-range@^0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/normalize-range/-/normalize-range-0.1.2.tgz#2d10c06bdfd312ea9777695a4d28439456b75942"
-
-note-parser@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/note-parser/-/note-parser-1.1.0.tgz#12e9f17e51450ec994f1364a01982c22667b8e6b"
-
-note-parser@^2.0.0:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/note-parser/-/note-parser-2.0.1.tgz#2438fd57a46894b402b3a2071798660129c8fbc1"
 
 npm-run-all@4.1.5:
   version "4.1.5"
@@ -10522,7 +10490,6 @@ path-type@^4.0.0:
 paths.macro@3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/paths.macro/-/paths.macro-3.0.1.tgz#ee2532f345531177a6547e13c94196911d6471cd"
-  integrity sha512-jnrSe8j9WCZuvG+LRu8gFc+Zz3PskVOeM6WwXXocjz29L7SXETEAlamUvTDc39VGtHBQK6eBNhAkJ7ZuGpkpkQ==
   dependencies:
     babel-plugin-macros "^2.8.0"
     find-root "^1.1.0"
@@ -11222,11 +11189,6 @@ react-sizeme@^2.6.7:
     shallowequal "^1.1.0"
     throttle-debounce "^2.1.0"
 
-react-swipeable@6.0.1:
-  version "6.0.1"
-  resolved "https://registry.yarnpkg.com/react-swipeable/-/react-swipeable-6.0.1.tgz#14246e798c25a00da3279632a87811411756f652"
-  integrity sha512-69nonicgjT4ofeHxZSpjuz37BoIiWMEbUYkX0mdTCY2mX1U53XDzDUIOVKRg6vVBNGL+pxYjbRzmylXWORh1xQ==
-
 react-syntax-highlighter@^13.5.0:
   version "13.5.3"
   resolved "https://registry.yarnpkg.com/react-syntax-highlighter/-/react-syntax-highlighter-13.5.3.tgz#9712850f883a3e19eb858cf93fad7bb357eea9c6"
@@ -11723,14 +11685,6 @@ safe-regex@^1.1.0:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/safer-buffer/-/safer-buffer-2.1.2.tgz#44fa161b0187b9549dd84bb91802f9bd8385cd6a"
 
-sample-player@^0.5.5:
-  version "0.5.5"
-  resolved "https://registry.yarnpkg.com/sample-player/-/sample-player-0.5.5.tgz#bc35bea3449c6fa972528f022a9bbc2872195637"
-  dependencies:
-    adsr "^1.0.0"
-    midimessage "^1.0.5"
-    note-parser "^1.1.0"
-
 sane@^4.0.3:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/sane/-/sane-4.1.0.tgz#ed881fd922733a6c461bc189dc2b6c006f3ffded"
@@ -12056,15 +12010,6 @@ sort-package-json@1.48.1:
     globby "10.0.0"
     is-plain-obj "2.1.0"
     sort-object-keys "^1.1.3"
-
-soundfont-player@0.12.0:
-  version "0.12.0"
-  resolved "https://registry.yarnpkg.com/soundfont-player/-/soundfont-player-0.12.0.tgz#2b26149f28aba471d2285d3df9a2e1e5793ceaf1"
-  integrity sha512-8BJIsAt7h1PK3thSZDgF6zecgGhYkK74JnZO8WRZi3h34qG6H/DYlnv7cpRvL7Q9C8N6qld4Qwj7nJsX1gYjEA==
-  dependencies:
-    audio-loader "^0.5.0"
-    note-parser "^2.0.0"
-    sample-player "^0.5.5"
 
 source-list-map@^2.0.0:
   version "2.0.1"
