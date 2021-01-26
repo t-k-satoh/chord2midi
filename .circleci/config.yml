@@ -4,6 +4,7 @@ executors:
     working_directory: ~/workspace
     docker:
       - image: node:12
+      - image: stoplight/prism:4
 
 commands:
   restore_yarn:
