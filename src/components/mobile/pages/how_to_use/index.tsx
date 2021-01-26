@@ -131,6 +131,7 @@ export const MobileHowToUse: React.FC<Props> = React.memo(function Component({ l
               locale={newProps.locale}
               barPosition={0}
               currentBar={0}
+              isLoading={false}
             />
             <Styles.BasicText>
               {utils.switchLangText(I18N.HOW_TO_USE.LIMIT_CHORDS, newProps.locale, null)}
@@ -144,6 +145,7 @@ export const MobileHowToUse: React.FC<Props> = React.memo(function Component({ l
               locale={newProps.locale}
               barPosition={0}
               currentBar={0}
+              isLoading={false}
             />
           </Styles.Section>
           <Styles.Section>

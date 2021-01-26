@@ -1,15 +1,17 @@
 import { Note as tonalNote } from '@tonaljs/tonal'
 import _ from 'lodash'
-import { Data, Chord, Bar, Note } from '../../../../types'
+import { I18N } from '../../../../constants/i18n'
+import { Data, Chord, Bar, Note, Locale, ExcludeInit } from '../../../../types'
+import * as utils from '../../../../utils'
 
-export const makeViewData = (
-  bars: Bar[],
-  chords: Chord[],
-  notes: Note[],
-  data: Data[],
-  baseNote: number,
+type MakeViewData = (payload: {
+  bars: Bar[]
+  chords: Chord[]
+  notes: Note[]
+  data: Data[]
+  baseNote: number
   molecular: number
-): {
+}) => {
   index: number
   isError: boolean
   targetChords: {
@@ -24,7 +26,9 @@ export const makeViewData = (
     }[]
     isNoteError: boolean
   }[]
-}[] => {
+}[]
+
+export const makeViewData: MakeViewData = ({ bars, chords, notes, data, baseNote, molecular }) => {
   return bars.map(({ index, isError }) => {
     const targetChords = chords
       .filter((chord) => chord.barIndex === index)
@@ -82,4 +86,71 @@ export const makeViewData = (
       isError,
     }
   })
+}
+
+type GenerateDialogChord = (payload: {
+  bars: Bar[]
+  chords: Chord[]
+  notes: Note[]
+  locale: ExcludeInit<Locale>
+  selectedChord: {
+    barIndex: number
+    chordIndex: number
+  }
+}) => {
+  title: string
+  texts: string[]
+  isError: boolean
+}
+
+export const generateDialogChord: GenerateDialogChord = ({
+  bars,
+  chords,
+  notes,
+  locale,
+  selectedChord,
+}): {
+  title: string
+  texts: string[]
+  isError: boolean
+} => {
+  const currentBar = bars.find((bar) => bar.index === selectedChord.barIndex)
+  const currentChord = chords.find(
+    (chord) => chord.barIndex === selectedChord.barIndex && chord.index === selectedChord.chordIndex
+  )
+  const currentNotes = notes.filter(
+    (note) =>
+      note.barIndex === selectedChord.barIndex && note.chordIndex === selectedChord.chordIndex
+  )
+
+  if (
+    typeof currentBar === 'undefined' ||
+    typeof currentChord === 'undefined' ||
+    typeof currentNotes === 'undefined'
+  ) {
+    const errorText = utils.switchLangText(I18N.UTILS.ERROR, locale, null)
+
+    return {
+      title: errorText,
+      texts: [errorText],
+      isError: true,
+    }
+  }
+
+  if (currentChord.isError) {
+    return {
+      title: currentBar.chords[currentChord.index],
+      texts: [utils.switchLangText(I18N.HOME.INVALID_CHORD, locale, null)],
+      isError: true,
+    }
+  }
+
+  return {
+    title:
+      'symbol' in currentChord
+        ? currentChord.symbol
+        : `${currentChord.configurationSymbol}/${currentChord.baseSymbol}`,
+    texts: currentNotes.map(({ note, distance }) => `${distance}: ${note}`),
+    isError: false,
+  }
 }

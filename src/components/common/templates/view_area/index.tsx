@@ -4,11 +4,11 @@ import React from 'react'
 import { I18N } from '../../../../constants/i18n'
 import { ChordSymbol, Beat, MIDINoteNumber, Locale, ExcludeInit } from '../../../../types'
 import * as utils from '../../../../utils'
-import { makeAllData } from '../../../../utils/data'
 import * as Styles from './styles'
-import { makeViewData } from './utils'
+import { makeViewData, generateDialogChord } from './utils'
 
 export type Props = {
+  isLoading: boolean
   isBrowser: boolean
   value: string
   chordSymbol: ExcludeInit<ChordSymbol>
@@ -20,6 +20,7 @@ export type Props = {
 }
 
 export const ViewArea: React.FC<Props> = React.memo(function Component({
+  isLoading,
   value,
   beat,
   isBrowser,
@@ -40,68 +41,24 @@ export const ViewArea: React.FC<Props> = React.memo(function Component({
   const closeText = React.useMemo(() => utils.switchLangText(I18N.UTILS.CLOSE, locale, null), [
     locale,
   ])
-  const allData = React.useMemo(() => makeAllData({ value, chordSymbol, beat, midiNoteNumber }), [
-    value,
-    chordSymbol,
-    beat,
-    midiNoteNumber,
-  ])
+  const allData = React.useMemo(
+    () => utils.makeAllData({ value, chordSymbol, beat, midiNoteNumber }),
+    [value, chordSymbol, beat, midiNoteNumber]
+  )
   const { molecular } = React.useMemo(() => utils.beatToFraction(beat), [beat])
   const baseNote: number = React.useMemo(() => tonalNote.midi(`${chordSymbol}${midiNoteNumber}`), [
     midiNoteNumber,
     chordSymbol,
   ])
-  const parsedBars = React.useMemo(
-    () =>
-      makeViewData(allData.bars, allData.chords, allData.notes, allData.data, baseNote, molecular),
-    [allData, baseNote, molecular]
+  const parsedBars = React.useMemo(() => makeViewData({ ...allData, baseNote, molecular }), [
+    allData,
+    baseNote,
+    molecular,
+  ])
+  const selectedChordForComponent = React.useMemo(
+    () => generateDialogChord({ ...allData, selectedChord, locale }),
+    [selectedChord, allData, locale]
   )
-  const selectedChordForComponent: {
-    title: string
-    texts: string[]
-    isError: boolean
-  } = React.useMemo(() => {
-    const currentBar = allData.bars.find((bar) => bar.index === selectedChord.barIndex)
-    const currentChord = allData.chords.find(
-      (chord) =>
-        chord.barIndex === selectedChord.barIndex && chord.index === selectedChord.chordIndex
-    )
-    const currentNotes = allData.notes.filter(
-      (note) =>
-        note.barIndex === selectedChord.barIndex && note.chordIndex === selectedChord.chordIndex
-    )
-
-    if (
-      typeof currentBar === 'undefined' ||
-      typeof currentChord === 'undefined' ||
-      typeof currentNotes === 'undefined'
-    ) {
-      const errorText = utils.switchLangText(I18N.UTILS.ERROR, locale, null)
-
-      return {
-        title: errorText,
-        texts: [errorText],
-        isError: true,
-      }
-    }
-
-    if (currentChord.isError) {
-      return {
-        title: currentBar.chords[currentChord.index],
-        texts: [utils.switchLangText(I18N.HOME.INVALID_CHORD, locale, null)],
-        isError: true,
-      }
-    }
-
-    return {
-      title:
-        'symbol' in currentChord
-          ? currentChord.symbol
-          : `${currentChord.configurationSymbol}/${currentChord.baseSymbol}`,
-      texts: currentNotes.map(({ note, distance }) => `${distance}: ${note}`),
-      isError: false,
-    }
-  }, [selectedChord, allData.bars, allData.chords, allData.notes, locale])
   const barErrorText = React.useMemo(() => {
     const currentBar = allData.bars.find((bar) => bar.index === selectedBar)
 
@@ -115,7 +72,7 @@ export const ViewArea: React.FC<Props> = React.memo(function Component({
       CURRENT_BEAT: beat,
     })
   }, [locale, beat, selectedBar, allData.bars])
-  const isResetHandle = React.useMemo(() => currentBar === 0 && barPosition === 0, [
+  const isResetHandle = React.useMemo(() => currentBar === 1 && barPosition === 0, [
     currentBar,
     barPosition,
   ])
@@ -195,7 +152,11 @@ export const ViewArea: React.FC<Props> = React.memo(function Component({
           return (
             <Styles.Bar key={bar.index}>
               {bar.index + 1 === handleBar && (
-                <Styles.Handle style={{ left: `calc(${handlePosition * 100}% - 0.5px)` }} />
+                <Styles.Handle
+                  style={{
+                    left: `calc(${handlePosition < 0 ? 0 : handlePosition * 100}% - 0.5px)`,
+                  }}
+                />
               )}
               {bar.isError ? (
                 <Styles.ErrorBar onClick={onClickBarError(bar.index)} />
@@ -216,6 +177,7 @@ export const ViewArea: React.FC<Props> = React.memo(function Component({
                             <Styles.Note
                               key={String(bar.index + targetChord.index + targetNote.index)}
                               position={targetNote.interval}
+                              S_isLoading={isLoading}
                             ></Styles.Note>
                           ))}
                         </>

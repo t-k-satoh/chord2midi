@@ -9,6 +9,7 @@ export const Main = styled.div`
   padding: 8px;
   box-sizing: border-box;
   overflow: scroll;
+  position: relative;
 `
 
 export const Bars = styled.div`
@@ -90,7 +91,7 @@ export const Symbol = styled.div`
   color: rgba(255, 255, 255, 0.4);
 `
 
-export const Note = styled.div<{ position: number }>`
+export const Note = styled.div<{ position: number; S_isLoading: boolean }>`
   position: absolute;
   background-color: ${(props) => `${colors[props.position]}`};
   bottom: ${(props) => props.position * 2}px;
@@ -98,7 +99,8 @@ export const Note = styled.div<{ position: number }>`
   height: 2px;
   left: 0;
   z-index: 2;
-  opacity: 0.5;
+  opacity: ${(props) => (props.S_isLoading ? 0.3 : 1)};
+  transition: opacity 0.5s;
 `
 
 export const Error = styled.div`

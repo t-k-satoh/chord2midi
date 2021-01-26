@@ -7,6 +7,7 @@ import { InputArea } from '../../../common/templates/input_area'
 import { Player } from '../../../common/templates/player'
 import { ViewArea } from '../../../common/templates/view_area'
 import { Frame } from '../../templates/frame'
+import { useBeatCounter } from './hooks'
 import * as Styles from './styles'
 
 export type Props = StateToProps & DispatchToProps
@@ -19,17 +20,16 @@ export const MobileHome: React.FC<Props> = React.memo(function Component({
   locale,
   onChangeValue,
 }) {
-  const requestRef = React.useRef<number | null>(null)
-
+  const [bpm, setBpm] = React.useState<number>(120)
   const [isSetLoop, setIsSetLoop] = React.useState<boolean>(false)
   const [isPlay, setIsPlay] = React.useState<boolean>(false)
-  const [isEnd, setIsEnd] = React.useState<boolean>(false)
+  const [prevBeat, setPrevBeat] = React.useState<number>(0)
 
-  const [barPosition, setBarPosition] = React.useState<number>(0)
-  const [currentBar, setCurrentBar] = React.useState<number>(0)
-  const [currentBeat, setCurrentBeat] = React.useState<number>(0)
-  const [tempo, setTempo] = React.useState<number>(120)
+  const { highAccuracyBeatCount, duration, onPlay, onPause, onRewind } = useBeatCounter({
+    bpm,
+  })
 
+  const isIdling = React.useMemo(() => highAccuracyBeatCount < 1, [highAccuracyBeatCount])
   const pickedValues = React.useMemo(
     () => utils.pickValues({ value, chordSymbol, beat, midiNoteNumber }),
     [value, chordSymbol, beat, midiNoteNumber]
@@ -42,101 +42,65 @@ export const MobileHome: React.FC<Props> = React.memo(function Component({
   const { notes, bars, chords, data } = React.useMemo(() => utils.makeAllData(newValues), [
     newValues,
   ])
+  const { molecular } = React.useMemo(() => utils.beatToFraction(newValues.beat), [newValues.beat])
   const isError = React.useMemo(
-    () =>
-      notes.some(({ isError }) => isError) ||
-      chords.some(({ isError }) => isError) ||
-      bars.some(({ isError }) => isError),
+    () => [...chords, ...notes, ...bars].some(({ isError }) => isError),
     [chords, notes, bars]
   )
-  const canControl = React.useMemo(
-    () => !isError && notes.length !== 0 && chords.length !== 0 && bars.length !== 0,
-    [chords, notes, bars, isError]
-  )
-  const beatRate = React.useMemo(() => 60000 / tempo, [tempo])
-  const { molecular } = React.useMemo(() => utils.beatToFraction(newValues.beat), [newValues.beat])
+  const canControl = React.useMemo(() => !isError && [...chords, ...notes, ...bars].length !== 0, [
+    chords,
+    notes,
+    bars,
+    isError,
+  ])
+  const currentBeat = React.useMemo(() => (isPlay ? highAccuracyBeatCount : 0) + prevBeat, [
+    highAccuracyBeatCount,
+    prevBeat,
+    isPlay,
+  ])
+  const currentBar = React.useMemo(() => Math.floor(currentBeat / molecular - 1 / molecular + 1), [
+    currentBeat,
+    molecular,
+  ])
+  const isBeatLimit = React.useMemo(() => currentBeat > bars.length * molecular, [
+    currentBeat,
+    bars.length,
+    molecular,
+  ])
 
-  const handlerChangeValue = React.useCallback(
-    (value: string) => {
-      onChangeValue(value)
-    },
-    [onChangeValue]
-  )
-
-  const onPause = React.useCallback(() => {
+  const handleOnPause = React.useCallback(() => {
     setIsPlay(false)
-    cancelAnimationFrame(requestRef.current || 0)
-  }, [requestRef])
+    setPrevBeat(currentBeat)
+    onPause()
+  }, [onPause, currentBeat])
 
-  const onPlay = React.useCallback(() => {
+  const handleOnPlay = React.useCallback(() => {
     setIsPlay(true)
+    onPlay()
+  }, [onPlay])
 
-    const baseTime = Math.floor(performance.now())
-    const countBar = (now: number): void => {
-      const count = currentBeat + (now - baseTime) / beatRate + 1
-      const isOver = count > bars.length * molecular + 1
+  const handleOnRewind = React.useCallback(() => {
+    setPrevBeat(0)
+    onRewind()
+  }, [onRewind])
 
-      if (isOver) {
-        setIsEnd(true)
-        return
-      }
-
-      setBarPosition(count)
-
-      requestRef.current = requestAnimationFrame(countBar)
-    }
-
-    requestRef.current = requestAnimationFrame(countBar)
-  }, [beatRate, bars.length, molecular, currentBeat])
-
-  const onRewind = React.useCallback(() => {
-    setBarPosition(0)
-  }, [])
-
-  const onSetLoop = React.useCallback(() => {
+  const handleOnSetLoop = React.useCallback(() => {
     setIsSetLoop(!isSetLoop)
   }, [isSetLoop])
 
   React.useEffect(() => {
-    return cancelAnimationFrame(requestRef.current || 0)
-  }, [])
-
-  React.useEffect(() => {
-    const newBeat = Math.floor(barPosition)
-    const newBar = Math.floor(newBeat / molecular - 1 / molecular + 1)
-    const isStart = newBeat === 0 && newBar === 0
-
-    setCurrentBeat(newBeat)
-    setCurrentBar(newBar)
-
-    if (isStart) {
-      setIsEnd(false)
-    }
-  }, [barPosition, beatRate, bars.length, isSetLoop, molecular, onPlay, onPause])
-
-  React.useEffect(() => {
-    const shouldLoop = isEnd && isSetLoop
-
-    if (shouldLoop) {
-      console.log('loop')
+    if (isBeatLimit && isSetLoop) {
+      handleOnRewind()
       return
     }
 
-    onPause()
-  }, [isEnd, isSetLoop, onPause])
-
-  React.useEffect(() => {
-    const playData = data.filter(
-      ({ barIndex, chordIndex }) =>
-        barIndex + 1 === currentBar && chordIndex + 1 === currentBeat - (currentBar - 1) * molecular
-    )
-
-    console.log({ playData })
-  }, [currentBeat, currentBar, data, molecular])
-
-  if (hasInit) {
-    return null
-  }
+    if (isBeatLimit) {
+      setPrevBeat(0)
+      setIsPlay(false)
+      onPause()
+      return
+    }
+  }, [isBeatLimit, isSetLoop, handleOnRewind, onPause])
 
   return (
     <PageContainer>
@@ -146,16 +110,17 @@ export const MobileHome: React.FC<Props> = React.memo(function Component({
             beat={beat.value}
             currentBar={currentBar}
             currentBeat={currentBeat}
-            tempo={tempo}
+            tempo={bpm}
           />
         </Styles.PlayerArea>
         <Styles.ViewArea>
           <ViewArea
+            isLoading={isIdling && isPlay}
             value={newValues.value}
             beat={newValues.beat}
             chordSymbol={newValues.chordSymbol}
             midiNoteNumber={newValues.midiNoteNumber}
-            barPosition={barPosition}
+            barPosition={duration}
             currentBar={currentBar}
             isBrowser={false}
             locale={newValues.locale}
@@ -164,24 +129,24 @@ export const MobileHome: React.FC<Props> = React.memo(function Component({
         <Styles.ControlArea>
           <Styles.Player>
             <Player
-              onPlay={onPlay}
-              onPause={onPause}
-              onRewind={onRewind}
-              onSetLoop={onSetLoop}
+              onPlay={handleOnPlay}
+              onPause={handleOnPause}
+              onRewind={handleOnRewind}
+              onSetLoop={handleOnSetLoop}
               isPlay={isPlay}
               isSetLoop={isSetLoop}
-              canPlay={canControl && !isEnd}
-              canPause={canControl}
-              canRewind={canControl && currentBar !== 0 && currentBeat !== 0}
+              canPlay={canControl && !isBeatLimit}
+              canPause={canControl && isPlay}
+              canRewind={canControl && currentBeat !== 0 && currentBar !== 0}
               canSetLoop={canControl}
             />
           </Styles.Player>
           <Styles.InputArea>
             <InputArea
-              onChangeValue={handlerChangeValue}
+              onChangeValue={onChangeValue}
               value={newValues.value}
               isError={isError}
-              canInput={!isPlay}
+              canInput={true}
             />
           </Styles.InputArea>
         </Styles.ControlArea>
