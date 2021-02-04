@@ -7,6 +7,7 @@ import {
   Query,
   MergeValueAndFrom,
   MergeInit,
+  Tempo,
 } from '../../types'
 
 export type State = {
@@ -14,6 +15,7 @@ export type State = {
   beat: MergeValueAndFrom<Beat>
   midiNoteNumber: MergeValueAndFrom<MIDINoteNumber>
   value: MergeValueAndFrom<Value>
+  tempo: MergeValueAndFrom<Tempo>
   locale: MergeInit<Locale>
   query: MergeInit<Partial<Query>>
   version: MergeInit<string>

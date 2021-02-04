@@ -68,6 +68,8 @@ export type From = Url | App | Launch | Init
 
 export type Value = string | Init
 
+export type Tempo = number | Init
+
 export type Query = {
   value: string
   chordSymbol: typeof CHORD_SYMBOL[number]

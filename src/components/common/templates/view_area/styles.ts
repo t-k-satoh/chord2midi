@@ -52,16 +52,10 @@ export const ErrorBar = styled.button`
   font-weight: normal;
 `
 
-export const Layer = styled.div<{ zIndex: number }>`
-  width: 100%;
-  height: 100%;
-  z-index: ${(props) => props.zIndex};
-`
-
-export const Chord = styled.button<{ duration: number }>`
+export const Chord = styled.button<{ S_duration: number }>`
   display: flex;
   height: 100%;
-  width: ${(props) => `${props.duration}%`};
+  width: ${(props) => `${props.S_duration}%`};
   box-sizing: border-box;
   position: relative;
   background-color: transparent;
@@ -91,15 +85,15 @@ export const Symbol = styled.div`
   color: rgba(255, 255, 255, 0.4);
 `
 
-export const Note = styled.div<{ position: number; S_isLoading: boolean }>`
+export const Note = styled.div<{ S_position: number; S_isIdling: boolean }>`
   position: absolute;
-  background-color: ${(props) => `${colors[props.position]}`};
-  bottom: ${(props) => props.position * 2}px;
+  background-color: ${(props) => `${colors[props.S_position]}`};
+  bottom: ${(props) => props.S_position * 2}px;
   width: 100%;
   height: 2px;
   left: 0;
   z-index: 2;
-  opacity: ${(props) => (props.S_isLoading ? 0.3 : 1)};
+  opacity: ${(props) => (props.S_isIdling ? 0.3 : 1)};
   transition: opacity 0.5s;
 `
 
@@ -111,10 +105,4 @@ export const Error = styled.div`
   justify-content: center;
   background: rgba(220, 20, 60, 0.5);
   overflow: hidden;
-`
-
-export const NoteText = styled.p`
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 `

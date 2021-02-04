@@ -75,6 +75,14 @@ export const MainHeader: React.FC<Props> = React.memo(function Component({
     utils.saveMIDIFile(data)
   }, [value, beat, midiNoteNumber, chordSymbol])
 
+  React.useEffect(() => {
+    if (copied) {
+      setTimeout(() => {
+        setCopied(false)
+      }, 1000)
+    }
+  }, [copied])
+
   return (
     <Header width={'100%'}>
       <Styles.Main>

@@ -18,6 +18,10 @@ export const initialState: State = {
     value: INIT,
     from: INIT,
   },
+  tempo: {
+    value: INIT,
+    from: INIT,
+  },
   locale: INIT,
   query: INIT,
   version: INIT,

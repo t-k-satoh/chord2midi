@@ -4,7 +4,6 @@ import Share from '@spectrum-icons/workflow/Share'
 import Image from 'next/image'
 import React from 'react'
 import { Title } from '../../../../components/common/molecules/title'
-import { ViewArea } from '../../../../components/common/templates/view_area'
 import { I18N } from '../../../../constants/i18n'
 import { StateToProps } from '../../../../containers/mobile/pages/how_to_use'
 import { PageContainer } from '../../../../containers/mobile/templates/page'
@@ -122,31 +121,9 @@ export const MobileHowToUse: React.FC<Props> = React.memo(function Component({ l
             <Styles.BasicText>
               {utils.switchLangText(I18N.HOW_TO_USE.SHOW_CHORDS, newProps.locale, null)}
             </Styles.BasicText>
-            <ViewArea
-              isBrowser={false}
-              value={`${exampleValue}`}
-              beat={'4/4'}
-              chordSymbol={'C'}
-              midiNoteNumber={3}
-              locale={newProps.locale}
-              barPosition={0}
-              currentBar={0}
-              isLoading={false}
-            />
             <Styles.BasicText>
               {utils.switchLangText(I18N.HOW_TO_USE.LIMIT_CHORDS, newProps.locale, null)}
             </Styles.BasicText>
-            <ViewArea
-              isBrowser={false}
-              value={'A D C D F| Invalid | C | D'}
-              beat={'4/4'}
-              chordSymbol={'C'}
-              midiNoteNumber={3}
-              locale={newProps.locale}
-              barPosition={0}
-              currentBar={0}
-              isLoading={false}
-            />
           </Styles.Section>
           <Styles.Section>
             <Styles.SubTitle>
