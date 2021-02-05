@@ -37,7 +37,7 @@ export default class MyDocument extends NextDocument {
 
   render(): JSX.Element {
     return (
-      <Html className={'spectrum'}>
+      <Html>
         <Head>
           <meta name="viewport" content="initial-scale=1.0, width=device-width" />
         </Head>

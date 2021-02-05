@@ -1,6 +1,7 @@
 import GoogleFonts from 'next-google-fonts'
 import { NextSeo } from 'next-seo'
 import NextHead from 'next/head'
+import { useRouter } from 'next/router'
 import * as React from 'react'
 
 export type Props = {
@@ -8,6 +9,10 @@ export type Props = {
 }
 
 export const Head: React.FC<Props> = React.memo(function Component({ children, title }) {
+  const router = useRouter()
+
+  console.log(router)
+
   return (
     <React.Fragment>
       <GoogleFonts href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" />
@@ -36,9 +41,9 @@ export const Head: React.FC<Props> = React.memo(function Component({ children, t
           description: 'An application that plays and generates MIDI files from code',
           images: [
             {
-              url: '/og.png',
-              width: 800,
-              height: 600,
+              url: 'https://dzworks.s3-ap-northeast-1.amazonaws.com/og.png',
+              width: 1200,
+              height: 630,
               alt: title,
             },
           ],
