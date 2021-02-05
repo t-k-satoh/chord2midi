@@ -6,19 +6,19 @@ import * as Styles from './styles'
 export type Props = {
   currentBar: number
   currentBeat: number
-  tempo: number
+  bpm: number
   beat: Beat
 }
 
 export const Indicator: React.VFC<Props> = React.memo(function Component({
   currentBar,
   currentBeat,
-  tempo,
+  bpm,
   beat,
 }) {
   const barZero = React.useMemo(() => utils.addZero(currentBar, 3), [currentBar])
   const beatZero = React.useMemo(() => utils.addZero(currentBeat, 3), [currentBeat])
-  const tempoZero = React.useMemo(() => utils.addZero(tempo, 3), [tempo])
+  const bpmZero = React.useMemo(() => utils.addZero(bpm, 3), [bpm])
 
   return (
     <Styles.Main>
@@ -42,11 +42,11 @@ export const Indicator: React.VFC<Props> = React.memo(function Component({
       </Styles.Section>
       <Styles.Section>
         <Styles.SectionTop>
-          <Styles.Zero>{tempoZero}</Styles.Zero>
-          <Styles.Value>{tempo}</Styles.Value>
+          <Styles.Zero>{bpmZero}</Styles.Zero>
+          <Styles.Value>{bpm}</Styles.Value>
         </Styles.SectionTop>
         <Styles.SectionBottom>
-          <Styles.SectionTitle>TEMPO</Styles.SectionTitle>
+          <Styles.SectionTitle>BPM</Styles.SectionTitle>
         </Styles.SectionBottom>
       </Styles.Section>
       <Styles.Section>

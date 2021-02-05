@@ -6,7 +6,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
-import { ChordSymbol, Beat, MIDINoteNumber, ExcludeInit } from '../../../../types'
+import { ChordSymbol, Beat, MIDINoteNumber, ExcludeInit, BPM } from '../../../../types'
 import * as utils from '../../../../utils'
 import * as CONSTANTS from './constants'
 import * as Styles from './styles'
@@ -16,6 +16,7 @@ export type Props = {
   chordSymbol: ExcludeInit<ChordSymbol>
   beat: ExcludeInit<Beat>
   midiNoteNumber: ExcludeInit<MIDINoteNumber>
+  bpm: ExcludeInit<BPM>
   version: string
   isDarkMode: boolean
   isHome: boolean
@@ -36,6 +37,7 @@ export const MainHeader: React.FC<Props> = React.memo(function Component({
   beat,
   midiNoteNumber,
   chordSymbol,
+  bpm,
   onClickNav,
 }) {
   const [copied, setCopied] = React.useState<boolean>(false)
@@ -59,8 +61,9 @@ export const MainHeader: React.FC<Props> = React.memo(function Component({
         beat: beat,
         midiNoteNumber: String(midiNoteNumber),
         chordSymbol: chordSymbol,
+        bpm: String(bpm),
       })}`,
-    [value, beat, midiNoteNumber, chordSymbol]
+    [value, beat, midiNoteNumber, chordSymbol, bpm]
   )
 
   const handlerClickNav = React.useCallback(() => {

@@ -76,6 +76,18 @@ export const launch = (
     dispatch(actions.value({ value: { value: INIT_VALUE.value, from: FROM.LAUNCH } }))
   }
 
+  if (
+    query !== INIT &&
+    _.isNumber(Number(query.bpm)) &&
+    query.bpm !== undefined &&
+    state.bpm.from !== FROM.URL &&
+    state.bpm.from !== FROM.APP
+  ) {
+    dispatch(actions.bpm({ bpm: { value: Number(decodeURI(query.bpm)), from: FROM.URL } }))
+  } else if (state.value.from === FROM.INIT) {
+    dispatch(actions.bpm({ bpm: { value: INIT_VALUE.bpm, from: FROM.LAUNCH } }))
+  }
+
   if (isDisabledDownLoad) {
     dispatch(actions.isDisabledDownLoad({ isDisabledDownLoad }))
   }

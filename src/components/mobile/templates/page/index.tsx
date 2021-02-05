@@ -19,12 +19,13 @@ export const Page: React.FC<Props> = React.memo(function Component({
   isHome,
   isDisabledDownLoad,
   isDisabledShare,
+  bpm,
 }) {
   const [isShowNav, setIsShowNav] = React.useState<boolean>(false)
 
   const tempValues = React.useMemo(
-    () => utils.pickValues({ chordSymbol, beat, midiNoteNumber, value, isDarkMode }),
-    [chordSymbol, beat, midiNoteNumber, value, isDarkMode]
+    () => utils.pickValues({ chordSymbol, beat, midiNoteNumber, value, isDarkMode, bpm }),
+    [chordSymbol, beat, midiNoteNumber, value, isDarkMode, bpm]
   )
   const { hasInit } = React.useMemo(
     () => utils.checkInit({ ...tempValues, isHome, isDisabledDownLoad, isDisabledShare }),
@@ -76,6 +77,7 @@ export const Page: React.FC<Props> = React.memo(function Component({
             isHome={newProps.isHome}
             isDisabledDownLoad={newProps.isDisabledDownLoad}
             isDisabledShare={newProps.isDisabledShare}
+            bpm={newProps.bpm}
           />
         </Styles.Header>
         {children}

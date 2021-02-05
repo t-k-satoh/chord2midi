@@ -19,15 +19,15 @@ export const MobileHome: React.FC<Props> = React.memo(function Component({
   beat,
   midiNoteNumber,
   locale,
+  bpm,
   onChangeValue,
 }) {
-  const [bpm] = React.useState<number>(120)
   const [isSetLoop, setIsSetLoop] = React.useState<boolean>(false)
   const [playerBeatCount, setPlayerBeatCount] = React.useState<number>(0)
 
   const pickedValues = React.useMemo(
-    () => utils.pickValues({ value, chordSymbol, beat, midiNoteNumber }),
-    [value, chordSymbol, beat, midiNoteNumber]
+    () => utils.pickValues({ value, chordSymbol, beat, midiNoteNumber, bpm }),
+    [value, chordSymbol, beat, midiNoteNumber, bpm]
   )
   const newValues = React.useMemo(() => utils.convertExcludeObject({ ...pickedValues, locale }), [
     pickedValues,
@@ -37,7 +37,7 @@ export const MobileHome: React.FC<Props> = React.memo(function Component({
     newValues.beat,
   ])
   const { beatCount, beatCountProgress, state, onPause, onPlay, onRewind } = useBeatCounter({
-    bpm,
+    bpm: newValues.bpm,
     timeSignature,
   })
   const barCount = React.useMemo(
@@ -117,7 +117,7 @@ export const MobileHome: React.FC<Props> = React.memo(function Component({
             beat={beat.value}
             currentBar={barCount}
             currentBeat={playerBeatCount}
-            tempo={bpm}
+            bpm={newValues.bpm}
           />
         </Styles.PlayerArea>
         <Styles.ViewArea>

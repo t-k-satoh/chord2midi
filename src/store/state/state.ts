@@ -18,7 +18,7 @@ export const initialState: State = {
     value: INIT,
     from: INIT,
   },
-  tempo: {
+  bpm: {
     value: INIT,
     from: INIT,
   },

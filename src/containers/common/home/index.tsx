@@ -35,14 +35,12 @@ export const HomeContainer: React.FC = () => {
       version,
     }
   }, [query, isDarkMode])
-
-  React.useEffect(() => {
-    dispatch(operators.changeIsHome(router.pathname === '/'))
-  }, [router.pathname, dispatch])
+  const isHome = React.useMemo(() => router.pathname === '/', [router.pathname])
 
   const onLaunch = React.useCallback(() => {
     dispatch(operators.launch(launchArg))
-  }, [dispatch, launchArg])
+    dispatch(operators.changeIsHome({ isHome }))
+  }, [dispatch, launchArg, isHome])
 
   return <Home onLaunch={onLaunch} isLoading={hasInit} isBrowser={isBrowser} />
 }

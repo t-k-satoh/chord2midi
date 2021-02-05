@@ -68,13 +68,14 @@ export type From = Url | App | Launch | Init
 
 export type Value = string | Init
 
-export type Tempo = number | Init
+export type BPM = number | Init
 
 export type Query = {
   value: string
   chordSymbol: typeof CHORD_SYMBOL[number]
   beat: typeof BEAT[number]
   midiNoteNumber: string
+  bpm: string
 }
 
 export type MergeInit<T> = T | Init

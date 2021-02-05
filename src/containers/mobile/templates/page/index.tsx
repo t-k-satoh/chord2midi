@@ -17,6 +17,7 @@ export type StateToProps = Pick<
   | 'isHome'
   | 'isDisabledDownLoad'
   | 'isDisabledShare'
+  | 'bpm'
 >
 
 export const PageContainer: React.FC = ({ children }) => {
@@ -32,6 +33,7 @@ export const PageContainer: React.FC = ({ children }) => {
         'isHome',
         'isDisabledDownLoad',
         'isDisabledShare',
+        'bpm',
       ]),
     shallowEqual
   )

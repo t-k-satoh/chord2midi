@@ -44,11 +44,13 @@ export const INIT_VALUE: {
   beat: Beat
   midiNoteNumber: MIDINoteNumber
   value: string
+  bpm: number
 } = {
   chordSymbol: 'C',
   beat: '4/4',
   midiNoteNumber: 3,
   value: '',
+  bpm: 120,
 } as const
 
 export const PAGE_TITLES: Record<string, LanguageObject> = {

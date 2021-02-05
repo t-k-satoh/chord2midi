@@ -9,7 +9,7 @@ export const actions = {
   locale: createAction(ACTION_TYPES.LOCALE)<Pick<State, 'locale'>>(),
   midiNoteNumber: createAction(ACTION_TYPES.MIDI_NOTE_NUMBER)<Pick<State, 'midiNoteNumber'>>(),
   value: createAction(ACTION_TYPES.VALUE)<Pick<State, 'value'>>(),
-  tempo: createAction(ACTION_TYPES.TEMPO)<Pick<State, 'tempo'>>(),
+  bpm: createAction(ACTION_TYPES.BPM)<Pick<State, 'bpm'>>(),
   query: createAction(ACTION_TYPES.QUERY)<Pick<State, 'query'>>(),
   isDarkMode: createAction(ACTION_TYPES.IS_DARK_MODE)<Pick<State, 'isDarkMode'>>(),
   isBrowser: createAction(ACTION_TYPES.IS_BROWSER)<Pick<State, 'isBrowser'>>(),

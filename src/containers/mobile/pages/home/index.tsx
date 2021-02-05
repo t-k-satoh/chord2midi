@@ -13,14 +13,14 @@ export type DispatchToProps = {
 
 export type StateToProps = Pick<
   State,
-  'value' | 'chordSymbol' | 'beat' | 'midiNoteNumber' | 'locale'
+  'value' | 'chordSymbol' | 'beat' | 'midiNoteNumber' | 'locale' | 'bpm'
 >
 
 export const MobileHomeContainer = (): JSX.Element => {
   const dispatch = useDispatch()
   const stateToProps = useSelector<State, StateToProps>(
     (state: State) =>
-      utilitySelector(state, ['value', 'chordSymbol', 'beat', 'midiNoteNumber', 'locale']),
+      utilitySelector(state, ['value', 'chordSymbol', 'beat', 'midiNoteNumber', 'locale', 'bpm']),
     shallowEqual
   )
   const onChangeValue: DispatchToProps['onChangeValue'] = React.useCallback(

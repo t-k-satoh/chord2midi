@@ -12,15 +12,17 @@ export const MobileSetting: React.FC<Props> = React.memo(function Component({
   onChangeBaseNoteSymbol,
   onChangeBeat,
   onChangeIsDarkMode,
+  onChangeBPM,
   locale,
   chordSymbol,
   beat,
   midiNoteNumber,
   isDarkMode,
+  bpm,
 }) {
   const pickedValues = React.useMemo(
-    () => utils.pickValues({ chordSymbol, beat, midiNoteNumber, isDarkMode }),
-    [chordSymbol, beat, midiNoteNumber, isDarkMode]
+    () => utils.pickValues({ chordSymbol, beat, midiNoteNumber, isDarkMode, bpm }),
+    [chordSymbol, beat, midiNoteNumber, isDarkMode, bpm]
   )
   const { hasInit } = React.useMemo(() => utils.checkInit({ ...pickedValues, locale }), [
     pickedValues,
@@ -47,11 +49,13 @@ export const MobileSetting: React.FC<Props> = React.memo(function Component({
           onChangeBaseNoteSymbol={onChangeBaseNoteSymbol}
           onChangeBeat={onChangeBeat}
           onChangeIsDarkMode={onChangeIsDarkMode}
+          onChangeBPM={onChangeBPM}
           locale={newProps.locale}
           chordSymbol={newProps.chordSymbol}
           beat={newProps.beat}
           midiNoteNumber={newProps.midiNoteNumber}
           isDarkMode={newIsDarkMode}
+          bpm={newProps.bpm}
         />
       </Frame>
     </PageContainer>

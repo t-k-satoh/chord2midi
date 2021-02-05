@@ -1,9 +1,18 @@
-import { TextField, RadioGroup, Radio, Form, Picker, Item, Switch } from '@adobe/react-spectrum'
+import {
+  TextField,
+  RadioGroup,
+  Radio,
+  Form,
+  Picker,
+  Item,
+  Switch,
+  Slider,
+} from '@adobe/react-spectrum'
 import { useRouter } from 'next/router'
 import React from 'react'
 import { BEAT, CHORD_SYMBOL, INIT, PAGE_TITLES, EN, JA } from '../../../../constants'
 import { I18N } from '../../../../constants/i18n'
-import { ChordSymbol, Beat, MIDINoteNumber, Locale, ExcludeInit } from '../../../../types'
+import { ChordSymbol, Beat, MIDINoteNumber, Locale, ExcludeInit, BPM } from '../../../../types'
 import * as utils from '../../../../utils'
 import { Title } from '../../molecules/title'
 import { dictionary as _dictionary, options } from './constants'
@@ -15,10 +24,12 @@ export type Props = {
   beat: ExcludeInit<Beat>
   midiNoteNumber: ExcludeInit<MIDINoteNumber>
   isDarkMode: boolean
+  bpm: ExcludeInit<BPM>
   onChangeBaseNoteSymbol: (baseNoteSymbol: ChordSymbol) => void
   onChangeBaseNoteNumber: (baseNoteNumber: MIDINoteNumber) => void
   onChangeBeat: (beat: Beat) => void
   onChangeIsDarkMode: (isDarkMode: boolean) => void
+  onChangeBPM: (bpm: number) => void
 }
 
 export const Setting: React.FC<Props> = React.memo(function Component({
@@ -27,10 +38,12 @@ export const Setting: React.FC<Props> = React.memo(function Component({
   beat,
   midiNoteNumber,
   isDarkMode,
+  bpm,
   onChangeBaseNoteSymbol,
   onChangeBaseNoteNumber,
   onChangeBeat,
   onChangeIsDarkMode,
+  onChangeBPM,
 }) {
   const router = useRouter()
 
@@ -96,6 +109,13 @@ export const Setting: React.FC<Props> = React.memo(function Component({
     [onChangeIsDarkMode]
   )
 
+  const changeBPM = React.useCallback(
+    (_bpm: number) => {
+      onChangeBPM(_bpm)
+    },
+    [onChangeBPM]
+  )
+
   return (
     <Styles.Main>
       <Title text={title} />
@@ -134,6 +154,13 @@ export const Setting: React.FC<Props> = React.memo(function Component({
         <Switch defaultSelected={isDarkMode} onChange={changeIsDarkMode}>
           {utils.switchLangText(I18N.SETTINGS.DARK_MODE, locale, null)}
         </Switch>
+        <Slider
+          label="BPM"
+          minValue={60}
+          maxValue={240}
+          defaultValue={bpm}
+          onChangeEnd={changeBPM}
+        />
       </Form>
     </Styles.Main>
   )
