@@ -1,5 +1,20 @@
 {
   "extends": [
     "config:base"
-  ]
+  ],
+  "assignees": ["t-k-satoh"],
+  "baseBranches": ["develop"],
+  "timezone": "Asia/Tokyo",
+  "schedule": ["before 2am"],
+  "rangeStrategy": "pin",
+  "automerge": true,
+  "major": {
+    "automerge": false
+  },
+  "minor": {
+    "automerge": false
+  },
+  "patch": {
+    "automerge": true
+  }
 }
