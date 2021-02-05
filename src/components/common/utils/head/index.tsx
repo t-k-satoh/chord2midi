@@ -1,4 +1,5 @@
 import GoogleFonts from 'next-google-fonts'
+import { NextSeo } from 'next-seo'
 import NextHead from 'next/head'
 import * as React from 'react'
 
@@ -23,10 +24,27 @@ export const Head: React.FC<Props> = React.memo(function Component({ children, t
         <meta name="msapplication-TileColor" content="#da532c" />
         <meta name="theme-color" content="#ffffff"></meta>
 
-        <title>{title}</title>
-
         {children}
       </NextHead>
+      <NextSeo
+        title={title}
+        description="An application that plays and generates MIDI files from code"
+        canonical="https://chord2midi.vercel.app"
+        openGraph={{
+          url: 'https://chord2midi.vercel.app',
+          title: title,
+          description: 'An application that plays and generates MIDI files from code',
+          images: [
+            {
+              url: '/og.png',
+              width: 800,
+              height: 600,
+              alt: title,
+            },
+          ],
+          site_name: title,
+        }}
+      />
     </React.Fragment>
   )
 })
