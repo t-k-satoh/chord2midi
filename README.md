@@ -53,4 +53,3 @@ yarn dev
 ## Unit testing
 - Jest
 
-Translated with www.DeepL.com/Translator (free version)
