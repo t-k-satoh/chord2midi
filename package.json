@@ -12,7 +12,7 @@
     "sort": "sort-package-json",
     "start": "next start",
     "storybook": "start-storybook -p 6006",
-    "storycap": "rm -rfv __screenshots__; storycap --serverCmd \"start-storybook -p 9001\" http://localhost:9001 --serverTimeout 60000",
+    "storycap": "rm -rfv __screenshots__; storycap --serverCmd \"npx http-server dist-storybook -p 9001\" http://localhost:9001 --serverTimeout 60000",
     "test": "jest",
     "type-check": "tsc --project tsconfig.json --pretty --noEmit"
   },
@@ -38,6 +38,7 @@
   },
   "devDependencies": {
     "@babel/core": "7.12.10",
+    "@babel/preset-react": "^7.12.13",
     "@next/plugin-storybook": "10.0.6",
     "@storybook/addon-actions": "6.1.17",
     "@storybook/addon-controls": "^6.1.17",

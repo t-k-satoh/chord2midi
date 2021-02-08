@@ -40,4 +40,16 @@ module.exports = {
         config.resolve.extensions.push('.ts', '.tsx');
         return config;
     },
+    babel: async (options) => ({
+        ...options,
+        presets: [
+            ...options.presets,
+            [
+                '@babel/preset-react', {
+                    runtime: 'automatic',
+                },
+                'preset-react-jsx-transform'
+            ],
+        ],
+    }),
 };
