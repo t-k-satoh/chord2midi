@@ -64,10 +64,12 @@ jobs:
       - run: yarn install --frozen-lockfile
       - run: export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
       - run: export AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
-      - run: yarn storycap:capture
+      - run: 
+          name: StoryCap
+          command: yarn storycap
       - run: 
           name: RegSuit
-          command: yarn reg-suit"
+          command: yarn reg-suit
       - save_yarn
 
 

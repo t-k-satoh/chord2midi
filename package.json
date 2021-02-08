@@ -12,8 +12,7 @@
     "sort": "sort-package-json",
     "start": "next start",
     "storybook": "start-storybook -p 6006",
-    "storycap:capture": "storycap --serverCmd 'start-storybook -p 9001' http://localhost:9001",
-    "storycap:remove": "rm -rf __screenshots__",
+    "storycap": "rm -rfv __screenshots__; storycap --serverCmd \"start-storybook -p 9001\" http://localhost:9001 --serverTimeout 60000",
     "test": "jest",
     "type-check": "tsc --project tsconfig.json --pretty --noEmit"
   },
