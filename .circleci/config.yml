@@ -55,6 +55,22 @@ jobs:
           command: yarn build
       - save_yarn
 
+  reg-suit:
+    executor:
+      name: default
+    steps:
+      - checkout
+      - restore_yarn
+      - run: yarn install --frozen-lockfile
+      - run: yarn dev
+      - run: export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
+      - run: export AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
+      - run: yarn storycap:capture
+      - run: 
+          name: RegSuit
+          command: yarn reg-suit"
+      - save_yarn
+
 
 workflows:
   pull-request:
@@ -66,3 +82,6 @@ workflows:
       - build:
           requires:
             - lint
+      - reg-suit:
+          requires:
+            - build
