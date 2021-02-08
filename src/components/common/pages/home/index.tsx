@@ -1,4 +1,5 @@
 import React from 'react'
+import { BrowserHomeContainer } from '../../../../containers/browser/pages/home'
 import { DispatchToProps, StateToProps } from '../../../../containers/common/home'
 import { MobileHomeContainer } from '../../../../containers/mobile/pages/home'
 import { generateInitBool } from '../../../../utils/generate_init_bool'
@@ -18,6 +19,8 @@ export const Home: React.FC<Props> = React.memo(function Component({
   }, [onLaunch])
 
   return (
-    <Loading isLoading={isLoading}>{memoizeIsBrowser ? <></> : <MobileHomeContainer />}</Loading>
+    <Loading isLoading={isLoading}>
+      {memoizeIsBrowser ? <BrowserHomeContainer /> : <MobileHomeContainer />}
+    </Loading>
   )
 })
