@@ -1,9 +1,13 @@
 version: 2.1
+orbs:
+  browser-tools: circleci/browser-tools@1.1.1
+
 executors:
   default:
     working_directory: ~/workspace
     docker:
       - image: node:14.15.4
+      - image: 'cimg/node:13.12-browser'
 
 commands:
   restore_yarn:
@@ -61,6 +65,13 @@ jobs:
     steps:
       - checkout
       - restore_yarn
+      - browser-tools/install-chrome
+      - browser-tools/install-chromedriver
+      - run:
+          name: Check install
+          command: |
+            google-chrome --version
+            chromedriver --version
       - run: yarn install --frozen-lockfile
       - run: export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
       - run: export AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
