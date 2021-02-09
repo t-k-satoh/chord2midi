@@ -1,0 +1,21 @@
+{
+  "core": {
+    "workingDir": ".reg",
+    "actualDir": "__screenshots__",
+    "threshold": 0,
+    "addIgnore": true,
+    "thresholdRate": 0.01,
+    "ximgdiff": {
+      "invocationType": "client"
+    }
+  },
+  "plugins": {
+    "reg-keygen-git-hash-plugin": {},
+    "reg-notify-github-plugin": {
+      "clientId": "MzY0tjQ1NzM21k/OyC9KMcrNTMnUNzU1NTIyt9Qv0c3WLU4syc8AAA=="
+    },
+    "reg-publish-s3-plugin": {
+      "bucketName": "chord2midi"
+    }
+  }
+}

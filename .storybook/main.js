@@ -1,40 +1,55 @@
 const path = require('path');
-const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin')
 
 module.exports = {
-  "stories": [
-    "../src/**/*.stories.mdx",
-    "../src/**/*.stories.@(js|jsx|ts|tsx)"
-  ],
-  "addons": [
-    "@storybook/addon-links",
-    "@storybook/addon-essentials",
-    "@next/plugin-storybook",
-    "@storybook/addon-actions"
-  ],
-  typescript: {
-    check: false,
-    checkOptions: {},
-    reactDocgen: 'react-docgen-typescript',
-    reactDocgenTypescriptOptions: {
-      shouldExtractLiteralValuesFromEnum: true,
-      propFilter: (prop) => (prop.parent ? !/node_modules/.test(prop.parent.fileName) : true),
+    stories: [
+        "../src/**/*.stories.@(js|jsx|ts|tsx)"
+    ],
+    addons: [
+        "@storybook/addon-links",
+        "@storybook/addon-essentials",
+        "@storybook/addon-actions",
+        '@storybook/addon-controls',
+        'storybook-dark-mode/register'
+    ],
+    webpackFinal: async config => {
+
+        const nextConfig = require('../next.config.js');
+
+        config.node = {
+            fs: 'empty'
+        };
+
+        config.module.rules.push({
+            test: /\.(ts|tsx)$/,
+            use: [{
+                    loader: require.resolve('awesome-typescript-loader'),
+                    options: {
+                        configFileName: path.resolve(__dirname, '../tsconfig.json')
+                    }
+                },
+                // Optional
+                {
+                    loader: require.resolve('react-docgen-typescript-loader'),
+                    options: {
+                        tsconfigPath: path.resolve(__dirname, '../tsconfig.json'),
+
+                    }
+                },
+            ],
+        });
+        config.resolve.extensions.push('.ts', '.tsx');
+        return config;
     },
-  },
-  webpackFinal: async (config, { configType }) => {
-    const nextConfig = require('../next.config.js');
-    // `configType` has a value of 'DEVELOPMENT' or 'PRODUCTION'
-    // You can change the configuration based on that.
-    // 'PRODUCTION' is used when building the static version of storybook.
-
-    // Ensure the `paths`-defined in tsconfig.json are correctly resolved by webpack
-    config.resolve.plugins = [
-      new TsconfigPathsPlugin({
-        configFile: path.resolve(__dirname, '../tsconfig.json'),
-      }),
-    ]
-
-    // Return the altered config
-    return config
-  },
-}
+    babel: async (options) => ({
+        ...options,
+        presets: [
+            ...options.presets,
+            [
+                '@babel/preset-react', {
+                    runtime: 'automatic',
+                },
+                'preset-react-jsx-transform'
+            ],
+        ],
+    }),
+};

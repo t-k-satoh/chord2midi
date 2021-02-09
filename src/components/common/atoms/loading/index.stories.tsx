@@ -3,31 +3,32 @@ import { Meta, Story } from '@storybook/react/types-6-0'
 import base from 'paths.macro'
 import React from 'react'
 import { generateTitle } from '../../../../test/utils'
-import { Title, Props } from '.'
+import { Loading, Props } from '.'
 
 const props: Props = {
-  text: 'title',
+  isLoading: true,
+  isDarkMode: true,
 }
 
 export default {
   title: generateTitle(base, true),
-  component: Title,
+  component: Loading,
   includeStories: /.*Story$/,
 } as Meta
 
-const Template: Story<Props> = (args) => <Title {...args} />
+const Template: Story<Props> = (args) => <Loading {...args} />
 
 export const DefaultStory = Template.bind({})
 DefaultStory.args = props
 
 export const DarkModeStory = (): JSX.Element => (
   <Provider colorScheme="dark">
-    <Title {...props} />
+    <Loading {...props} />
   </Provider>
 )
 
 export const LightModeStory = (): JSX.Element => (
   <Provider colorScheme="light">
-    <Title {...props} />
+    <Loading {...props} isDarkMode={false} />
   </Provider>
 )

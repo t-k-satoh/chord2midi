@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import { HeaderHight } from '../../../../constants'
 
 export const Main = styled.main`
   width: 100vw;
@@ -7,46 +6,25 @@ export const Main = styled.main`
   position: relative;
 `
 
-export const InputArea = styled.div`
-  width: 100%;
-  height: calc(30% - ${HeaderHight}px / 2);
-`
-export const ViewArea = styled.div`
-  width: 100%;
-  height: calc(70% - ${HeaderHight}px / 2);
-`
-
-export const ButtonArea = styled.div`
-  width: 100%;
-  height: 60px;
+export const Header = styled.header`
   display: flex;
+  align-items: center;
   justify-content: center;
-  align-items: center;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-`
-
-export const Error = styled.div<{ isShow: boolean }>`
-  display: flex;
-  align-items: center;
-  height: 30px;
+  margin: 8px;
   width: 100%;
-  position: absolute;
-  top: ${(props) => (props.isShow ? 0 : `-45px`)};
-  left: 0;
-  background: #fadbda;
-  z-index: 1;
-  padding: 0 1rem;
-  box-sizing: border-box;
-  overflow: hidden;
-  transition: top 0.1s;
 `
 
-export const ErrorText = styled.p`
-  color: red;
-  margin-left: 1rem;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+export const Logo = styled.h1`
+  width: 40px;
+  height: 40px;
 `
+
+export const ControlArea = styled.div``
+
+export const ControllerArea = styled.div``
+
+export const IndicatorArea = styled.div``
+
+export const ViewArea = styled.div``
+
+export const InputArea = styled.div``
