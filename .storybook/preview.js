@@ -27,7 +27,7 @@ export const decorators = [
           prefetch: () => Promise.resolve(),
         }}
       >
-        <UIProvider theme={defaultTheme} minHeight="100%" colorScheme={ mode}>
+        <UIProvider theme={defaultTheme} minHeight="100vh" colorScheme={ mode}>
           <ThemeProvider theme={theme}>
             <Reset />
             <Story />
