@@ -7,7 +7,6 @@ executors:
     working_directory: ~/workspace
     docker:
       - image: node:14.15.4
-      - image: 'cimg/node:13.12-browser'
 
 commands:
   restore_yarn:
