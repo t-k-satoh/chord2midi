@@ -6,8 +6,7 @@ import Info from '@spectrum-icons/workflow/Info'
 import Settings from '@spectrum-icons/workflow/Settings'
 import Link from 'next/link'
 import React from 'react'
-import { INIT } from '../../../../constants'
-import { StateToProps } from '../../../../containers/mobile/templates/nav'
+import { StateToProps } from '../../../../containers/mobile/templates/nav/types'
 import { generateQuery } from '../../../../utils/generate_query'
 import * as Styles from './styles'
 
@@ -19,8 +18,7 @@ export const Nav: React.FC<Props> = React.memo(function Component({
   isHome,
   version,
 }) {
-  const newQuery = React.useMemo(() => (query !== INIT ? query : {}), [query])
-  const homePath = React.useMemo(() => generateQuery(newQuery), [newQuery])
+  const homePath = React.useMemo(() => generateQuery(query), [query])
 
   const navList: { label: string; path: string; key: string }[] = React.useMemo(() => {
     return [

@@ -15,6 +15,7 @@ export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },
 }
 
+
 export const decorators = [
   (Story) => {
     const mode = useDarkMode() ? 'dark' : 'light'
@@ -34,6 +35,7 @@ export const decorators = [
           </ThemeProvider>
         </UIProvider>
       </RouterContext.Provider>
+
     )
   },
 ]

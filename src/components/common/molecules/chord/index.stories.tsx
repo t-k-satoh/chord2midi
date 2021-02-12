@@ -9,8 +9,8 @@ import { Chord, Props } from '.'
 const props: Omit<Props, 'onClick'> = {
   width: 25,
   notes: [
-    { index: 1, position: 1 },
-    { index: 2, position: 30 },
+    { index: 1, position: 1, isError: false },
+    { index: 2, position: 30, isError: false },
   ],
 }
 

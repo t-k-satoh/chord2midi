@@ -3,35 +3,35 @@ import { Meta, Story } from '@storybook/react/types-6-0'
 import base from 'paths.macro'
 import React from 'react'
 import { generateTitle } from '../../../../test/utils'
-import { NoteError } from '.'
+import { Nav, Props } from '.'
+
+const props: Props = {
+  locale: 'ja',
+  query: {},
+  isHome: true,
+  version: '1.0.0',
+  isDarkMode: false,
+}
 
 export default {
   title: generateTitle(base, true),
-  component: NoteError,
+  component: Nav,
   includeStories: /.*Story$/,
 } as Meta
 
-const Template: Story = (args) => (
-  <div style={{ height: '240px' }}>
-    <NoteError {...args} />
-  </div>
-)
+const Template: Story<Props> = (args) => <Nav {...args} />
 
 export const DefaultStory = Template.bind({})
-DefaultStory.args = {}
+DefaultStory.args = props
 
 export const DarkModeStory = (): JSX.Element => (
   <Provider colorScheme="dark">
-    <div style={{ height: '240px' }}>
-      <NoteError />
-    </div>
+    <Nav {...props} />
   </Provider>
 )
 
 export const LightModeStory = (): JSX.Element => (
   <Provider colorScheme="light">
-    <div style={{ height: '240px' }}>
-      <NoteError />
-    </div>
+    <Nav {...props} />
   </Provider>
 )

@@ -1,8 +1,8 @@
 import styled from 'styled-components'
 
-export const Main = styled.main`
+export const Main = styled.main<{ S_height: number }>`
   width: 100%;
-  height: 100%;
+  height: ${(props) => `${props.S_height}px`};
   position: relative;
 `
 

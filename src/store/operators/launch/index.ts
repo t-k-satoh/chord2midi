@@ -110,6 +110,10 @@ export const launch = (
     dispatch(actions.isDarkMode({ isDarkMode }))
   }
 
+  if (state.isShowNav === FROM.INIT) {
+    dispatch(actions.isShowNav({ isShowNav: false }))
+  }
+
   dispatch(actions.query({ query }))
   dispatch(actions.isBrowser({ isBrowser }))
   dispatch(actions.version({ version }))

@@ -6,25 +6,12 @@ import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
-import { ChordSymbol, Beat, MIDINoteNumber, ExcludeInit, BPM } from '../../../../types'
+import { DispatchToProps, StateToProps } from '../../../../containers/mobile/templates/header/types'
 import * as utils from '../../../../utils'
 import * as CONSTANTS from './constants'
 import * as Styles from './styles'
 
-export type Props = {
-  value: string
-  chordSymbol: ExcludeInit<ChordSymbol>
-  beat: ExcludeInit<Beat>
-  midiNoteNumber: ExcludeInit<MIDINoteNumber>
-  bpm: ExcludeInit<BPM>
-  version: string
-  isDarkMode: boolean
-  isHome: boolean
-  isDisabledDownLoad: boolean
-  isDisabledShare: boolean
-  isShowNav: boolean
-  onClickNav: (isShowNav: boolean) => void
-}
+export type Props = DispatchToProps & StateToProps
 
 export const MainHeader: React.FC<Props> = React.memo(function Component({
   version,
@@ -38,7 +25,7 @@ export const MainHeader: React.FC<Props> = React.memo(function Component({
   midiNoteNumber,
   chordSymbol,
   bpm,
-  onClickNav,
+  onChangeIsShowNav,
 }) {
   const [copied, setCopied] = React.useState<boolean>(false)
 
@@ -58,25 +45,25 @@ export const MainHeader: React.FC<Props> = React.memo(function Component({
     () =>
       `${window.location.origin}${utils.generateQuery({
         value: encodeURI(value),
-        beat: beat,
+        beat,
         midiNoteNumber: String(midiNoteNumber),
-        chordSymbol: chordSymbol,
+        chordSymbol,
         bpm: String(bpm),
       })}`,
     [value, beat, midiNoteNumber, chordSymbol, bpm]
   )
 
   const handlerClickNav = React.useCallback(() => {
-    onClickNav(!isShowNav)
-  }, [isShowNav, onClickNav])
+    onChangeIsShowNav(!isShowNav)
+  }, [isShowNav, onChangeIsShowNav])
   const onClickShare = React.useCallback(() => {
     setCopied(true)
   }, [])
   const onClickDownLoad = React.useCallback(() => {
-    const { data } = utils.makeAllData({ value, beat, midiNoteNumber, chordSymbol })
+    const { data } = utils.makeAllData({ value, chordSymbol, beat, midiNoteNumber })
 
     utils.saveMIDIFile(data)
-  }, [value, beat, midiNoteNumber, chordSymbol])
+  }, [value, chordSymbol, beat, midiNoteNumber])
 
   React.useEffect(() => {
     if (copied) {

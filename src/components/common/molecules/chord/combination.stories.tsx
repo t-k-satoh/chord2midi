@@ -13,8 +13,12 @@ const options: CombinationType<Props> = {
   width: [25],
   notes: [
     [
-      { index: 1, position: 1 },
-      { index: 2, position: 30 },
+      { index: 1, position: 1, isError: false },
+      { index: 2, position: 30, isError: false },
+    ],
+    [
+      { index: 1, position: 1, isError: true },
+      { index: 2, position: 30, isError: true },
     ],
   ],
   onClick: [action('onClick')],
@@ -24,16 +28,16 @@ const combinations = combinate(options)
 
 const stories = storiesOf(generateTitle(base, false), module)
 
-combinations.forEach((combinationProps) =>
+combinations.forEach((combinationProps, index) =>
   stories
-    .add(`light-${JSON.stringify(combinationProps)}`, () => (
+    .add(`light-${index}`, () => (
       <Combination code={combinationProps}>
         <Provider colorScheme="light">
           <Chord {...combinationProps} />
         </Provider>
       </Combination>
     ))
-    .add(`dark-${JSON.stringify(combinationProps)}`, () => (
+    .add(`dark-${index}`, () => (
       <Combination code={combinationProps}>
         <Provider colorScheme="dark">
           <Chord {...combinationProps} />

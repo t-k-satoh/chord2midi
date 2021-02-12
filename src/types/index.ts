@@ -104,3 +104,12 @@ export type ExcludeInitObject<
 > = U
 
 export type PathKeys = keyof typeof PATHS
+
+export type ExcludeAllInit<
+  T extends Record<string, MergeValueAndFrom<unknown> | MergeInit<unknown>>,
+  U = {
+    [K in keyof T]: T[K] extends MergeValueAndFrom<unknown>
+      ? ExcludeInit<T[K]['value']>
+      : ExcludeInit<T[K]>
+  }
+> = U
