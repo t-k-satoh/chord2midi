@@ -67,9 +67,9 @@ const combinations = combinate(options)
 
 const stories = storiesOf(generateTitle(base, false), module)
 
-combinations.forEach((combinationProps) =>
+combinations.forEach((combinationProps, index) =>
   stories
-    .add(`light-${JSON.stringify(combinationProps)}`, () => (
+    .add(`light-${index}`, () => (
       <Combination code={combinationProps}>
         <Provider colorScheme="light">
           <div style={{ height: '240px' }}>
@@ -78,7 +78,7 @@ combinations.forEach((combinationProps) =>
         </Provider>
       </Combination>
     ))
-    .add(`dark-${JSON.stringify(combinationProps)}`, () => (
+    .add(`dark-${index}`, () => (
       <Combination code={combinationProps}>
         <Provider colorScheme="dark">
           <div style={{ height: '240px' }}>

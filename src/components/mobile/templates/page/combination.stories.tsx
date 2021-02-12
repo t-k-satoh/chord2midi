@@ -1,19 +1,19 @@
 import { Provider } from '@adobe/react-spectrum'
+import { action } from '@storybook/addon-actions'
 import { storiesOf } from '@storybook/react'
 import combinate from 'combinate'
 import base from 'paths.macro'
 import { Combination } from '../../../../test/components/combination'
+import { WithProvider } from '../../../../test/components/with-provider'
 import { generateTitle } from '../../../../test/utils'
-import { Nav, Props } from '.'
+import { Page, Props } from '.'
 
 type CombinationType<P extends Record<string | number, unknown>, U = { [K in keyof P]: P[K][] }> = U
 
 const options: CombinationType<Props> = {
-  locale: ['ja', 'en'],
-  query: [{}],
-  isHome: [true, false],
-  version: ['1.0.0'],
   isDarkMode: [true, false],
+  isShowNav: [true, false],
+  onCloseShowNav: [action('onCloseShowNav')],
 }
 
 const combinations = combinate(options)
@@ -25,14 +25,18 @@ combinations.forEach((combinationProps, index) =>
     .add(`light-${index}`, () => (
       <Combination code={combinationProps}>
         <Provider colorScheme="light">
-          <Nav {...combinationProps} />
+          <WithProvider>
+            <Page {...combinationProps} />
+          </WithProvider>
         </Provider>
       </Combination>
     ))
     .add(`dark-${index}`, () => (
       <Combination code={combinationProps}>
         <Provider colorScheme="dark">
-          <Nav {...combinationProps} />
+          <WithProvider>
+            <Page {...combinationProps} />
+          </WithProvider>
         </Provider>
       </Combination>
     ))
