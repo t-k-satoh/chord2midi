@@ -16,11 +16,6 @@
     "test": "jest",
     "type-check": "tsc --project tsconfig.json --pretty --noEmit"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "yarn lint"
-    }
-  },
   "dependencies": {
     "@adobe/react-spectrum": "3.7.0",
     "@spectrum-icons/workflow": "3.2.0",
