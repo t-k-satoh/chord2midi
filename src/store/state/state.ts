@@ -33,4 +33,5 @@ export const initialState: State = {
   isHome: INIT,
   isDisabledDownLoad: INIT,
   isDisabledShare: INIT,
+  isShowNav: INIT,
 }

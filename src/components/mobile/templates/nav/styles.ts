@@ -10,6 +10,7 @@ export const Main = styled.nav`
 export const NavWrap = styled.ul`
   width: 100%;
   height: 100%;
+  padding-bottom: 60px;
 `
 export const NavChild = styled.li`
   width: 100%;

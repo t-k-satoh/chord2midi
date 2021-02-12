@@ -1,42 +1,38 @@
 import React from 'react'
-import { useSelector, shallowEqual } from 'react-redux'
+import { useSelector, shallowEqual, useDispatch } from 'react-redux'
 import { Page } from '../../../../components/mobile/templates/page'
+import * as operators from '../../../../store/operators'
 import { utilitySelector } from '../../../../store/selector'
 import { State } from '../../../../store/state/types'
 
-export type DispatchToProps = void
+export type DispatchToProps = {
+  onCloseShowNav: () => void
+}
 
-export type StateToProps = Pick<
-  State,
-  | 'value'
-  | 'chordSymbol'
-  | 'beat'
-  | 'midiNoteNumber'
-  | 'version'
-  | 'isDarkMode'
-  | 'isHome'
-  | 'isDisabledDownLoad'
-  | 'isDisabledShare'
-  | 'bpm'
->
+export type StateToProps = Pick<State, 'isShowNav'>
 
 export const PageContainer: React.FC = ({ children }) => {
+  const dispatch = useDispatch()
+
   const stateToProps = useSelector<State, StateToProps>(
-    (state: State) =>
-      utilitySelector(state, [
-        'value',
-        'chordSymbol',
-        'beat',
-        'midiNoteNumber',
-        'version',
-        'isDarkMode',
-        'isHome',
-        'isDisabledDownLoad',
-        'isDisabledShare',
-        'bpm',
-      ]),
+    (state: State) => utilitySelector(state, ['isShowNav']),
     shallowEqual
   )
 
-  return <Page {...stateToProps}>{children}</Page>
+  const onCloseShowNav: DispatchToProps['onCloseShowNav'] = React.useCallback(() => {
+    dispatch(operators.changeIsShowNav({ isShowNav: false }))
+  }, [dispatch])
+
+  const dispatchToProps: DispatchToProps = React.useMemo(
+    () => ({
+      onCloseShowNav,
+    }),
+    [onCloseShowNav]
+  )
+
+  return (
+    <Page {...stateToProps} {...dispatchToProps}>
+      {children}
+    </Page>
+  )
 }

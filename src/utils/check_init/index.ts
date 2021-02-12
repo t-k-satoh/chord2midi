@@ -9,7 +9,7 @@ export const checkInitFromValue = (
   }
   const newValue = value as MergeValueAndFrom<unknown>
 
-  if (newValue.value === INIT || newValue.from === INIT) {
+  if (typeof newValue === 'object' && (newValue.value === INIT || newValue.from === INIT)) {
     return true
   }
 

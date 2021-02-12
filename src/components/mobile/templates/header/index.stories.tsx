@@ -4,43 +4,41 @@ import { Meta, Story } from '@storybook/react/types-6-0'
 import base from 'paths.macro'
 import React from 'react'
 import { generateTitle } from '../../../../test/utils'
-import { Chord, Props } from '.'
+import { MainHeader, Props } from '.'
 
-const props: Omit<Props, 'onClick'> = {
-  width: 25,
-  notes: [
-    { index: 1, position: 1, isError: false },
-    { index: 2, position: 30, isError: false },
-  ],
+const props: Omit<Props, 'onChangeIsShowNav'> = {
+  version: 'v.0.1.0',
+  isHome: true,
+  isDarkMode: true,
+  isDisabledDownLoad: true,
+  isDisabledShare: true,
+  isShowNav: false,
+  value: 'C',
+  beat: '4/4',
+  midiNoteNumber: 3,
+  chordSymbol: 'C',
+  bpm: 120,
 }
 
 export default {
   title: generateTitle(base, true),
-  component: Chord,
+  component: MainHeader,
   includeStories: /.*Story$/,
 } as Meta
 
-const Template: Story<Props> = (args) => (
-  <div style={{ height: '240px' }}>
-    <Chord {...args} />
-  </div>
-)
+const Template: Story<Props> = (args) => <MainHeader {...args} />
 
 export const DefaultStory = Template.bind({})
 DefaultStory.args = props
 
 export const DarkModeStory = (): JSX.Element => (
   <Provider colorScheme="dark">
-    <div style={{ height: '240px' }}>
-      <Chord {...props} onClick={action('onClick')} />
-    </div>
+    <MainHeader {...props} onChangeIsShowNav={action('onChangeIsShowNav')} />
   </Provider>
 )
 
 export const LightModeStory = (): JSX.Element => (
   <Provider colorScheme="light">
-    <div style={{ height: '240px' }}>
-      <Chord {...props} onClick={action('onClick')} />
-    </div>
+    <MainHeader {...props} onChangeIsShowNav={action('onChangeIsShowNav')} />
   </Provider>
 )

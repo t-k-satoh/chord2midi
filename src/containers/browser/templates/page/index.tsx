@@ -17,6 +17,7 @@ export type StateToProps = Pick<
   | 'isHome'
   | 'isDisabledDownLoad'
   | 'isDisabledShare'
+  | 'isShowNav'
   | 'bpm'
 >
 
@@ -34,9 +35,14 @@ export const PageContainer: React.FC = ({ children }) => {
         'isDisabledDownLoad',
         'isDisabledShare',
         'bpm',
+        'isShowNav',
       ]),
     shallowEqual
   )
 
-  return <Page {...stateToProps}>{children}</Page>
+  return (
+    <Page {...stateToProps} onCloseShowNav={() => ({})}>
+      {children}
+    </Page>
+  )
 }

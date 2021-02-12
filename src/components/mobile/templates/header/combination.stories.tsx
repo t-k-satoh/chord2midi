@@ -5,23 +5,23 @@ import combinate from 'combinate'
 import base from 'paths.macro'
 import { Combination } from '../../../../test/components/combination'
 import { generateTitle } from '../../../../test/utils'
-import { Chord, Props } from '.'
+import { MainHeader, Props } from '.'
 
 type CombinationType<P extends Record<string | number, unknown>, U = { [K in keyof P]: P[K][] }> = U
 
 const options: CombinationType<Props> = {
-  width: [25],
-  notes: [
-    [
-      { index: 1, position: 1, isError: false },
-      { index: 2, position: 30, isError: false },
-    ],
-    [
-      { index: 1, position: 1, isError: true },
-      { index: 2, position: 30, isError: true },
-    ],
-  ],
-  onClick: [action('onClick')],
+  version: ['v.0.1.0'],
+  isHome: [true, false],
+  isDarkMode: [true, false],
+  isDisabledDownLoad: [true, false],
+  isDisabledShare: [true, false],
+  isShowNav: [true, false],
+  value: ['C'],
+  beat: ['4/4', '3/4'],
+  midiNoteNumber: [3],
+  chordSymbol: ['C'],
+  bpm: [120, 200],
+  onChangeIsShowNav: [action('onChangeIsShowNav')],
 }
 
 const combinations = combinate(options)
@@ -33,14 +33,14 @@ combinations.forEach((combinationProps) =>
     .add(`light-${JSON.stringify(combinationProps)}`, () => (
       <Combination code={combinationProps}>
         <Provider colorScheme="light">
-          <Chord {...combinationProps} />
+          <MainHeader {...combinationProps} />
         </Provider>
       </Combination>
     ))
     .add(`dark-${JSON.stringify(combinationProps)}`, () => (
       <Combination code={combinationProps}>
         <Provider colorScheme="dark">
-          <Chord {...combinationProps} />
+          <MainHeader {...combinationProps} />
         </Provider>
       </Combination>
     ))
