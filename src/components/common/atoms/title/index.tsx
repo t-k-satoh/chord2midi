@@ -1,12 +1,16 @@
 import React from 'react'
 import * as Styles from './styles'
+import { Props } from './types'
 
-export type Props = {
-  text: string
+const Title: (props: Props, ref: React.ForwardedRef<HTMLHeadingElement>) => JSX.Element = (
+  { text },
+  ref
+) => {
+  const fallbackRef = React.useRef<HTMLHeadingElement | null>(null)
+  const domRef = ref || fallbackRef
+
+  return <Styles.Title ref={domRef}>{text}</Styles.Title>
 }
 
-export const Title: React.ForwardRefExoticComponent<Props> = React.memo(function Component({
-  text,
-}) {
-  return <Styles.Title>{text}</Styles.Title>
-})
+const _Title = React.memo(React.forwardRef(Title))
+export { _Title as Title }

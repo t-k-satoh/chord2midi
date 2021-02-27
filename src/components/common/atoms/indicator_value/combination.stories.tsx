@@ -3,10 +3,10 @@ import { storiesOf } from '@storybook/react'
 import combinate from 'combinate'
 import base from 'paths.macro'
 import { Combination } from '../../../../test/components/combination'
+import { CombinationType } from '../../../../test/types'
 import { generateTitle } from '../../../../test/utils'
-import { IndicatorValue, Props } from '.'
-
-type CombinationType<P extends Record<string | number, unknown>, U = { [K in keyof P]: P[K][] }> = U
+import { Props } from './types'
+import { IndicatorValue } from '.'
 
 const options: CombinationType<Props> = {
   value: ['120', 120, 'long_long_long', 0.123, 1.0e20],

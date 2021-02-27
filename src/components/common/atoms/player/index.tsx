@@ -4,34 +4,27 @@ import Play from '@spectrum-icons/workflow/Play'
 import Refresh from '@spectrum-icons/workflow/Refresh'
 import Rewind from '@spectrum-icons/workflow/Rewind'
 import React from 'react'
+import { BUTTON_HEIGHT } from './constants'
 import * as Styles from './styles'
+import { Props } from './types'
 
-export type Props = {
-  isPlay: boolean
-  isSetLoop: boolean
-  canPlay: boolean
-  canSetLoop: boolean
-  canRewind: boolean
-  canPause: boolean
-  onRewind: () => void
-  onPlay: () => void
-  onPause: () => void
-  onSetLoop: () => void
-}
-
-export const Player: React.VFC<Props> = React.memo(function Component({
-  canPause,
-  canPlay,
-  canRewind,
-  canSetLoop,
-  isSetLoop,
-  isPlay,
-  onPause,
-  onPlay,
-  onRewind,
-  onSetLoop,
-}) {
-  const buttonHeight = React.useMemo(() => '100%', [])
+const Player: (props: Props, ref: React.ForwardedRef<HTMLDivElement>) => JSX.Element = (
+  {
+    canPause,
+    canPlay,
+    canRewind,
+    canSetLoop,
+    isSetLoop,
+    isPlay,
+    onPause,
+    onPlay,
+    onRewind,
+    onSetLoop,
+  },
+  ref
+) => {
+  const fallbackRef = React.useRef<HTMLDivElement | null>(null)
+  const domRef = ref || fallbackRef
 
   const onHandleRewind = React.useCallback(() => {
     onRewind()
@@ -50,27 +43,30 @@ export const Player: React.VFC<Props> = React.memo(function Component({
   }, [onSetLoop])
 
   return (
-    <Styles.Main>
-      <ActionButton isQuiet height={buttonHeight} isDisabled={!canRewind} onPress={onHandleRewind}>
-        <Rewind height={buttonHeight} />
+    <Styles.Main ref={domRef}>
+      <ActionButton isQuiet height={BUTTON_HEIGHT} isDisabled={!canRewind} onPress={onHandleRewind}>
+        <Rewind height={BUTTON_HEIGHT} />
       </ActionButton>
       {isPlay ? (
-        <ActionButton isQuiet height={buttonHeight} isDisabled={!canPause} onPress={onHandlePause}>
-          <Pause height={buttonHeight} />
+        <ActionButton isQuiet height={BUTTON_HEIGHT} isDisabled={!canPause} onPress={onHandlePause}>
+          <Pause height={BUTTON_HEIGHT} />
         </ActionButton>
       ) : (
-        <ActionButton isQuiet height={buttonHeight} isDisabled={!canPlay} onPress={onHandlePlay}>
-          <Play height={buttonHeight} />
+        <ActionButton isQuiet height={BUTTON_HEIGHT} isDisabled={!canPlay} onPress={onHandlePlay}>
+          <Play height={BUTTON_HEIGHT} />
         </ActionButton>
       )}
       <ActionButton
         isQuiet
-        height={buttonHeight}
+        height={BUTTON_HEIGHT}
         isDisabled={!canSetLoop}
         onPress={onHandleSetLoop}
       >
-        <Refresh height={buttonHeight} color={isSetLoop ? 'informative' : ''} />
+        <Refresh height={BUTTON_HEIGHT} color={isSetLoop ? 'informative' : ''} />
       </ActionButton>
     </Styles.Main>
   )
-})
+}
+
+const _Player = React.memo(React.forwardRef(Player))
+export { _Player as Player }

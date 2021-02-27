@@ -3,7 +3,8 @@ import { Meta, Story } from '@storybook/react/types-6-0'
 import base from 'paths.macro'
 import React from 'react'
 import { generateTitle } from '../../../../test/utils'
-import { IndicatorValue, Props } from '.'
+import { Props } from './types'
+import { IndicatorValue } from '.'
 
 const props: Props = {
   value: 120,

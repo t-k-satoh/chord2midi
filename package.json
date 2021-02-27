@@ -13,7 +13,8 @@
     "start": "next start",
     "storybook": "start-storybook -p 6006",
     "storycap": "rm -rfv __screenshots__; storycap --serverCmd \"npx http-server dist-storybook -p 9001\" http://localhost:9001 --serverTimeout 60000",
-    "test": "jest",
+    "test": "jest --verbose",
+    "test:watch": "jest --verbose --watch --runInBand --detectOpenHandles",
     "type-check": "tsc --project tsconfig.json --pretty --noEmit"
   },
   "dependencies": {

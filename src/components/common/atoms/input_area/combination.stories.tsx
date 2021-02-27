@@ -4,10 +4,10 @@ import { storiesOf } from '@storybook/react'
 import combinate from 'combinate'
 import base from 'paths.macro'
 import { Combination } from '../../../../test/components/combination'
+import { CombinationType } from '../../../../test/types'
 import { generateTitle } from '../../../../test/utils'
-import { InputArea, Props } from '.'
-
-type CombinationType<P extends Record<string | number, unknown>, U = { [K in keyof P]: P[K][] }> = U
+import { Props } from './types'
+import { InputArea } from '.'
 
 const options: CombinationType<Props> = {
   isError: [true, false],

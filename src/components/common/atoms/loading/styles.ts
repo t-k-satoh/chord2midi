@@ -16,14 +16,14 @@ const switchBackgroundColor = (S_isDarkMode: boolean): string =>
 
 const switchBorderColor = (S_isDarkMode: boolean): string => (S_isDarkMode ? '#ffffff' : '#000000')
 
-export const Main = styled.main<{ S_isLoading: boolean }>`
+export const Main = styled.div<{ S_isLoading: boolean }>`
   display: ${(props) => (props.S_isLoading ? 'block' : 'none')};
   width: 100vw;
   height: 100vh;
   position: relative;
 `
 
-export const LoaderWrap = styled.main`
+export const LoaderWrap = styled.div`
   position: absolute;
   top: calc(40vh - ${LoaderSize / 2}em);
   left: calc(50vw - ${LoaderSize / 2}em);

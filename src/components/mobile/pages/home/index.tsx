@@ -1,6 +1,6 @@
 import { Note as tonalNote } from '@tonaljs/tonal'
 import React from 'react'
-import { StateToProps, DispatchToProps } from '../../../../containers/mobile/pages/home'
+import { StateToProps, DispatchToProps } from '../../../../containers/mobile/pages/home/types'
 import { PageContainer } from '../../../../containers/mobile/templates/page'
 import * as utils from '../../../../utils'
 import { Indicator } from '../../../common/templates/indicator'
@@ -18,33 +18,25 @@ export const MobileHome: React.FC<Props> = React.memo(function Component({
   chordSymbol,
   beat,
   midiNoteNumber,
-  locale,
   bpm,
   onChangeValue,
 }) {
   const [isSetLoop, setIsSetLoop] = React.useState<boolean>(false)
   const [playerBeatCount, setPlayerBeatCount] = React.useState<number>(0)
 
-  const pickedValues = React.useMemo(
-    () => utils.pickValues({ value, chordSymbol, beat, midiNoteNumber, bpm }),
-    [value, chordSymbol, beat, midiNoteNumber, bpm]
-  )
-  const newValues = React.useMemo(() => utils.convertExcludeObject({ ...pickedValues, locale }), [
-    pickedValues,
-    locale,
-  ])
-  const { molecular: timeSignature } = React.useMemo(() => utils.beatToFraction(newValues.beat), [
-    newValues.beat,
-  ])
+  const { molecular: timeSignature } = React.useMemo(() => utils.beatToFraction(beat), [beat])
   const { beatCount, beatCountProgress, state, onPause, onPlay, onRewind } = useBeatCounter({
-    bpm: newValues.bpm,
+    bpm,
     timeSignature,
   })
   const barCount = React.useMemo(
     () => Math.floor(playerBeatCount / timeSignature - 1 / timeSignature + 1),
     [playerBeatCount, timeSignature]
   )
-  const allData = React.useMemo(() => utils.makeAllData(newValues), [newValues])
+  const allData = React.useMemo(
+    () => utils.makeAllData({ value, chordSymbol, beat, midiNoteNumber }),
+    [value, chordSymbol, beat, midiNoteNumber]
+  )
 
   const beatLimit = React.useMemo(() => allData.bars.length * timeSignature + 1, [
     allData.bars.length,
@@ -63,10 +55,10 @@ export const MobileHome: React.FC<Props> = React.memo(function Component({
     return playerBeatCount - (barCount - 1) * timeSignature
   }, [barCount, timeSignature, playerBeatCount])
 
-  const baseNote: number = React.useMemo(
-    () => tonalNote.midi(`${pickedValues.chordSymbol}${pickedValues.midiNoteNumber}`),
-    [pickedValues.chordSymbol, pickedValues.midiNoteNumber]
-  )
+  const baseNote: number = React.useMemo(() => tonalNote.midi(`${chordSymbol}${midiNoteNumber}`), [
+    chordSymbol,
+    midiNoteNumber,
+  ])
 
   const onRest = React.useCallback(() => {
     setPlayerBeatCount(0)
@@ -113,12 +105,7 @@ export const MobileHome: React.FC<Props> = React.memo(function Component({
     <PageContainer>
       <Frame>
         <Styles.PlayerArea>
-          <Indicator
-            beat={beat.value}
-            currentBar={barCount}
-            currentBeat={playerBeatCount}
-            bpm={newValues.bpm}
-          />
+          <Indicator beat={beat} currentBar={barCount} currentBeat={playerBeatCount} bpm={bpm} />
         </Styles.PlayerArea>
         <Styles.ViewArea>
           <ViewArea
@@ -149,7 +136,7 @@ export const MobileHome: React.FC<Props> = React.memo(function Component({
           <Styles.InputArea>
             <InputArea
               onChangeValue={onChangeValue}
-              value={newValues.value}
+              value={value}
               isError={false}
               canInput={state !== 'RUN'}
             />

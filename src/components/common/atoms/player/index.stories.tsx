@@ -4,7 +4,8 @@ import { Meta, Story } from '@storybook/react/types-6-0'
 import base from 'paths.macro'
 import React from 'react'
 import { generateTitle } from '../../../../test/utils'
-import { Player, Props } from '.'
+import { Props } from './types'
+import { Player } from '.'
 
 const props: Omit<Props, 'onRewind' | 'onPlay' | 'onPause' | 'onSetLoop'> = {
   isPlay: true,

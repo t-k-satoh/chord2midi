@@ -46,6 +46,18 @@ jobs:
           command: yarn lint
       - save_yarn
 
+  test:
+    executor:
+      name: default
+    steps:
+      - checkout
+      - restore_yarn
+      - run: yarn install --frozen-lockfile
+      - run: 
+          name: Lint
+          command: yarn test
+      - save_yarn
+
   build:
     executor:
       name: default
@@ -93,9 +105,12 @@ workflows:
       - lint:
           requires:
             - setup
-      - build:
+      - test:
           requires:
             - lint
+      - build:
+          requires:
+            - test
       - reg-suit:
           requires:
             - build

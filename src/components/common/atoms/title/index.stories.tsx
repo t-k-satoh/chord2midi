@@ -3,7 +3,8 @@ import { Meta, Story } from '@storybook/react/types-6-0'
 import base from 'paths.macro'
 import React from 'react'
 import { generateTitle } from '../../../../test/utils'
-import { Title, Props } from '.'
+import { Props } from './types'
+import { Title } from '.'
 
 const props: Props = {
   text: 'title',

@@ -1,20 +1,16 @@
 import { TextArea } from '@adobe/react-spectrum'
 import React from 'react'
+import { PLACE_HOLDER } from './constants'
 import * as Styles from './styles'
+import { Props } from './types'
 
-export type Props = {
-  isError: boolean
-  canInput: boolean
-  value: string
-  onChangeValue: (value: string) => void
-}
+const InputArea: (props: Props, ref: React.ForwardedRef<HTMLDivElement>) => JSX.Element = (
+  { onChangeValue, value, isError, canInput },
+  ref
+) => {
+  const fallbackRef = React.useRef<HTMLDivElement | null>(null)
+  const domRef = ref || fallbackRef
 
-export const InputArea: React.ForwardRefExoticComponent<Props> = React.memo(function Component({
-  onChangeValue,
-  value,
-  isError,
-  canInput,
-}) {
   const onChange = React.useCallback(
     (_value: string) => {
       onChangeValue(_value)
@@ -23,7 +19,7 @@ export const InputArea: React.ForwardRefExoticComponent<Props> = React.memo(func
   )
 
   return (
-    <Styles.Main>
+    <Styles.Main ref={domRef}>
       <Styles.TextArea>
         <TextArea
           width={'100%'}
@@ -32,9 +28,12 @@ export const InputArea: React.ForwardRefExoticComponent<Props> = React.memo(func
           value={value}
           isDisabled={!canInput}
           validationState={isError ? 'invalid' : 'valid'}
-          placeholder={'ex. C#/D6 | C C/F A | E/F A B | A B C/D | A B | A B C | A | A B C D'}
+          placeholder={PLACE_HOLDER}
         />
       </Styles.TextArea>
     </Styles.Main>
   )
-})
+}
+
+const _InputArea = React.memo(React.forwardRef(InputArea))
+export { _InputArea as InputArea }
