@@ -1,4 +1,4 @@
-import GoogleFonts from 'next-google-fonts'
+import { GoogleFonts } from "next-google-fonts";
 import { NextSeo } from 'next-seo'
 import NextHead from 'next/head'
 import * as React from 'react'
