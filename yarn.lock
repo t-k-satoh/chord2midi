@@ -1042,6 +1042,13 @@
   dependencies:
     regenerator-runtime "^0.13.4"
 
+"@babel/runtime@^7.13.10":
+  version "7.13.10"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.13.10.tgz#47d42a57b6095f4468da440388fdbad8bebf0d7d"
+  integrity sha512-4QPkjJq6Ns3V/RgpEahRk+AGfL0eO6RHHtTWoNNr5mO49G6B5+X6d6THgWEAvTrznU5xYpbAlVKRYcsCgh/Akw==
+  dependencies:
+    regenerator-runtime "^0.13.4"
+
 "@babel/runtime@^7.4.4", "@babel/runtime@^7.8.7":
   version "7.12.13"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.12.13.tgz#0a21452352b02542db0ffb928ac2d3ca7cb6d66d"
@@ -5009,11 +5016,12 @@ atob@^2.1.2:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/atob/-/atob-2.1.2.tgz#6d9517eb9e030d2436666651e86bd9f6f13533c9"
 
-automation-events@^3.0.4:
-  version "3.0.4"
-  resolved "https://registry.yarnpkg.com/automation-events/-/automation-events-3.0.4.tgz#5024ea21badf563babf737e6488c6df2ea4a3df1"
+automation-events@^3.0.8:
+  version "3.0.8"
+  resolved "https://registry.yarnpkg.com/automation-events/-/automation-events-3.0.8.tgz#d17cbc6dbad439a4761c25c1f600658d23f328ba"
+  integrity sha512-5/v0eyez5qQgkIQpjlmxfnClSma80M+cGL+DKbvtggxqAPy0CpJl56yPxoGW1kNv6dF83x7A3u4UlZJn2+9VAA==
   dependencies:
-    "@babel/runtime" "^7.12.5"
+    "@babel/runtime" "^7.13.10"
     tslib "^2.1.0"
 
 autoprefixer@^9.7.2:
@@ -13034,12 +13042,13 @@ stacktrace-parser@0.1.10:
   dependencies:
     type-fest "^0.7.1"
 
-standardized-audio-context@25.1.9:
-  version "25.1.9"
-  resolved "https://registry.yarnpkg.com/standardized-audio-context/-/standardized-audio-context-25.1.9.tgz#110d3e8adc2b142b5e0553cdd0685f11bf62460b"
+standardized-audio-context@25.1.11:
+  version "25.1.11"
+  resolved "https://registry.yarnpkg.com/standardized-audio-context/-/standardized-audio-context-25.1.11.tgz#e08b61eb71d047d3ef49617124021a2f1e350298"
+  integrity sha512-qGvVli7ZSwjX1q6wK6ZkUuw48gsSivxgMwIS4JXypKXQ9VtEaUV67WPX1U96msY+mqxrISXWUjXWbiEUFZvXJA==
   dependencies:
-    "@babel/runtime" "^7.12.5"
-    automation-events "^3.0.4"
+    "@babel/runtime" "^7.13.10"
+    automation-events "^3.0.8"
     tslib "^2.1.0"
 
 state-toggle@^1.0.0:
