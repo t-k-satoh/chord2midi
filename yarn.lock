@@ -10490,10 +10490,10 @@ next-compose-plugins@2.2.1:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/next-compose-plugins/-/next-compose-plugins-2.2.1.tgz#020fc53f275a7e719d62521bef4300fbb6fde5ab"
 
-next-google-fonts@2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/next-google-fonts/-/next-google-fonts-2.0.0.tgz#ea261b144e41e0a963d00a8178ccebc00f19bd33"
-  integrity sha512-wQmJoEfsX24Hx86cz25tdGfLlNq/mcji9WwXOYGQRQ21A8D7eJg0GH26hEEeBz9kbwB7W2ZC1aWZ7pUgPGXxcg==
+next-google-fonts@2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/next-google-fonts/-/next-google-fonts-2.1.0.tgz#0c23b9c2a04d7a340f84326337b0b62b660176be"
+  integrity sha512-gar5RnNhtGaZ1CvHSw7MJh0D/mUDijY/LVyfWkxnJxKeD63EOLFXd4m6c7S0u3W0aOdhgVjYNKYqQqcI42XW7w==
 
 next-redux-wrapper@6.0.2:
   version "6.0.2"
