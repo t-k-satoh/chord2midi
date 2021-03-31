@@ -5158,10 +5158,10 @@ atob@^2.1.2:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/atob/-/atob-2.1.2.tgz#6d9517eb9e030d2436666651e86bd9f6f13533c9"
 
-automation-events@^3.0.8:
-  version "3.0.8"
-  resolved "https://registry.yarnpkg.com/automation-events/-/automation-events-3.0.8.tgz#d17cbc6dbad439a4761c25c1f600658d23f328ba"
-  integrity sha512-5/v0eyez5qQgkIQpjlmxfnClSma80M+cGL+DKbvtggxqAPy0CpJl56yPxoGW1kNv6dF83x7A3u4UlZJn2+9VAA==
+automation-events@^3.0.9:
+  version "3.0.9"
+  resolved "https://registry.yarnpkg.com/automation-events/-/automation-events-3.0.9.tgz#271bdb92b2760427161d52d7827ea5a467decdae"
+  integrity sha512-xuszf5MhINXYKe6VCyceSq26CuGq4K5qXBWosCPaxCBRiTQUxYE/zH/PIafqXrHjsrX15XE87IsmF61PbvMMRw==
   dependencies:
     "@babel/runtime" "^7.13.10"
     tslib "^2.1.0"
@@ -13317,13 +13317,13 @@ stacktrace-parser@0.1.10:
   dependencies:
     type-fest "^0.7.1"
 
-standardized-audio-context@25.1.12:
-  version "25.1.12"
-  resolved "https://registry.yarnpkg.com/standardized-audio-context/-/standardized-audio-context-25.1.12.tgz#7582fffeed2543e34ec780b0bdeb8f30d124ed8b"
-  integrity sha512-lMN3whmiB8tjxi6y7OJBJ07hUXJtD4xobcVi/NEtPNiuLa2vqCQHJAp/MqpcRFa0raqvVfR5BFzp503N6vh1yA==
+standardized-audio-context@25.1.13:
+  version "25.1.13"
+  resolved "https://registry.yarnpkg.com/standardized-audio-context/-/standardized-audio-context-25.1.13.tgz#c00ba2a2309f81bdb249ce14fb5ea8c2ad730966"
+  integrity sha512-mOwqM8ffC1fg4oFcqpr+YK7OIcYF97DOD9rQ6bN7GVIHABRZThlLlmfn6jvMQrxeFimodOH12EuyNIH0w33pUA==
   dependencies:
     "@babel/runtime" "^7.13.10"
-    automation-events "^3.0.8"
+    automation-events "^3.0.9"
     tslib "^2.1.0"
 
 state-toggle@^1.0.0:
