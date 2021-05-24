@@ -95,7 +95,7 @@
     "reg-publish-s3-plugin": "0.10.15",
     "reg-suit": "0.10.15",
     "reselect": "4.0.0",
-    "sort-package-json": "1.49.0",
+    "sort-package-json": "1.50.0",
     "standardized-audio-context": "25.1.16",
     "storybook-dark-mode": "1.0.8",
     "storycap": "3.0.3",
