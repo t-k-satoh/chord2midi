@@ -1320,16 +1320,23 @@
   dependencies:
     regenerator-runtime "^0.13.4"
 
-"@babel/runtime@^7.13.17", "@babel/runtime@^7.9.2":
-  version "7.13.17"
-  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.13.17.tgz#8966d1fc9593bf848602f0662d6b4d0069e3a7ec"
-  integrity sha512-NCdgJEelPTSh+FEFylhnP1ylq848l1z9t9N0j1Lfbcw0+KXGjsTvUmkxy+voLLXB5SOKMbLLx4jxYliGrYQseA==
+"@babel/runtime@^7.14.0":
+  version "7.14.0"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.14.0.tgz#46794bc20b612c5f75e62dd071e24dfd95f1cbe6"
+  integrity sha512-JELkvo/DlpNdJ7dlyw/eY7E0suy5i5GQH+Vlxaq1nsNJ+H7f4Vtv3jMeCEgRhZZQFXTjldYfQgv2qmM6M1v5wA==
   dependencies:
     regenerator-runtime "^0.13.4"
 
 "@babel/runtime@^7.4.4", "@babel/runtime@^7.8.7":
   version "7.12.13"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.12.13.tgz#0a21452352b02542db0ffb928ac2d3ca7cb6d66d"
+  dependencies:
+    regenerator-runtime "^0.13.4"
+
+"@babel/runtime@^7.9.2":
+  version "7.13.17"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.13.17.tgz#8966d1fc9593bf848602f0662d6b4d0069e3a7ec"
+  integrity sha512-NCdgJEelPTSh+FEFylhnP1ylq848l1z9t9N0j1Lfbcw0+KXGjsTvUmkxy+voLLXB5SOKMbLLx4jxYliGrYQseA==
   dependencies:
     regenerator-runtime "^0.13.4"
 
@@ -5408,12 +5415,12 @@ atob@^2.1.2:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/atob/-/atob-2.1.2.tgz#6d9517eb9e030d2436666651e86bd9f6f13533c9"
 
-automation-events@^3.0.12:
-  version "3.0.12"
-  resolved "https://registry.yarnpkg.com/automation-events/-/automation-events-3.0.12.tgz#925635fbd1c7151165d454e8631218ef45f4471b"
-  integrity sha512-HLX4bf3fNQU17ur0nTasqWGxcgZXLLWtWKZN4mfyNXZYxYZb501hshj1MwxObfVkd76MwobtTr8XdGmuTm34xQ==
+automation-events@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/automation-events/-/automation-events-4.0.1.tgz#93acef8a457cbea65f16fdcef8f349fd2fafe298"
+  integrity sha512-8bQx+PVtNDMD5F2H40cQs7oexZve3Z0xC9fWRQT4fltF65f/WsSpjM4jpulL4K4yLLB71oi4/xVJJCJ5I/Kjbw==
   dependencies:
-    "@babel/runtime" "^7.13.17"
+    "@babel/runtime" "^7.14.0"
     tslib "^2.2.0"
 
 autoprefixer@^9.8.6:
@@ -13754,13 +13761,13 @@ stacktrace-parser@0.1.10:
   dependencies:
     type-fest "^0.7.1"
 
-standardized-audio-context@25.1.16:
-  version "25.1.16"
-  resolved "https://registry.yarnpkg.com/standardized-audio-context/-/standardized-audio-context-25.1.16.tgz#d7a423b4a4703d2b2ade0094d24dbc656087366a"
-  integrity sha512-G48JHE7Tt25bVbqV5Az5PLB+mT6nOv1sOwf7V/kISFV8z/RSsFyQ7f76rJ/9THaOIJxWU/oowMX+Mz7kqF6Ivg==
+standardized-audio-context@25.2.4:
+  version "25.2.4"
+  resolved "https://registry.yarnpkg.com/standardized-audio-context/-/standardized-audio-context-25.2.4.tgz#d64dbdd70615171ec90d1b7151a0d945af94cf3d"
+  integrity sha512-uQKZXRnXrPVO1V6SwZ7PiV3RkQqRY3n7i6Q8nbTXYvoz8NftRNzfOIlwefpuC8LVLUUs9dhbKTpP+WOA82dkBw==
   dependencies:
-    "@babel/runtime" "^7.13.17"
-    automation-events "^3.0.12"
+    "@babel/runtime" "^7.14.0"
+    automation-events "^4.0.1"
     tslib "^2.2.0"
 
 state-toggle@^1.0.0:
