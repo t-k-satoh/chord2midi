@@ -4593,18 +4593,6 @@
   version "15.7.3"
   resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.7.3.tgz#2ab0d5da2e5815f94b0b9d4b95d1e5f243ab2ca7"
 
-"@types/puppeteer-core@^2.0.0":
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/@types/puppeteer-core/-/puppeteer-core-2.1.0.tgz#453debf63b8e6654f41e2bb6075c223a29faa47e"
-  dependencies:
-    "@types/puppeteer" "^2"
-
-"@types/puppeteer@^2":
-  version "2.1.5"
-  resolved "https://registry.yarnpkg.com/@types/puppeteer/-/puppeteer-2.1.5.tgz#9137aa87dca21450820bfd6fa4fe747bc8176381"
-  dependencies:
-    "@types/node" "*"
-
 "@types/qs@^6.9.5":
   version "6.9.6"
   resolved "https://registry.yarnpkg.com/@types/qs/-/qs-6.9.6.tgz#df9c3c8b31a247ec315e6996566be3171df4b3b1"
@@ -4759,6 +4747,13 @@
 "@types/yargs@^15.0.0":
   version "15.0.10"
   resolved "https://registry.yarnpkg.com/@types/yargs/-/yargs-15.0.10.tgz#0fe3c8173a0d5c3e780b389050140c3f5ea6ea74"
+  dependencies:
+    "@types/yargs-parser" "*"
+
+"@types/yargs@^16.0.0":
+  version "16.0.3"
+  resolved "https://registry.yarnpkg.com/@types/yargs/-/yargs-16.0.3.tgz#4b6d35bb8e680510a7dc2308518a80ee1ef27e01"
+  integrity sha512-YlFfTGS+zqCgXuXNV26rOIeETOkXnGQXP/pjjL9P0gO/EP9jTmc7pUBhx+jVEIxpq41RX33GQ7N3DzOSfZoglQ==
   dependencies:
     "@types/yargs-parser" "*"
 
@@ -5042,10 +5037,6 @@ acorn@^7.1.1, acorn@^7.4.0, acorn@^7.4.1:
 address@1.1.2, address@^1.0.1:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/address/-/address-1.1.2.tgz#bf1116c9c758c51b7a933d296b72c221ed9428b6"
-
-agent-base@5:
-  version "5.1.1"
-  resolved "https://registry.yarnpkg.com/agent-base/-/agent-base-5.1.1.tgz#e8fb3f242959db44d63be665db7a8e739537a32c"
 
 agent-base@6:
   version "6.0.2"
@@ -7098,9 +7089,10 @@ detect-port@^1.3.0:
     address "^1.0.1"
     debug "^2.6.0"
 
-devtools-protocol@0.0.818844:
-  version "0.0.818844"
-  resolved "https://registry.yarnpkg.com/devtools-protocol/-/devtools-protocol-0.0.818844.tgz#d1947278ec85b53e4c8ca598f607a28fa785ba9e"
+devtools-protocol@0.0.854822:
+  version "0.0.854822"
+  resolved "https://registry.yarnpkg.com/devtools-protocol/-/devtools-protocol-0.0.854822.tgz#eac3a5260a6b3b4e729a09fdc0c77b0d322e777b"
+  integrity sha512-xd4D8kHQtB0KtWW0c9xBZD5LVtm9chkMOfs/3Yn01RhT/sFIsVtzTtypfKoFfWBaL+7xCYLxjOLkhwPXaX/Kcg==
 
 devtools-protocol@0.0.869402:
   version "0.0.869402"
@@ -9030,13 +9022,6 @@ http-signature@~1.2.0:
 https-browserify@1.0.0, https-browserify@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/https-browserify/-/https-browserify-1.0.0.tgz#ec06c10e0a34c0f2faf199f7fd7fc78fffd03c73"
-
-https-proxy-agent@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/https-proxy-agent/-/https-proxy-agent-4.0.0.tgz#702b71fb5520a132a66de1f67541d9e62154d82b"
-  dependencies:
-    agent-base "5"
-    debug "4"
 
 https-proxy-agent@^5.0.0:
   version "5.0.0"
@@ -12200,7 +12185,7 @@ proxy-addr@~2.0.5:
     forwarded "~0.1.2"
     ipaddr.js "1.9.1"
 
-proxy-from-env@^1.0.0, proxy-from-env@^1.1.0:
+proxy-from-env@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/proxy-from-env/-/proxy-from-env-1.1.0.tgz#e102f16ca355424865755d2c9e8ea4f24d58c3e2"
   integrity sha512-D+zkORCbA9f1tdWRK0RaCR3GPv50cMxcrz4X8k5LTSUD1Dkw47mKJEZQNunItRTkWwgtaUSo1RVFRIG9ZXiFYg==
@@ -12262,18 +12247,19 @@ punycode@^2.1.0, punycode@^2.1.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/punycode/-/punycode-2.1.1.tgz#b58b010ac40c22c5657616c8d2c2c02c7bf479ec"
 
-puppeteer-core@5.5.0:
-  version "5.5.0"
-  resolved "https://registry.yarnpkg.com/puppeteer-core/-/puppeteer-core-5.5.0.tgz#dfb6266efe5a933cbf1a368d27025a6fd4f5a884"
+puppeteer-core@8.0.0:
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/puppeteer-core/-/puppeteer-core-8.0.0.tgz#4f56cc24675a8e993b0610a284f064a84910f4ec"
+  integrity sha512-kRTiGh42+4eiw9tl489p//8Zpg3LWmz0K3mOpv0qj5PsCV7jE43SLIi0E50suLh8OghXsFhJFoE98vEmXUnDew==
   dependencies:
     debug "^4.1.0"
-    devtools-protocol "0.0.818844"
+    devtools-protocol "0.0.854822"
     extract-zip "^2.0.0"
-    https-proxy-agent "^4.0.0"
+    https-proxy-agent "^5.0.0"
     node-fetch "^2.6.1"
     pkg-dir "^4.2.0"
     progress "^2.0.1"
-    proxy-from-env "^1.0.0"
+    proxy-from-env "^1.1.0"
     rimraf "^3.0.2"
     tar-fs "^2.0.0"
     unbzip2-stream "^1.3.3"
@@ -13802,37 +13788,36 @@ storybook-dark-mode@1.0.8:
     fast-deep-equal "^3.0.0"
     memoizerific "^1.11.3"
 
-storycap@3.0.3:
-  version "3.0.3"
-  resolved "https://registry.yarnpkg.com/storycap/-/storycap-3.0.3.tgz#887ac118d92961419b05bf2a34e3fb040d34b958"
-  integrity sha512-bu/MLVe+601UaHVPunvBC0XWfYKtICyGa8pS8f61sFLtRsMpXNA2WPvBNqLJ8CJh754CON2JRJELtJVVF6qWdg==
+storycap@3.0.4:
+  version "3.0.4"
+  resolved "https://registry.yarnpkg.com/storycap/-/storycap-3.0.4.tgz#1ecc6a4f876c3949fc2aef7e4816544eb7eb8216"
+  integrity sha512-Mpw/nReKvITHEgl2KYHwLGskNaRgZLo9j2YdD+Gxn6sj+J9iZOW7BiAmM3HUkrFmFUioEYhshxbUqbad7S9aHg==
   dependencies:
     "@types/minimatch" "^3.0.3"
     "@types/mkdirp" "^1.0.0"
     "@types/node" "^12.6.8"
-    "@types/puppeteer-core" "^2.0.0"
     "@types/rimraf" "^3.0.0"
     "@types/wait-on" "^5.0.0"
-    "@types/yargs" "^15.0.0"
+    "@types/yargs" "^16.0.0"
     core-js "^3.2.1"
     minimatch "^3.0.4"
     mkdirp "^1.0.0"
-    puppeteer-core "5.5.0"
+    puppeteer-core "8.0.0"
     rimraf "^3.0.0"
     sanitize-filename "^1.6.3"
-    storycrawler "^3.0.3"
+    storycrawler "^3.0.4"
     yargs "^16.0.0"
 
-storycrawler@^3.0.3:
-  version "3.0.3"
-  resolved "https://registry.yarnpkg.com/storycrawler/-/storycrawler-3.0.3.tgz#cd108c81f012585692c4ea9da7e44bb5219035bd"
+storycrawler@^3.0.4:
+  version "3.0.4"
+  resolved "https://registry.yarnpkg.com/storycrawler/-/storycrawler-3.0.4.tgz#4a0a669667a20b6fb5c5c4f89b33147363ed6a2e"
+  integrity sha512-6t6zW1aA9wJwmwhjO13EPDyQdH4ORfnpGeJ2MvMQtuiJbrLXl+FyLsuiaAu5KBWXTg5uZdNt08ovtyVf6TtZEg==
   dependencies:
     "@types/chalk" "^2.2.0"
     "@types/node" "^12.6.8"
-    "@types/puppeteer-core" "^2.0.0"
     "@types/wait-on" "^5.0.0"
     chalk "^2.4.1"
-    puppeteer-core "5.5.0"
+    puppeteer-core "8.0.0"
     wait-on "^5.0.0"
 
 stream-browserify@3.0.0:
