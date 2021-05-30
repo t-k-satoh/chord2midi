@@ -6468,10 +6468,10 @@ colors@^1.1.2:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/colors/-/colors-1.4.0.tgz#c50491479d4c1bdaed2c9ced32cf7c7dc2360f78"
 
-combinate@1.1.4:
-  version "1.1.4"
-  resolved "https://registry.yarnpkg.com/combinate/-/combinate-1.1.4.tgz#0a5687e4a8a1e6daf4a3630a7fa3bec72b1192bc"
-  integrity sha512-CPNH/aT1vPdHWCLNYRjzYmu7vHGQmpTmfQRiQEAT7tmnisFyhgTK37YxsaPU+l87D0ms4IGL7AmtWlra4poM3g==
+combinate@1.1.5:
+  version "1.1.5"
+  resolved "https://registry.yarnpkg.com/combinate/-/combinate-1.1.5.tgz#27af616f3ff88fd6d73a7b951fec468d4ece9e4c"
+  integrity sha512-ihd/mQp/lGwl+kXbdCoQ0XUnB3bg40xdHVXz758XirB4giyGftnFim8sGJo9e/CWVUVSBpkDlGLmyEWWQGqeKg==
 
 combined-stream@^1.0.6, combined-stream@^1.0.8, combined-stream@~1.0.6:
   version "1.0.8"
